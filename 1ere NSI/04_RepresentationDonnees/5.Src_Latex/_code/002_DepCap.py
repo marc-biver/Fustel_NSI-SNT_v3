@@ -1,0 +1,1 @@
+# on importe d'abord une bibliotheque celebre en python,# tres utilisee pour la rapidite des calculsimport numpy# on utilise sa fonction uint8 pour coder l'entier 250 sur 8 bitsa = numpy.uint8 (250)print (bin (a))for i in range (1, 10):    print (f" Iteration {i}, valeur de a : {a}")    print (f"en binaire : {bin (a)}")    a += numpy.uint8 (1)

@@ -1,0 +1,13 @@
+<p>Le but de cette première activité est que vous vous familiarisiez avec Python - les commandes de base, la console etc...</p>
+<p>Cette activité sera appréciée (je verrai votre travail ce qui me permettra de voir où vous en êtes sur l'échelle "alpiniste - grimpeur") mais elle ne sera pas notée.</p>
+<p>Votre script doit:</p>
+<p>- Demander à l'utilisateur la longueur d'un rectangle, puis sa largeur</p>
+<p>- Calculer l'aire du rectangle et la présente à l'utilisateur au format (exact): "L'aire du rectangle vaut XX."</p>
+<p>- Demander à l'utilisateur quelle aire il/elle souhaite</p>
+<p>- Calculer (en gardant la longueur donnée par l'utilisateur au départ) la largeur nécessaire pour atteindre cette aire et l'afficher (avec un message explicatif)</p>
+<p>- Pour ceux qui veulent aller plus loin: modifier votre script pour qu'il demande à l'utilisateur s'il/elle souhaite modifier la longeur ou la largeur du rectangle pour atteindre l'aire demander - et faire les calculs / afficher le résultat en conséquence.</p>
+<p>Quelques conseils / recommandations:</p>
+<p>- Il est <em><strong>très</strong></em><strong><em> important</em></strong> de bien commenter ("#") votre code en expliquant ce qu'il fait</p>
+<p>- Prenez les tâches les unes après les autres, dans l'ordre, et testez (en l'exécutant) bien à chaque étape</p>
+<p>- Si vous n'êtes pas sûr de ce que fait une commande exactement, utilisez la console pour essayer!!</p>
+<p>Bon courage!</p>

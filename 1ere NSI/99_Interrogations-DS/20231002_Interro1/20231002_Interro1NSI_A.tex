@@ -1,0 +1,195 @@
+% !TeX document-id = {58e5ef0b-ac0e-469b-bfec-b82861a95ae8}
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+\documentclass[11pt,a4paper]{exam}
+\addpoints % Pour compter les points
+\usepackage[utf8]{inputenc}
+\usepackage{minted}
+
+\usepackage{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{dashundergaps}
+%\usepackage[monochrome]{xcolor} % Permet de tout mettre en N&B strict
+\usepackage{xcolor}
+\selectcolormodel{gray} % Permet de tout mettre en niveaux de gris
+\geometry{left=1.5cm, right=1.5cm, top=2.2cm, bottom=2.2cm} % Définition des marges du doc
+
+\newcommand{\class}{1\textsuperscript{ère} Spé. NSI Gr. 2\textsubscript{A}}
+\newcommand{\examnum}{Interrogation \#1}
+\newcommand{\examdate}{02/10/2023}
+\newcommand{\timelimit}{20 Minutes}
+\newcommand{\lycee}{Lycée Fustel de Coulanges}
+
+\pagestyle{head}
+\firstpageheader{}{}{}
+\runningheader{\class}{\examnum\ - Page \thepage\ / \numpages}{\examdate}
+\runningheadrule
+
+
+\begin{document}
+% Espace d'en-tête
+    \noindent
+    \begin{spacing}{2}
+        \noindent
+        \begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} l @{\extracolsep{6pt}} l}
+            \textbf{\class} & \textbf{\examnum, \examdate}&\\
+            \textbf{\lycee} &\textbf{Durée: \timelimit} &\\
+        \end{tabular*}\\
+    \end{spacing}
+
+    \noindent
+    \hrule
+    \vspace{5pt} 
+    \noindent
+    \\
+    Cette interrogation comporte \numquestions\ questions; elle sera notée sur \numpoints\ points. 
+    Les réponses sont à porter sur une copie \uline{comportant votre nom}.\\
+    \noindent
+    \hrule
+    \vspace{10pt} 
+
+    \begin{questions} % DEBUT DE L'EXAMEN
+        \begin{spacing}{1,2}
+    
+            % #1 - tableau - OK
+            \question[14] Correction de code: dans cet exercice il vous est demandé, dans des extraits 
+            de code Python où \uline{les lignes sont numérotées} et \uline{les blocs identifiés par des lettres}, de trouver les erreurs 
+            et d'en proposer une correction en précisant le numéro de ligne.
+            \\
+            Exemple: si le code suivant vous est proposé:
+            \begin{minted}{Python}
+                01: # A: Affichage message d'accueil
+                02: print("Bonjour!"
+            \end{minted}
+        	Vous répondrez: \hspace{1cm}\textit{Bloc A, ligne 2, il faut refermer la parenthèse: print("Bonjour!")}
+            \leavevmode
+            \\
+            \\
+            % Code à évaluer pour l'exercice
+            \noindent
+            \begin{minipage}{0.5\textwidth}
+                \begin{minted}{Python}
+01: # A: Calcul d'une somme
+02: a = 5
+03: b = a + c
+04: print(b)
+
+05: # B: Fonc. pour afficher un texte
+06: def fonction_aff(txt):
+07: print("Ceci est le texte: ", txt)
+
+08: # C: Affichage message d'accueil
+09: print("Bonjour!')
+
+10: # D: Calcul d'une valeur au carre
+11: x = "15"
+12: resultat = x ** 2
+13: print(resultat)
+
+14: # E: Fonc. qui double un nombre
+15: def CalculDouble(nombre):
+16:     resultat = nombre * 2
+17:
+18: a = 10
+19: print(CalculDouble(a))
+                \end{minted}
+            \end{minipage}
+            \begin{minipage}{0.5\textwidth}
+                \begin{minted}{Python}
+20: # F: Fonc. qui trouve le max
+21: def MyMax(a, b):
+22: if a > b:
+23:     return a
+24: else:
+25:     return b
+
+26: # G: Affich. produit
+27: a = 27
+28: b = 12
+29: c = a * b
+30: print("Le produit vaut ", c)
+
+31: # H: Evaluation mineur / majeur
+32: age = input("Quel est votre age?")
+33: if age < 18:
+34:     print("Vous etes mineur.")
+35: else:
+36:     print("Vous etes majeur.")
+
+37: # I: Verification d'egalite
+38: x = 5
+39: y = 10
+40: if x = y:
+41:     print("x est egal a y")
+                \end{minted}
+            \end{minipage}
+            \leavevmode
+            \\
+            \\
+            \\
+            Dans les 9 blocs précédents (A \textemdash\ I), 7 comportent une erreur: trouvez-les, et corrigez-les comme indiqué ci-dessus.
+            \newpage
+
+            % Page 2
+            \leavevmode
+            \\
+            % Question 2
+            \question Considérez la fonction suivante:
+            \begin{minted}{Python}
+def eligibilite(nom, age):
+    if (nom == "Alice" or nom == "Bob") and age > 18:
+        return "VRAI"
+    else:
+        return "FAUX"
+            \end{minted}
+            Qu'est-ce qui apparaitra à l'écran à l'issue des appels suivants?
+            \begin{parts}
+                \part[\half]
+                    \texttt{print(eligibilite("Alice", 18))}
+                \part[\half]
+                    \texttt{print(eligibilite("Eve", "Bob"))}	
+                \part[\half]
+                    \texttt{print(eligibilite("Bob", 20))}
+                \part[\half]
+                    \texttt{print(eligibilite("Thomas", 23))}
+            \end{parts}
+%        \end{spacing}
+        
+        
+        % Question 3 - HTML
+        \question[4] Considérez le code HTML suivant:
+%        \begin{spacing}{1}
+            \begin{minted}{HTML}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="./css/style.css">
+<title>Ma page HTML
+</head>
+<body>
+    Voici une liste:
+    <ul>
+        <li>1er element</a></li>
+        <li><a href="www.google.com">SURPRISE</a></li>
+    </ul>
+
+
+    <img src="www.amazon.com">
+
+</body>
+</html>
+            \end{minted}
+%        \end{spacing}
+%        \begin{spacing}{1,2}
+            Ecrivez une critique de ce code sur la base des pratiques qu'on a apprises en 
+            cours \textemdash\ indice: votre critique devrait soulever \uline{\textit{au moins}} 
+            4 éléments à corriger.
+            \\
+            Question bonus: si vous ouvrez cette page HTML dans un navigateur, qu'est-ce 
+            qui va s'afficher selon vous?
+        \end{spacing}
+    \end{questions}
+\end{document}

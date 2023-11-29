@@ -1,0 +1,1 @@
+# Convertir '10110 ' en base 10nombre_decimal = int('10110 ', base =2)print ( nombre_decimal ) # Output sera 22

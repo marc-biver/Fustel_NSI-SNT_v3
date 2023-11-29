@@ -1,0 +1,9 @@
+Connectez-vous sur votre ENT;
+
+Ouvrez l’application “Capytale V2”;
+
+Dans le champ “Accédez à une activité” rentrez le code ci-dessous:
+-> 845d-2010566 (pour les 2GT8)
+-> fcab-1940590 (pour les 2GT9)
+
+Cliquez sur "GO!" et effectuez les activités détaillées dans le document (Jupyter Notebook).
