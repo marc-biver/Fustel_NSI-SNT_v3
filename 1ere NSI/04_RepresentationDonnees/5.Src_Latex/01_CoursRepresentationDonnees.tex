@@ -7,8 +7,8 @@
 \newcommand{\versiondoc}{v0.2}
 % Affichage ou non des reponses aux questions & exercices
 \newif\ifDispRep
-%\DispReptrue  % Show the text
-\DispRepfalse % Hide the text
+\DispReptrue  % Show the text
+%\DispRepfalse % Hide the text
 
 
 % Language setting
@@ -59,6 +59,11 @@
 \usepackage{mdframed} % text box des réponses aux questions rhétoriques
 \usepackage{enumitem} % pour des listes alphanum et pas numeriques
 \usepackage{soul} % pour faire du surlignage
+\usepackage{dsfont} % pour faire du pseudo-code
+\usepackage{mathtools} % pour faire du pseudo-code
+\usepackage{algorithm} % pour faire du pseudo-code
+\usepackage{algorithmicx} % pour faire du pseudo-code
+\usepackage{algpseudocode} % pour faire du pseudo-code
 
 % Environnement d'exos
 \definecolor{myblue}{rgb}{0.12, 0.3, 0.84} % Adjust the rgb values as needed
@@ -231,8 +236,9 @@
 		\item Représentation des entiers naturels;
 		\item Représentation des entiers relatifs;
 		\item Représentation des nombres réels ("nombres flottants");
-		\item Représentation des booléens -- opérateurs booléens, logique boolénne;
-		\item Représentation et codage du texte.
+		\item Représentation et codage du texte;
+		\item Représentation des booléens -- opérateurs booléens, logique boolénne -- ce qui nous amènera à:
+		\item Circuits logiques élémentaires.
 	\end{itemize}
 	
 	\subsection{Comment on va procéder}
@@ -359,20 +365,36 @@
 
 		En pseudo-code, on pourrait écrire:
 		
-		\begin{verbatim}
-			Fonction ConvertirBase4EnBase10(nombreBase4)
-			    Définir résultat à 0
-			    Définir puissance à 0
+		\begin{algorithmic}[1]
+			\Function{ConvertirBase4enBase10}{nombreBase4}
+			\State résultat $\leftarrow$ 0
+			\State puissance $\leftarrow$ 0
+			\ForAll{chiffre de nombreBase4, de droite à gauche}
 			
-			    Pour chaque chiffre du nombreBase4 de droite à gauche:
-			        résultat = résultat + chiffre * (4 ** puissance)
-			        Augmenter puissance de 1
+			\Comment{On parcourt tous les chiffres constitutifs du nombre en entrée}
 			
-			    Retourner résultat
-			Fin Fonction
-		\end{verbatim}
+			\State résultat $\leftarrow$ résultat + chiffre$\times 4^{puissance}$
+			\State puissance $\leftarrow$ puissance + 1
+			\EndFor
+			\State\Return{résultat}
+			\EndFunction
+		\end{algorithmic}
+
+%		\begin{verbatim}
+%			Fonction ConvertirBase4EnBase10(nombreBase4)
+%			    Définir résultat à 0
+%			    Définir puissance à 0
+%			
+%			    Pour chaque chiffre du nombreBase4 de droite à gauche:
+%			        résultat = résultat + chiffre * (4 ** puissance)
+%			        Augmenter puissance de 1
+%			
+%			    Retourner résultat
+%			Fin Fonction
+%		\end{verbatim}
 	\end{MaReponse}
 	
+		
 	Bon -- abandonnons le vocabulaire Shadok à présent et revenons au cours: on parle évidemment ici d'une \textbf{base 4} et notre méthode générale peut s'écrire sous la forme d'une suite de puissances de 4.
 	
 	Pour un nombre N noté en base 4 \( a_4 \)\( a_3 \)\( a_2 \)\( a_1 \)\( a_0 \), par exemple, on le convertira par la formule:
@@ -808,7 +830,7 @@
 	 \begin{MaReponse}
 		\begin{alphenum}
 			\item $3E6_{16}$: on s'appuie sur le tableau précédent et on traduit symbole par symbole en binaire: $3_{16} = 0011_2$;  $E_{16} = 1110_2$; $6_{16} = 0110_2$. Donc en éliminant les 0 sur la gauche cela donne: $3E6_{16} = 1111100110_2$
-			\item $A420_{16}$ = $1010010000100000_2$
+			\item $A420_{16}$ = $101	0010000100000_2$
 			\item $110100111100_2$: toujours en s'appuyant sur le tableau précédent, on effectue l'opération inverse en découpant le nombre binaire en "tranches" de 4 chiffres, en partant de la droite:
 			\[ \underbrace{1101}_{}\underbrace{0011}_{}\underbrace{1100}_{}\]
 			Puis on convertit un à un ces nombres pour obtenir: $D3C_{16}$
@@ -935,7 +957,7 @@
 	\begin{MaReponse}
 		Sur 8 bits, le nombre maximal que l'on peut coder est $(11111111)_2$ soit, en décimal: $2^0 + 2^1 + 2^2 + 2^4 + 2^5 + 2^6 + 2^7=255$. Cette somme est assez fastidieuse à faire -- une manière plus rapide consiste à observer que, en binaire: 11111111 + 1 = 100000000 (pour vous en convaincre, allez voir la section suivante!), et que $100000000_2 = (2^8)_{10} = 256_{10}$
 		
-		Pour 32 bits, utilisons directement la manière rapide ci-dessus: $2^32=4294967296$; donc le nombre maximal que l'on peut coder sur 4 octets est 4294967291.
+		Pour 32 bits, utilisons directement la manière rapide ci-dessus: $2^{32}=4294967296$; donc le nombre maximal que l'on peut coder sur 4 octets est 4294967291.
 	\end{MaReponse}
 	 
 	 \begin{MonExo}[et à l'inverse...]
@@ -1543,6 +1565,16 @@
 		\end{alphenum}
 	\end{MaReponse}
 	
+	\begin{MonExo}[C'est un peu fastidieux... et si on codait ça?]
+		\begin{alphenum}
+			\item Sur papier, écrire en pseudo-code l'algorithme d'une fonction qui prend en entrée une liste de 32 éléments représentant les 32 bits encodant un nombre flottant et qui calcule puis renvoie la valeur décimal du réel correspondant.
+			\item Dans IDLE, écrire cette fonction en Python. Si vous avez terminé, rendez cette fonction robuste -- qu'elle sache gérer des listes n'ayant pas le bon nombre d'éléments, ou ne contenant pas que des 0 ou des 1...
+		\end{alphenum}
+	\end{MonExo}
+	\begin{MaReponse}
+		\hl{A REDIGER!}
+	\end{MaReponse}
+	
 	\subsection{Alors d'où viennent les erreurs qu'on a vues?}
 	Le problème est qu'il n'est en général pas possible de coder \textit{exactement} un nombre réel avec ce système -- sauf si, par chance, il peut se décomposer exactement de cette manière. L'ordinateur en est donc réduit à stocker des approximations des valeurs qu'on lui donne.
 	
@@ -1565,6 +1597,72 @@
 		\item Le fait \textbf{qu'il ne faut jamais} effectuer des tests d'égalité entre nombres flottants dans un programme (on l'a vu en début de chapitre, et on en avait vu également des exemples dans le cours sur Python);
 		\item Le fait que dans des contextes où les besoins de précision sont hors du commun (dans certaines disciplines scientifiques par exemple), il sera nécessaire de trouver des moyens de contourner ces difficultés pour éviter de générer de réelles erreurs.
 	\end{itemize}
+	
+	\pagebreak
+	
+	\section{Représentation des caractères}
+	
+	\begin{MonAmp}{ATTENTION}
+		Comme le chapitre précédent, celui-ci a pour vocation d'être une introduction au codage des caractères -- vous devez en comprendre les principes et les mécanismes, mais \textbf{\uline{il ne vous sera pas demandé de connaître précisément le normes d'encodage (ASCII et Unicode) -- c'est hors programme}}. 	\end{MonAmp}
+	
+	\subsection{Code ASCII}
+	
+	Les ordinateurs ne stockent que des 0 et des 1; on sait assez simplement établir une correspondance entre un nombre décimal et sa traduction en binaire. Partant de ces deux constats, on a initialement établi une correspondance unique entre chaque caractère et un entier naturel -- on appelle cette démarche le \textit{charset}.
+	
+	Ceci a donné naissance en 1963 au code ASCII (\textit{American Standard Code for Information Interchange}), toujours en usage, et permettant d'encoder 128 caractères: 33 caractères dits de contrôle (codes 0 à 32 et code 127 -- ils incluent des caractères "blancs" comme les espaces ou les tabulations, des suppressions, des retours à la ligne, des marqueurs de début et de fin de texte...), 94 caractères standards (codes 33 à 126) comportant les 26 lettres minuscules, les 26 lettres majuscules, les 10 chiffres, et 32 symboles (ponctuation, symboles arithmétiques...).
+	
+	Le tableau ci-dessous vous présente tout ceci exhaustivement (pour votre culture générale -- il est évident \textbf{que ce n'est pas à connaitre par cœur!}).
+	
+	\begin{tabular}{|c|l||c|l||c|l||c|l|}
+		\hline
+		Code & Caractères & Code & Caractères & Code & Caractères & Code & Caractères \\
+		\hline
+		0 & NUL & 32 & Espace & 64 & @ & 96 & ` \\
+		1 & SOH & 33 & ! & 65 & A & 97 & a \\
+		2 & STX & 34 & " & 66 & B & 98 & b \\
+		3 & ETX & 35 & \# & 67 & C & 99 & c \\
+		4 & EOT & 36 & \$ & 68 & D & 100 & d \\
+		5 & ENQ & 37 & \% & 69 & E & 101 & e \\
+		6 & ACK & 38 & \& & 70 & F & 102 & f \\
+		7 & BEL & 39 & ' & 71 & G & 103 & g \\
+		8 & BS & 40 & ( & 72 & H & 104 & h \\
+		9 & HT & 41 & ) & 73 & I & 105 & i \\
+		10 & LF & 42 & * & 74 & J & 106 & j \\
+		11 & VT & 43 & + & 75 & K & 107 & k \\
+		12 & FF & 44 & , & 76 & L & 108 & l \\
+		13 & CR & 45 & - & 77 & M & 109 & m \\
+		14 & SO & 46 & . & 78 & N & 110 & n \\
+		15 & SI & 47 & / & 79 & O & 111 & o \\
+		16 & DLE & 48 & 0 & 80 & P & 112 & p \\
+		17 & DC1 & 49 & 1 & 81 & Q & 113 & q \\
+		18 & DC2 & 50 & 2 & 82 & R & 114 & r \\
+		19 & DC3 & 51 & 3 & 83 & S & 115 & s \\
+		20 & DC4 & 52 & 4 & 84 & T & 116 & t \\
+		21 & NAK & 53 & 5 & 85 & U & 117 & u \\
+		22 & SYN & 54 & 6 & 86 & V & 118 & v \\
+		23 & ETB & 55 & 7 & 87 & W & 119 & w \\
+		24 & CAN & 56 & 8 & 88 & X & 120 & x \\
+		25 & EM & 57 & 9 & 89 & Y & 121 & y \\
+		26 & SUB & 58 & : & 90 & Z & 122 & z \\
+		27 & ESC & 59 & ; & 91 & [ & 123 & \{ \\
+		28 & FS & 60 & < & 92 & \textbackslash & 124 & | \\
+		29 & GS & 61 & = & 93 & ] & 125 & \} \\
+		30 & RS & 62 & > & 94 & \textasciicircum & 126 & \textasciitilde \\
+		31 & US & 63 & ? & 95 & \_ & 127 & DEL \\
+		\hline
+	\end{tabular}
+	
+	\MaQuestion{A première vue, qu'est-ce qui ne va pas ce tableau -- quel(s) problème(s) va-t-on rapidement rencontrer?}
+\begin{MaReponse}
+	Il manque énormément de caractères -- et d'autant plus si on n'est pas anglophone! Déjà, pour les francophones, on note qu'il n'y a aucun accent. Mais que devaient penser les Arabes, les Chinois, les Russes...?
+\end{MaReponse}
+
+	\MaQuestion{Sur combien de bits va-t-on encoder ces caractères ASCII?}
+\begin{MaReponse}
+	On compte 128 caractères soit (et ce n'est évidemment pas un hasard) $2^7$. Il serait donc possible de n'utiliser que 7 bits pour coder les caractères ASCII.
+	
+	En pratique, on a toujours codé ces caractères sur un octet (donc 8 bits) en utilisant à l'origine le bit de poids fort comme un mécanisme de contrôle d'erreur (qui étaient fréquentes avec les premières mémoires électroniques). Le principe était d'en faire un bit de parité: il était positionné à 0 ou à 1 de manière à ce que tous les caractères aient toujours un nombre pair de bits à 1; et si ce n'était pas le cas, une erreur était détectée.
+\end{MaReponse}
 	
 \end{document}
 %Eléments manquants:
