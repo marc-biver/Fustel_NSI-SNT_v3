@@ -1,3 +1,7 @@
+# Liste des fichiers de l'arborescence a faire ignorer par git:
+# les fichiers caches de travail Mac (.DS_Store) et les fichiers de
+# travail de compilation Latex (je ne veux que les sources sur git)
+
 .DS_Store
 
 # Ignorer tous les fichiers de travail Latex
