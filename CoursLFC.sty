@@ -1,0 +1,166 @@
+% Package de tous les éléments communs à tous mes cours au Lycée Fustel de Coulanges
+% en 2023-24
+\ProvidesPackage{CoursLFC}[2023/12/02 Tous elements utilises pour cours NSI Fustel]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Eléments communs de la page de titre
+\newcommand{\etabshort}{Lycée Fustel de Coulanges}
+\newcommand{\etablissement}{\etabshort, Massy}
+\newcommand{\auteur}{Marc Biver}
+\newcommand{\resumecours}{\textit{Ce document reprend les notions abordées en cours et pratiquées en TP / TD; il inclut la totalité de ce qui a été diffusé en classe sur ce thème. Si vous avez des questions à son propos n'hésitez pas à me contacter par le biais de la messagerie de l'ENT.
+}}
+\newcommand{\anneescol}{2023-24}
+
+% Language setting
+\RequirePackage[french]{babel}
+\RequirePackage[T1]{fontenc}
+
+% Rustine pourrie parce que je n'arrive pas à lui faire gérer les césures tout seul
+\babelhyphenation
+{
+	Wal-hal-la
+	Dar-bhan-ga
+	s'oc-cu-pe
+	rem-plis-sage
+	anti-constitution-nellement
+	uni-dimen-sion-nel
+	mathé-ma-tiques
+	mathé-ma-tique
+	inter-acti-vement
+	acces-sibles
+	acces-sible
+	embran-che-ment
+	embran-che-ments
+} 
+
+% Set page size and margins & espace inter-paragraphes
+\RequirePackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\RequirePackage{amsmath} % Pour les formules mathématiques - pas sûr qu'on sen serve.
+\RequirePackage{amsfonts}
+\RequirePackage{graphicx}
+\graphicspath{{_img/}} % Là où j'ai stocké toutes mes images
+\RequirePackage[colorlinks=true, allcolors=blue]{hyperref} % Pour les liens dans la ToC
+\RequirePackage{fontawesome} % Pour le logo ampoule au départ
+\RequirePackage[most]{tcolorbox} % Pour les boîtes "activités"
+\RequirePackage{xcolor} % Pour l'environnement d'exos
+\RequirePackage{wrapfig} % comme son nom l'indique
+\RequirePackage{parskip} % Séparation verticale entre les paragraphes au lieu d'indentation
+%\renewcommand{\baselinestretch}{10} % Si on voulait des interlignes de motherfucker
+\RequirePackage{hyperref} % liens hypertexte
+\RequirePackage{listings}
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\RequirePackage{minted}
+\RequirePackage{array}
+\RequirePackage{ulem} % pour strikethrough sout
+\RequirePackage{comment} % Curieusement, seule solution que j'ai réussi à implémenter pour du texte conditionnel.
+\RequirePackage{mdframed} % text box des réponses aux questions rhétoriques
+\RequirePackage{enumitem} % pour des listes alphanum et pas numeriques
+\RequirePackage{soul} % pour faire du surlignage
+\RequirePackage{dsfont} % pour faire du pseudo-code
+\RequirePackage{mathtools} % pour faire du pseudo-code
+\RequirePackage{algorithm} % pour faire du pseudo-code
+\RequirePackage{algorithmicx} % pour faire du pseudo-code
+\RequirePackage{algpseudocode} % pour faire du pseudo-code
+
+% Traduction des commandes pour le package algorithmic
+\renewcommand{\algorithmicfor}{\textbf{pour}}
+\renewcommand{\algorithmicif}{\textbf{si}}
+\renewcommand{\algorithmicthen}{\textbf{alors}}
+\renewcommand{\algorithmicelse}{\textbf{sinon}}
+\renewcommand{\algorithmicfunction}{\textbf{fonction}}
+\renewcommand{\algorithmicforall}{\textbf{pour tout}}
+\renewcommand{\algorithmicdo}{\textbf{faire}}
+\renewcommand{\algorithmicwhile}{\textbf{tant que}}
+\renewcommand{\algorithmicend}{\textbf{fin}}
+\renewcommand{\algorithmicreturn}{\textbf{retourner}}
+\renewcommand{\algorithmicrequire}{\textbf{Entrée:}}
+\renewcommand{\algorithmicensure}{\textbf{Sortie:}} % Détournement du Ensure, mais ce n'est pas très grave...
+
+
+% Environnement d'exos
+\definecolor{myblue}{rgb}{0.12, 0.3, 0.84} % Adjust the rgb values as needed
+\definecolor{lightblue}{rgb}{0.8, 0.9, 1} % Light blue for the background
+\newcounter{monexo}
+\setcounter{monexo}{1}
+\newtcolorbox{MonExo}[1][]{
+	colback=white,
+	colbacktitle=lightblue,
+	colframe=myblue,
+	fonttitle=\bfseries,
+	coltitle=black,
+	colbacktitle=lightblue,
+	title=Exercice \themonexo: #1,
+	enhanced,
+	sharp corners,
+	boxrule=0.2mm,
+	toprule=0.2mm,
+	bottomrule=0.2mm,
+	titlerule=0.2mm,
+	arc=0mm,
+	top=1mm,
+	bottom=1mm,
+	left=2mm,
+	right=2mm,
+	before=\refstepcounter{monexo}
+}
+
+
+% Style pour mes questions rhétoriques
+\newcommand{\MaQuestion}[1]{\par\vspace{0.3\baselineskip}\noindent$\rightarrow$\textit{#1}?\par\vspace{0.3\baselineskip}}
+
+% Style pour les réponses (aux questions rhétoriques et aux exos - enfin une solution perenne)
+% Definition du booleen d'affichage - fait en tete de preambule
+%\newif\ifDispRep
+%\DispReptrue  % Show the text
+%%\DispRepfalse % Hide the text
+
+% Définition (simplifiee) de leur textbox
+\definecolor{lightgray}{gray}{0.9}
+\newmdenv[linecolor=black, backgroundcolor=lightgray, innerleftmargin=10pt, innerrightmargin=10pt, innertopmargin=10pt, innerbottommargin=10pt]{greyedtextbox}
+% OLD - je garde pour me souvenir des parametres dispos
+%\newmdenv[
+%linecolor=black,
+%backgroundcolor=lightgray,
+%skipabove=\baselineskip,
+%skipbelow=\baselineskip,
+%innertopmargin=3pt,
+%innerbottommargin=3pt,
+%innerleftmargin=5pt,
+%innerrightmargin=5pt,
+%leftmargin=0cm,
+%rightmargin=0cm,
+%linewidth=1pt
+%]{questionbox}
+% Et enfin definition de l'environnement conditionnel
+\ifDispRep
+\newenvironment{MaReponse}
+{\begin{greyedtextbox}\itshape} % Begin greyed textbox with italics
+	{\end{greyedtextbox}}            % End greyed textbox
+\else
+\excludecomment{MaReponse}
+\fi
+
+% Enumeration alphanumerique (qui utilise le package enumitem)
+\newenvironment{alphenum}
+{\begin{enumerate}[label=\alph*.]}
+	{\end{enumerate}}
+
+% Format pour mes conseils, alertes, etc.
+\newtcolorbox{MonAmp}[1]{
+	colback=white,      % Background color of the box
+	colframe=black,     % Frame color
+	coltitle=black,     % Title text color
+	colbacktitle=white, % Fonds de la partie titre à blanc
+	title={\LARGE{\faLightbulbO} \normalsize{\hspace{0.5cm}\textbf{#1:}}}, % Title format
+	boxrule=0.0mm,      % Frame thickness
+	arc=0mm,            % Corner radius of the frame
+	top=1mm,            % Space between the frame and the content at the top
+	bottom=1mm,         % Space between the frame and the content at the bottom
+	left=2mm,           % Space between the frame and the content on the left
+	right=2mm           % Space between the frame and the content on the right
+}

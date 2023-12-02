@@ -2,163 +2,21 @@
 % Le truc au-dessus pour avoir l'option shell-escape qui permet de faire du minted.
 \documentclass[12pt]{article}
 
-% Les variables globales qu'on peut ou non vouloir modifier
-% Version du document
-\newcommand{\versiondoc}{v0.2}
 % Affichage ou non des reponses aux questions & exercices
 \newif\ifDispRep
-\DispReptrue  % Show the text
-%\DispRepfalse % Hide the text
-
-
-% Language setting
-\usepackage[french]{babel}
-\usepackage[T1]{fontenc}
-
-% Rustine pourrie parce que je n'arrive pas à lui faire gérer les césures tout seul
-\babelhyphenation
-{
-	Wal-hal-la
-	Dar-bhan-ga
-	s'oc-cu-pe
-	rem-plis-sage
-	anti-constitution-nellement
-	uni-dimen-sion-nel
-	mathé-ma-tiques
-	mathé-ma-tique
-	inter-acti-vement
-	acces-sibles
-	acces-sible
-	embran-che-ment
-	embran-che-ments
-} 
-
-% Set page size and margins & espace inter-paragraphes
-\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
-
-% Useful packages
-\usepackage{amsmath} % Pour les formules mathématiques - pas sûr qu'on sen serve.
-\usepackage{amsfonts}
-\usepackage{graphicx}
-\graphicspath{{_img/}} % Là où j'ai stocké toutes mes images
-\usepackage[colorlinks=true, allcolors=blue]{hyperref} % Pour les liens dans la ToC
-\usepackage{fontawesome} % Pour le logo ampoule au départ
-\usepackage[most]{tcolorbox} % Pour les boîtes "activités"
-\usepackage{xcolor} % Pour l'environnement d'exos
-\usepackage{wrapfig} % comme son nom l'indique
-\usepackage{parskip} % Séparation verticale entre les paragraphes au lieu d'indentation
-%\renewcommand{\baselinestretch}{10} % Si on voulait des interlignes de motherfucker
-\usepackage{hyperref} % liens hypertexte
-\usepackage{listings}
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\usepackage{minted}
-\usepackage{array}
-\usepackage{ulem} % pour strikethrough sout
-\usepackage{comment} % Curieusement, seule solution que j'ai réussi à implémenter pour du texte conditionnel.
-\usepackage{mdframed} % text box des réponses aux questions rhétoriques
-\usepackage{enumitem} % pour des listes alphanum et pas numeriques
-\usepackage{soul} % pour faire du surlignage
-\usepackage{dsfont} % pour faire du pseudo-code
-\usepackage{mathtools} % pour faire du pseudo-code
-\usepackage{algorithm} % pour faire du pseudo-code
-\usepackage{algorithmicx} % pour faire du pseudo-code
-\usepackage{algpseudocode} % pour faire du pseudo-code
-
-% Environnement d'exos
-\definecolor{myblue}{rgb}{0.12, 0.3, 0.84} % Adjust the rgb values as needed
-\definecolor{lightblue}{rgb}{0.8, 0.9, 1} % Light blue for the background
-\newcounter{monexo}
-\setcounter{monexo}{1}
-\newtcolorbox{MonExo}[1][]{
-	colback=white,
-	colbacktitle=lightblue,
-	colframe=myblue,
-	fonttitle=\bfseries,
-	coltitle=black,
-	colbacktitle=lightblue,
-	title=Exercice \themonexo: #1,
-	enhanced,
-	sharp corners,
-	boxrule=0.2mm,
-	toprule=0.2mm,
-	bottomrule=0.2mm,
-	titlerule=0.2mm,
-	arc=0mm,
-	top=1mm,
-	bottom=1mm,
-	left=2mm,
-	right=2mm,
-	before=\refstepcounter{monexo}
-}
-
-
-% Style pour mes questions rhétoriques
-\newcommand{\MaQuestion}[1]{\par\vspace{0.3\baselineskip}\noindent$\rightarrow$\textit{#1}?\par\vspace{0.3\baselineskip}}
-
-% Style pour les réponses (aux questions rhétoriques et aux exos - enfin une solution perenne)
-% Definition du booleen d'affichage - fait en tete de preambule
-%\newif\ifDispRep
 %\DispReptrue  % Show the text
-%%\DispRepfalse % Hide the text
+\DispRepfalse % Hide the text
 
-% Définition (simplifiee) de leur textbox
-\definecolor{lightgray}{gray}{0.9}
-\newmdenv[linecolor=black, backgroundcolor=lightgray, innerleftmargin=10pt, innerrightmargin=10pt, innertopmargin=10pt, innerbottommargin=10pt]{greyedtextbox}
-% OLD - je garde pour me souvenir des parametres dispos
-%\newmdenv[
-%linecolor=black,
-%backgroundcolor=lightgray,
-%skipabove=\baselineskip,
-%skipbelow=\baselineskip,
-%innertopmargin=3pt,
-%innerbottommargin=3pt,
-%innerleftmargin=5pt,
-%innerrightmargin=5pt,
-%leftmargin=0cm,
-%rightmargin=0cm,
-%linewidth=1pt
-%]{questionbox}
-% Et enfin definition de l'environnement conditionnel
-\ifDispRep
-	\newenvironment{MaReponse}
-		{\begin{greyedtextbox}\itshape} % Begin greyed textbox with italics
-		{\end{greyedtextbox}}            % End greyed textbox
-\else
-	\excludecomment{MaReponse}
-\fi
+% Version du document
+\newcommand{\versiondoc}{v0.2}
 
-% Enumeration alphanumerique (qui utilise le package enumitem)
-\newenvironment{alphenum}
-{\begin{enumerate}[label=\alph*.]}
-	{\end{enumerate}}
+% Incorporation tous éléments de préambule communs à tous mes cours
+\usepackage{../../../CoursLFC}
 
-% Format pour mes conseils, alertes, etc.
-\newtcolorbox{MonAmp}[1]{
-	colback=white,      % Background color of the box
-	colframe=black,     % Frame color
-	coltitle=black,     % Title text color
-	colbacktitle=white, % Fonds de la partie titre à blanc
-	title={\LARGE{\faLightbulbO} \normalsize{\hspace{0.5cm}\textbf{#1:}}}, % Title format
-	boxrule=0.0mm,      % Frame thickness
-	arc=0mm,            % Corner radius of the frame
-	top=1mm,            % Space between the frame and the content at the top
-	bottom=1mm,         % Space between the frame and the content at the bottom
-	left=2mm,           % Space between the frame and the content on the left
-	right=2mm           % Space between the frame and the content on the right
-}
-
-
-% Eléments de l'en-tête et de la page de garde
+% Eléments de l'en-tête et de la page de garde spécifiques à ce doc
 \newcommand{\classe}{1\textsuperscript{ère} NSI}
 \newcommand{\themecours}{Thème 4: Représentation des données}
-\newcommand{\etabshort}{Lycée Fustel de Coulanges}
-\newcommand{\etablissement}{\etabshort, Massy}
-\newcommand{\auteur}{Marc Biver}
 \newcommand{\datedoc}{novembre 2023}
-\newcommand{\anneescol}{2023-24}
-\newcommand{\resumecours}{\textit{Ce document reprend les notions abordées en cours et pratiquées en TP / TD; il inclut la totalité de ce qui a été diffusé en classe sur ce thème. Si vous avez des questions à son propos n'hésitez pas à me contacter par le biais de la messagerie de l'ENT.
-}}
 
 % Page de garde mise en page
 \title
@@ -366,32 +224,21 @@
 		En pseudo-code, on pourrait écrire:
 		
 		\begin{algorithmic}[1]
-			\Function{ConvertirBase4enBase10}{nombreBase4}
-			\State résultat $\leftarrow$ 0
-			\State puissance $\leftarrow$ 0
-			\ForAll{chiffre de nombreBase4, de droite à gauche}
+			\Require{$nbB4 \in \mathds{N}$, exprimé en base 4}
+			\Ensure{$resB10 \in \mathds{N}$, exprimé en base 10}
+			\Function{ConvertirBase4enBase10}{nbB4}
+			\State resB10 $\leftarrow$ 0
+			\State puiss $\leftarrow$ 0
+			\ForAll{chiffre de nbB4}
+
+			\Comment{Parcours des chiffres \textbf{de droite à gauche}}
 			
-			\Comment{On parcourt tous les chiffres constitutifs du nombre en entrée}
-			
-			\State résultat $\leftarrow$ résultat + chiffre$\times 4^{puissance}$
-			\State puissance $\leftarrow$ puissance + 1
+			\State resB10 $\leftarrow$ resB10 + chiffre$\times 4^{puiss}$
+			\State puiss $\leftarrow$ puiss + 1
 			\EndFor
-			\State\Return{résultat}
+			\State\Return{resB10}
 			\EndFunction
 		\end{algorithmic}
-
-%		\begin{verbatim}
-%			Fonction ConvertirBase4EnBase10(nombreBase4)
-%			    Définir résultat à 0
-%			    Définir puissance à 0
-%			
-%			    Pour chaque chiffre du nombreBase4 de droite à gauche:
-%			        résultat = résultat + chiffre * (4 ** puissance)
-%			        Augmenter puissance de 1
-%			
-%			    Retourner résultat
-%			Fin Fonction
-%		\end{verbatim}
 	\end{MaReponse}
 	
 		
