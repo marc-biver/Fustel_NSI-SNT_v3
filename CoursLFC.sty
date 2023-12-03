@@ -164,3 +164,13 @@
 	left=2mm,           % Space between the frame and the content on the left
 	right=2mm           % Space between the frame and the content on the right
 }
+
+% Format d'inclusion de code Python
+\newcommand{\MonPython}[1]{
+		\inputminted[
+		bgcolor=gray!15,
+		fontsize=\footnotesize,
+		linenos=true,
+		breaklines, % Allows line breaks
+		]{python}{_code/#1}
+}

@@ -4,8 +4,8 @@
 
 % Affichage ou non des reponses aux questions & exercices
 \newif\ifDispRep
-%\DispReptrue  % Show the text
-\DispRepfalse % Hide the text
+\DispReptrue  % Show the text
+%\DispRepfalse % Hide the text
 
 % Version du document
 \newcommand{\versiondoc}{v0.2}
@@ -609,17 +609,7 @@
 		Il est essentiel de savoir effectuer ces conversions "à la main" comme on vient de le faire -- mais pour de grands nombres, ça prend du temps, et Python vous offre une solution beaucoup plus rapide:
 	\end{MonAmp}
 	
-	\begin{listing}[H]
-		\inputminted
-		[
-		bgcolor = gray!15, % pas essentiel
-		fontsize = \footnotesize,
-		linenos = true % numéros de ligne
-		]
-		{python}
-		{_code/001_ConvBinaire.py}
-	\end{listing}
-	
+	\MonPython{001_ConvBinaire.py}	
 	Donc ca, c'est comment l'ordinateur stocke et manipule les nombres -- c'est pratique pour lui, mais un peu complique pour nous: par exemple, la population de la France est d'environ 64,8 millions de personnes. En binaire ca nous donne: 11110111001100010100000000... Même celle de Massy, qui n'est que de 50.506 habitants, donne 1100010101001010. Vous trouvez ca lisible, vous?
 	
 	\subsection{La base hexadécimale, ou base 16}
@@ -873,18 +863,8 @@
 	\begin{MonExo}[bonne nouvelle! On passe (brièvement...) sur ordinateur!]
 		Créez un script IDLE dans lequel vous mettez le code suivant et exécutez-le:
 		
-		\begin{listing}[H]
-			\inputminted
-			[
-			bgcolor = gray!15, % pas essentiel
-			fontsize = \footnotesize,
-			linenos = true % numéros de ligne
-			]
-			{python}
-			{_code/002_DepCap.py}
-		\end{listing}
-		
-		
+		\MonPython{002_DepCap.py}		
+
 		Que remarquez-vous après avoir exécuté ce code? Pouvez-vous expliquer pourquoi cela se produit en utilisant les concepts abordés dans ce cours?
 	\end{MonExo}
 	\begin{MaReponse}
@@ -966,16 +946,7 @@
 		\end{alphenum}
 	\end{MonExo}
 	\begin{MaReponse}
-		\begin{listing}[H]
-			\inputminted
-			[
-			bgcolor = gray!15, % pas essentiel
-			fontsize = \footnotesize,
-			linenos = true % numéros de ligne
-			]
-			{python}
-			{_code/003_Comp1.py}
-		\end{listing}
+		\MonPython{003_Comp1.py}
 	\end{MaReponse}
 	
 	\subsubsection*{Complément à 2}
@@ -1374,7 +1345,7 @@
 			\item
 			\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} % One 'c' column type for each letter in the word
 				\hline
-				1&0&1&1&1&1&1&1&0&1&1&1&1&0&0&0 \\
+				1&0&1&1&1&1&1&0&1&1&1&1&1&0&0&0 \\
 				\hline
 				0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0 \\
 				\hline
@@ -1383,7 +1354,7 @@
 			Isolons tout d'abord les différentes composantes de ce mot binaire:
 			\begin{itemize}
 				\item Signe: 1
-				\item Exposant: 01111110
+				\item Exposant: 01111101
 				\item Mantisse: 11110000000000000000000
 			\end{itemize}
 			Comme ci-dessus, calculons à présent les valeurs de ces différentes composantes:
@@ -1392,8 +1363,8 @@
 				\text{signe} & \text{=} & -1^1\\
 				& \text{=} & -1\\
 				\\
-				\text{exposant} & \text{=} & 2^6 + 2^5 + 2^4 + 2^3 + 2^2 + 2^1 \\
-				& \text{=} & 64 + 32 + 16 + 8 + 4 + 2\\
+				\text{exposant} & \text{=} & 2^6 + 2^5 + 2^4 + 2^3 + 2^2 + 2^0 \\
+				& \text{=} & 64 + 32 + 16 + 8 + 4 + 1\\
 				& \text{=} & 125\\
 				\\
 				\text{mantisse} & \text{=} & 2^{-1} + 2^{-2} + 2^{-3} + 2^{-4}\\
@@ -1406,7 +1377,7 @@
 				M& \text{=} & -1 \times (1+0,9375) \times 2^{(125 - 127)}\\
 				& \text{=} & -1,9375 \times 2^{-2}\\
 				& \text{=} & -1,9375 \times 0,25\\
-				& \text{=} & 0,484375\
+				& \text{=} & -0,484375\
 			\end{array}
 			\]
 		\end{alphenum}
@@ -1419,7 +1390,46 @@
 		\end{alphenum}
 	\end{MonExo}
 	\begin{MaReponse}
-		\hl{A REDIGER!}
+		\begin{algorithmic}[1]
+			\Require{$Lst$, liste de 32 bits ($\in \{0,1\}$)}
+			\Ensure{$res \in \mathds{R}$}
+			\Function{ConvBinEnReel}{Lst}
+			\State exposant $\leftarrow$ 0
+			\State mantisse $\leftarrow$ 0.0
+			\Comment{C'est un nb réel $\in [0,1[}$
+			\\
+			\State signe $\leftarrow$ $-1^{Lst([0])}$
+			\Comment{Calcul signe sur le 1\textsuperscript{er}  elt de la liste d'entrée}
+			\\
+			\For{$i=1$ à $8$}
+			\Comment{Calcul exposant sur les 8 elts suivants}
+			\State{puiss $\leftarrow 8-i$}
+			\Comment{indice 1  $\leftrightarrow 2^7$; $i=2 \leftrightarrow 2^6$; ...;  $i=8 \leftrightarrow 2^0$}
+			\If{$Lst[i]=1$}
+			\State{exposant $\leftarrow exposant + 2^{puiss}$}
+			\EndIf
+			\EndFor
+			\State{exposant $\leftarrow exposant -127$}
+			\Comment{Application du décalage sur 32 bits}
+			\\
+			\For{$i=9$ à $31$}
+			\Comment{Calcul mantisse sur les 23 derniers elts}
+			\State{puiss $\leftarrow 8-i$}
+			\Comment{indice 9  $\leftrightarrow 2^{-1}$; $i=10 \leftrightarrow 2^{-2}$; ...;  $i=31 \leftrightarrow 2^{-23}$}
+			\If{$Lst[i]=1$}
+			\State{mantisse $\leftarrow mantisse + 2^{puiss}$}
+			\EndIf
+			\EndFor
+			\State{mantisse $\leftarrow 1 + mantisse$}
+			\Comment{Application du "(1+m)" de la formule}
+			\\
+			\State{resultat $\leftarrow signe \times mantisse \times exposant$}
+			\\
+			\State\Return{resultat}
+			\EndFunction
+		\end{algorithmic}
+		
+		\MonPython{004_ConvBin2Float.py}
 	\end{MaReponse}
 	
 	\subsection{Alors d'où viennent les erreurs qu'on a vues?}
