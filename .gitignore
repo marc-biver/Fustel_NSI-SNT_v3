@@ -5,11 +5,11 @@
 .DS_Store
 
 # Ignorer tous les fichiers de travail Latex
-**/5.Src_Latex/*.gz
-**/5.Src_Latex/*.aux
-**/5.Src_Latex/*.log
-**/5.Src_Latex/*minted*/
-**/5.Src_Latex/*.pdf
-**/5.Src_Latex/*.out
-**/5.Src_Latex/*.toc
-**/5.Src_Latex/*.cut
+**/*Src_Latex/*.gz
+**/*Src_Latex/*.aux
+**/*Src_Latex/*.log
+**/*Src_Latex/*minted*/
+**/*Src_Latex/*.pdf
+**/*Src_Latex/*.out
+**/*Src_Latex/*.toc
+**/*Src_Latex/*.cut
