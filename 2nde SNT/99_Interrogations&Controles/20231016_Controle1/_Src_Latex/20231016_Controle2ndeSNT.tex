@@ -1,0 +1,178 @@
+\documentclass[11pt,a4paper]{exam}
+%\printanswers % pour imprimer les réponses (corrigé)
+\noprintanswers % Pour ne pas imprimer les réponses (énoncé)
+\addpoints % Pour compter les points
+\usepackage[utf8]{inputenc}
+
+% Package booléen pour pouvoir jouer sur 2nde8 / 2nde9
+% MAIS CA MARCHE PAS - AR
+%\usepackage{etoolbox}
+%\newbool{huit}
+%\booltrue{huit}
+%\ifbool{huit}
+%\newcommand{\class}{SNT 2\textsuperscript{nde}8}
+%\else
+%\newcommand{\class}{SNT 2\textsuperscript{nde}9}
+%\fi
+
+
+%\usepackage[margin=1 in]{geometry}
+\usepackage[a4paper,top=3.2cm,bottom=3.2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{dashundergaps}
+
+\newcommand{\examnum}{Contrôle majeur \#1}
+\newcommand{\class}{SNT 2\textsuperscript{nde}8}
+\newcommand{\examdate}{16/10/2023}
+\newcommand{\timelimit}{45 Minutes}
+\newcommand{\lycee}{Lycée Fustel de Coulanges}
+
+\pagestyle{head}
+\firstpageheader{}{}{}
+\runningheader{\class}{\examnum\ - Page \thepage\ / \numpages}{\examdate}
+\runningheadrule
+
+
+\begin{document}
+	
+    \noindent
+    \begin{spacing}{1,5}
+    \noindent
+    \begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} l @{\extracolsep{6pt}} l}
+        \textbf{\class} & \textbf{Nom:} & \makebox[3in]{\hrulefill}\\
+        \textbf{\lycee} &&\\
+        \textbf{\examnum, \examdate} &&\\
+        \textbf{Durée: \timelimit} &&\\
+    \end{tabular*}\\
+    \end{spacing}
+
+    \noindent
+    \rule[1ex]{\textwidth}{2pt}
+
+    \noindent
+    \begin{spacing}{1,3}
+    	\noindent
+	    Ce contrôle comporte \textbf{\numquestions\ parties}; il sera noté sur \textbf{\numpoints\ points}.\\
+    	Les réponses aux QCM sont à porter sur cette feuille (qui est donc à rendre, \uline{avec votre nom ci-dessus}); les réponses écrites sont à rédiger sur une copie séparée \uline{comportant votre nom} que vous rendrez également.
+    \end{spacing}
+    \noindent
+    \rule{\linewidth}{2pt}
+
+    \begin{spacing}{1,25}
+        \begin{questions} % DEBUT DE L'EXAMEN
+        	\noaddpoints
+        	\question[9] \textbf{\underline{Données structurées \& données personnelles}}
+        	\begin{parts}
+        		\noaddpoints
+        		\part{\underline{QCM --- cochez ci-dessous la ou les cases correctes}}
+        		\addpoints
+        		\begin{subparts}
+        			\subpart[1]Quelle est la meilleure description des données structurées?
+        			\begin{checkboxes}
+	        			\choice Des données présentées de manière aléatoire sans format spécifique.
+	        			\choice Des informations sous forme d'images ou de vidéos.
+	        			\correctchoice Des données organisées de manière ordonnée, souvent dans des tableaux.
+	        			\choice Des informations basées uniquement sur des opinions et non des faits.
+        			\end{checkboxes}
+        			\subpart[1]Lesquelles des options suivantes sont considérées comme des données personnelles d'une personne "X"?
+        			\begin{checkboxes}
+        				\choice La couleur préférée de "X".
+        				\correctchoice L'adresse e-mail de "X".
+        				\choice Le nombre de pages du livre préféré de "X".
+        				\correctchoice  Le nom complet de "X".
+        			\end{checkboxes}
+        			\subpart[1] Quel est l'objectif principal du RGPD (Règlement général sur la protection des données)?
+        			\begin{checkboxes}
+	        			\correctchoice Protéger la vie privée des citoyens européens.
+	        			\choice Augmenter les revenus des entreprises.
+	        			\choice Punir les entreprises technologiques.
+	        			\choice Encourager le partage de données.
+	        		\end{checkboxes}
+        		\end{subparts}
+        		\noaddpoints
+        		\part{\underline{Réponses écrites --- à rédiger sur une copie séparée}}
+        		\addpoints
+        		\begin{subparts}
+        			\subpart[2]Pour vous, qu'est-ce qu'une "métadonnée" d'un fichier image (en une phrase)?
+        			\begin{solution}
+        				Une métadonnée est une donnée qui décrit ou donne des informations sur une autre donnée --- en l'occurence sur le fichier image, sans que l'information soit visible dans l'image elle-même; il peut s'agir par exemple de la date de prise de vue, du modèle de téléphone ou d'appareil photo utilisé, des coordonnées GPS de l'endroit où la prise de vue a été effectuée...
+        			\end{solution}
+        			\subpart{Quelqu'un veut concevoir une table de données nommée "Élèves" dans laquelle chaque ligne représente un élève du Lycée Fustel de Coulanges. A cette fin il vous pose les questions suivantes:}
+        			\begin{subsubparts}
+        				\subsubpart[2] Quels descripteurs incluriez-vous pour décrire avec précision chaque étudiant (listez-en au moins 5)? \textit{Justifiez brièvement votre choix.}
+        				\begin{solution}
+        					On pouvait envisager de nombreuses solutions incluant: nom, prénom, date de naissance, classe, liste de notes, liste d'options choisies, adresse, adresse mail, numéro de téléphone, noms des parents...
+        				\end{solution}
+        				\subsubpart[2] Parmi les descripteurs que vous avez listés, lequel ou lesquels permettraient d'identifier les étudiants de manière unique? \textit{Justifiez brièvement votre choix.}
+        				\begin{solution}
+        					On pouvait évidemment proposer d'avoir une colonne \{ID\} qui identifierait les étudiants par un numéro unique (comme un ISBN pour un livre par exemple --- voir le cours); faute de ça, on pouvait réfléchir à des solutions réellement uniques (adresse mail ou numéro de téléphone par exemple), ou probablement uniques (\{Nom, Prénom, Date de naissance\} n'a pas de garantie d'être unique --- mais c'est probable néanmoins).
+        				\end{solution}
+        			\end{subsubparts} 
+        			
+        		\end{subparts}
+        		
+        	\end{parts}
+        	
+        	\noaddpoints
+			\question[11] \underline{\textbf{Réseaux \& Internet}}
+			\addpoints
+			\begin{parts}
+				\part{\underline{QCM --- cochez ci-dessous la ou les cases correctes.}}
+				\begin{subparts}
+					\subpart[1]Qu'est-ce qu'une adresse IP?
+					\begin{checkboxes}
+						\correctchoice Un identifiant d'appareil permettant de lui transmettre des données.
+						\choice Une adresse de site web.
+						\correctchoice Une identification numérique pour un appareil sur un réseau.
+						\choice L'adresse fournie par le fabricant d'un ordinateur.
+					\end{checkboxes}
+					\subpart[1]Comment le protocole TCP s'assure-t-il que les données sont bien reçues par l'autre côté?
+					\begin{checkboxes}
+						\choice Il ne s'en assure pas --- il ne vérifie pas du tout.
+						\choice Il demande à l'utilisateur de vérifier manuellement.
+						\choice Il envoie un programme qui effectue la vérification.
+						\correctchoice Il attend un accusé de réception de l'autre côté.
+					\end{checkboxes}
+					\subpart[1] Si vous téléchargez un fichier trop gros pour que TCP puisse le transmettre en une seule fois, que fait-il?
+					\begin{checkboxes}
+						\choice Il annule le transfert puisqu'il ne peut pas le gérer.
+						\choice Il utilise un autre protocole (qu'on a évoqué en cours) --- "UDP".
+						\choice Il le stocke sur Google Drive pour qu'il puisse être téléchargé plus tard.
+						\correctchoice Il le découpe en morceaux et l'envoie paquet par paquet.
+					\end{checkboxes}
+				\end{subparts}
+				\part{\underline{Réponses écrites --- à rédiger sur une copie séparée}}
+				\begin{subparts}
+					\subpart[2]Expliquez brièvement la différence entre adresse MAC et adresse IP.
+					\begin{solution}
+						L'adresse MAC est un identifiant unique attribué à un matériel réseau, comme une carte réseau, pour son identification au sein d'un réseau local. Elle est attribuée par le fabricant du matériel. Elle ne changera pas durant la vie du matériel.
+						L'adresse IP, quant à elle, est en général attribuée à un matériel par un serveur au moment de la connexion à Internet et permet de le localiser et de lui transmettre des données au sein d'un réseau ou sur Internet.
+						Donc: pour un matériel donné, l'adresse MAC ne change jamais, l'adresse IP peut changer; l'adresse MAC demeure quel que soit l'état de l'ordinateur (allumé ou éteint), tandis qu'une adresse IP est libérée lorsque l'ordinateur n'est plus connecté à Internet.
+					\end{solution}
+					\subpart[2] À quoi sert la commande \texttt{ipconfig}?
+					\begin{solution}
+						La commande ipconfig permet de voir les informations de configuration réseau de l'ordinateur, comme son adresse IP, la passerelle à laquelle il est connecté, son adresse MAC...
+					\end{solution}
+					\subpart[2] Quelle pourrait être une cause si vous obtenez un temps de réponse très élevé lors de l'utilisation de la commande \texttt{ping}?
+					\begin{solution}
+						Un temps de réponse élevé avec la commande ping peut indiquer un réseau surchargé; des problèmes de connexion; une grande distance entre l'ordinateur qui envoie la commande et le serveur qu'il cible... Beaucoup de réponses possibles --- n'importe laquelle était acceptée.
+					\end{solution}
+					\subpart[2] On entend souvent l'expression "\textit{architecture client-serveur}"; qu'entend-on par là? Spécifiquement: quel est le rôle du serveur? Du client? Donnez un exemple dans la vie courante.
+					\begin{solution}
+						L'architecture "client-serveur" désigne une manière d'organiser les interactions dans un réseau informatique. Dans ce système:
+						\begin{itemize}
+							\item Le serveur fournit des ressources, des services ou des données aux autres ordinateurs, appelés clients. Son rôle est d'attendre et de répondre aux demandes des clients.
+							\item Le client fait une demande vers un serveur et utilise ses réponses.
+						\end{itemize}
+						Exemple dans la vie courante: lorsqu'on utilise un navigateur web pour visiter un site web, le navigateur est le "client" et le site web est hébergé sur un "serveur" auquel le navigateur envoie sa demande.
+					\end{solution}
+				\end{subparts}				
+			\end{parts}
+
+%    NON INCLUS: Définition d'une passerelle? Ou lier à une question avec une image avec des éléments à nommer sur un réseau? A faire sur Filius / PC?    
+        \end{questions}
+    \end{spacing}
+\end{document}

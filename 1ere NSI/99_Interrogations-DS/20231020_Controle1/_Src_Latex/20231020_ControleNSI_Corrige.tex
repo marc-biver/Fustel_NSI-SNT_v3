@@ -1,0 +1,375 @@
+% !TeX document-id = {63e2cb4c-39e5-4fe5-ae31-d450d2286238}
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+\documentclass[11pt,a4paper]{exam}
+\printanswers % pour imprimer les réponses (corrigé)
+%\noprintanswers % Pour ne pas imprimer les réponses (énoncé)
+\addpoints % Pour compter les points
+\usepackage[utf8]{inputenc}
+\usepackage{minted}
+
+\usepackage{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{dashundergaps}
+%\usepackage[monochrome]{xcolor} % Permet de tout mettre en N&B strict
+\usepackage{xcolor}
+%\selectcolormodel{gray} % Permet de tout mettre en niveaux de gris
+\geometry{left=1.5cm, right=1.5cm, top=2cm, bottom=2cm} % Définition des marges du doc
+
+%\newcommand{\class}{1\textsuperscript{ère} Spé. NSI Gr. 2\textsubscript{A}}
+\newcommand{\class}{1\textsuperscript{ère} Spé. NSI Gr. 2}
+\newcommand{\examnum}{Contrôle \#1}
+\newcommand{\examdate}{20/10/2023}
+\newcommand{\timelimit}{50 Minutes}
+\newcommand{\lycee}{Lycée Fustel de Coulanges}
+
+\pagestyle{head}
+\firstpageheader{}{}{}
+\runningheader{\class}{\examnum\ - Page \thepage\ / \numpages}{\examdate}
+\runningheadrule
+
+
+\begin{document}
+% Espace d'en-tête
+    \noindent
+    \begin{spacing}{1}
+        \noindent
+        \begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} l @{\extracolsep{6pt}} l}
+            \textbf{\class} & \textbf{\examnum, \examdate}&\\
+            \textbf{\lycee} &\textbf{Durée: \timelimit} &\\
+        \end{tabular*}\\
+    \end{spacing}
+
+    \noindent
+    \vspace{10pt}
+    \hrule
+    \vspace{5pt} 
+    \noindent
+    \\
+    Ce contrôle comporte \numquestions\ questions; il sera noté sur \numpoints\ points. 
+    Les réponses sont à porter sur une copie \uline{comportant votre nom}.
+    Il n'est pas nécessaire de répondre aux questions dans l'ordre \textemdash\ commencez par celles où vous vous sentez le plus à l'aise \textit{(mais ne tentez les questions bonus qu'après avoir fini le reste!!)}.\\
+    Une attention particulière sera portée à la qualité et à la clarté du code que vous aurez écrit.\\
+    \noindent
+    \hrule
+    \vspace{15pt} 
+
+    \begin{questions} % DEBUT DE L'EXAMEN
+        \begin{spacing}{1}
+    
+           \question Questions à choix multiples (aucune justification de la réponse n'est nécessaire):
+   		        \begin{parts}
+       			\part[1] Quelle est la syntaxe correcte pour un '\texttt{if}' en Python?
+       			\frenchspacing
+%       			\emph{frenchspacing} % pb des espaces après deux points       			
+   			        \begin{checkboxes}
+         				\choice \texttt{if condition ( ... )}
+						\correctchoice \texttt{if condition: ...}
+         				\choice \texttt{if: condition \{ ... \} }
+         				\choice \texttt{if condition \{ ... \}}
+           			\end{checkboxes}
+           		\nonfrenchspacing
+       			\part[1] Si on souhaite répéter un bloc de code tant qu'une condition est vraie, quelle structure utilise-t-on en Python?
+					\frenchspacing
+					\begin{checkboxes}
+						\choice \texttt{do \{ ... \} while condition}
+						\choice \texttt{repeat ... until condition}
+						\correctchoice \texttt{while condition: ...}
+						\choice \texttt{for condition: ...}
+					\end{checkboxes}
+					\nonfrenchspacing
+				\part[1] Comment ajoute-t-on un élément à la fin d'une liste en Python?
+					\frenchspacing
+					\begin{checkboxes}
+						\choice \texttt{liste.add(element)}
+						\choice \texttt{liste.insert(element)}
+						\correctchoice \texttt{liste.append(element)}
+						\choice \texttt{liste.push(element)}
+					\end{checkboxes}
+				\part[1] Quelle est la sortie du code suivant?
+					\begin{minted}
+						[
+						bgcolor = gray!15,
+						fontsize = \footnotesize,
+						linenos = true % numéros de ligne
+						]
+						{Python}
+txt = "ha"
+for i in range(3):
+    txt = txt + "ha"
+print(txt)
+				\end{minted}
+					\begin{checkboxes}
+						\choice \texttt{ha}
+						\choice \texttt{haha}
+						\choice \texttt{hahaha}
+						\correctchoice \texttt{hahahaha}
+					\end{checkboxes}
+					\nonfrenchspacing
+	           	\end{parts}
+							
+            \question {Fonction d'échange d'éléments dans une liste} 
+            \begin{parts}
+            	\part[2] {Ecriture du code:} Complétez la fonction '\texttt{Echange(L, i, j)}' ci-dessous qui prend en entrée une liste \texttt{L}, deux indices \texttt{i} et \texttt{j}, et retourne une liste où les éléments \texttt{L[i]} et \texttt{L[j]} auront été échangés et le reste de la liste sera identique à \texttt{L}.
+            	\noindent
+            	\begin{minted}
+            		[
+            		bgcolor = gray!15,
+            		fontsize = \footnotesize,
+            		linenos = true % numéros de ligne
+            		]
+            		{Python}
+def Echange(L, i, j):
+    ## A COMPLETER: code effectuant l'echange des elements d'indice i et j
+    return ...
+            	\end{minted}
+            	\begin{solution}
+            		\begin{minted}
+            			[
+            			bgcolor = gray!15,
+            			fontsize = \footnotesize
+            			]
+            			{Python}
+def Echange(L, i, j):
+    temp = L[i]
+    L[i] = L[j]
+    L[j] = temp
+    return L
+            		\end{minted}
+            	\end{solution}
+            	\part{Exécution du code:}
+            	\begin{subparts}
+            		\subpart[\half] Que retournera l'appel \texttt{echange([1,2,3], 1, 2)}?
+            		\begin{solution}
+            			\textit{Note: si on voulait être strictement exact, cet appel aurait renvoyé une erreur sur le fait que la fonction "echange" n'était pas définie \textemdash\ en effet j'ai fait une faute de frappe en rédigeant l'énoncé: la fonction qu'on a définie à la question précédente était "Echange" (avec un "E" majuscule)}...\\
+            			Mais sinon la réponse attendue ici était:\\
+            			\texttt{[1, 3, 2]}
+            		\end{solution}
+            		\subpart[\half] Que retournera l'appel \texttt{echange([1,2,3], 2, 3)}?
+            		\begin{solution}
+            			On aurait obtenu une erreur du type "\texttt{index out of range}"; en effet, L contient 3 éléments, qui sont donc indexés de 0 à 2 \textemdash\ et donc L[3] n'existe pas.
+            		\end{solution}
+            	\end{subparts}
+            \end{parts}
+            
+          \question[2] \textit{Comptage jusqu'à 10:} Complétez le code ci-dessous pour afficher à l'écran les nombres de 1 à 10 \textbf{en utilisant une boucle "while"}.
+			\noindent
+			\begin{minted}
+			[
+			bgcolor = gray!15,
+			fontsize = \footnotesize,
+			linenos = true % numéros de ligne
+			]
+			{Python}
+def compte10():
+    i = 0
+    while ...
+        ## A COMPLETER: code affichant, au moyen d'une boucle while, les nombres de 1 a 10
+        print(i)
+			\end{minted} 
+			\begin{solution}
+				\begin{minted}
+					[
+					bgcolor = gray!15,
+					fontsize = \footnotesize
+					]
+					{Python}
+def compte10():
+    i = 0
+    while i < 10:
+        i += 1
+        print(i)
+				\end{minted}
+			\end{solution} 
+            
+            \question[1] \textit{Recherche dans une liste:} Ecrivez une fonction '\texttt{recherche\_element(liste, element)}' qui prend une liste et un élément en entrée, et renvoie '\texttt{OUI}' si l'élément est présent dans la liste, sinon renvoie '\texttt{NON}'.
+            \begin{solution}
+            	\begin{minted}
+           		[
+           		bgcolor = gray!15,
+           		fontsize = \footnotesize
+           		]
+           		{Python}
+def recherche_element(liste,element):
+    resultat = "NON"
+    if element in liste:
+        resultat = "OUI"
+    return resultat
+            	\end{minted}
+            \end{solution} 
+            
+           \question[3] \textit{Evolution du nombre d'abonnés d'une chaîne YouTube:} Un vlogueur commence avec 1000 abonnés sur sa chaîne YouTube. Chaque mois, il gagne 3\% de nouveaux abonnés en plus et il perd 50 abonnés qui se désinscrivent. Écrivez une fonction '\texttt{NbAbos(nbMois)}' qui retourne une liste contenant l'évolution du nombre d'abonnés sur un nombre \texttt{nbMois} de mois. \textit{Indice: pour conserver la partie entière d'un nombre \texttt{N} plus 3\%, on utilise la formule \texttt{int(1.03 * N)}}.
+          \begin{solution}
+           		\begin{minted}
+	           		[
+	           		bgcolor = gray!15,
+	           		fontsize = \footnotesize
+	           		]
+	           		{Python}
+def NbAbos(nbMois): # Evidemment presqu'identique a celle des abonnes de triathlon faite en cours
+    listeNbAbos = [1000]
+    for i in range(nbMois):
+        listeNbAbos.append(int(listeNbAbos[i] * 1.03 - 50))
+    return listeNbAbos
+			\end{minted}
+		\end{solution} 
+            
+            \question[2] \textit{Table de multiplication:} Complétez la fonction '\texttt{Multiples(num)}' ci-dessous: elle prend en entrée un nombre entier '\texttt{num}' et retourne la liste de ses dix premiers multiples (donc \texttt{[num*1, num*2, num*3 .... num*10]}).
+            \begin{minted}
+            	[
+            	bgcolor = gray!15,
+            	fontsize = \footnotesize,
+            	linenos = true % numéros de ligne
+            	]
+            	{Python}
+def Multiples(num):
+    Lst ....
+    for i ...
+        ## A COMPLETER: code constituant la liste des multiples de num
+    return Lst
+            \end{minted}
+             \begin{solution}
+            	\begin{minted}
+            		[
+            		bgcolor = gray!15,
+            		fontsize = \footnotesize
+            		]
+            		{Python}
+def Multiples(num):
+    Lst = []
+    for i in range(10):
+        i += 1
+        Lst.append(i * num)
+    return Lst
+            	\end{minted}
+            \end{solution} 
+            
+            \question[2] \textit{Vérification de parité:} Ecrivez une fonction '\texttt{est\_pair(n)}' qui prend un entier '\texttt{n}' en entrée et renvoie '\texttt{OUI}' si '\texttt{n}' est pair, sinon renvoie '\texttt{NON}'.
+            \begin{solution}
+            	\begin{minted}
+            		[
+            		bgcolor = gray!15,
+            		fontsize = \footnotesize
+            		]
+            		{Python}
+def est_pair(n):
+    if n % 2 == 0:
+        resultat = "OUI"
+    else:
+        resultat = "NON"
+    return resultat
+            	\end{minted}
+            \end{solution} 
+            
+            \noindent
+            \newpage
+            \question[3] Correction de code: même principe que dans le l'interrogation précédente \textemdash\ dans les quatre extraits ci-dessous, il y a trois erreurs à identifier et à corriger.
+            \\
+            \begin{minipage}{0.5\textwidth}
+            	\begin{minted}
+            		[
+            		bgcolor = gray!15,
+            		fontsize = \footnotesize,
+            		linenos = true % numéros de ligne
+            		]
+            		{Python}
+# A: Affichage des carres d'entiers 0 a 5
+for i in range(6):
+    print(i ** 2)
+
+# B: Compte a rebours partant de 10
+x = 10
+while x > 0:
+print(x)
+x = x - 1
+            	\end{minted}
+            \end{minipage}
+            \begin{minipage}{0.5\textwidth}
+            	\begin{minted}
+            		[
+					bgcolor = gray!15,
+					fontsize = \footnotesize,
+					linenos = true % numéros de ligne
+					]
+					{Python}
+# C: Affichage des 10 premiers entiers
+i = 0
+while i < 10:
+    print(i)
+
+# D: Doublerment dernier element d'une liste
+def DoubleDernier(Lst):
+    a = len(Lst)
+    resultat = Lst[a] * 2
+    return resultat
+            	\end{minted}
+            \end{minipage}
+            \begin{solution}
+            	\\
+            	Bloc A: pas d'erreur, le code fait ce qu'on lui demande.
+            	\\ \\
+            	Bloc B: sortie en erreur pour cause d'indentation erronée après le "\texttt{while x > 0:}"
+            	\\ \\
+            	Bloc C: boucle infinie \textemdash\ on n'incrémente jamais i, il reste donc à 0, et le programme affichera à l'écran une série infinie de 0.
+            	\\ \\
+            	Bloc D: erreur d'indexation: une liste est indexée de 0 à \texttt{(len(liste) - 1)}: donc \texttt{liste[len(liste)]} fait référence un index qui n'existe pas.
+            \end{solution}
+            
+            \vspace{10pt} 
+            \hrule
+            \vspace{15pt} 
+            
+            \textit{(Question bonus 1): }Écrivez un programme qui demande à l'utilisateur deux nombres entiers '\texttt{a}' et '\texttt{b}', puis utilise une boucle \texttt{while} pour calculer le produit '\texttt{a x b}' sans utiliser l'opérateur de multiplication (\texttt{*}).
+             \begin{solution}
+            	\begin{minted}
+            		[
+            		bgcolor = gray!15,
+            		fontsize = \footnotesize
+            		]
+            		{Python}
+a = int(input("Entrez le premier entier: "))
+b = int(input("Entrez le second entier: "))
+# Ce n'etait pas specifie mais il fallait evidemment que b soit positif pour une solution
+# raisonnablement simple au probleme.
+i = 0
+resultat = 0
+while i < b:
+    resultat += a
+    i += 1
+print(resultat)
+            	\end{minted}
+            \end{solution} 
+            
+            \vspace{15pt}
+            
+            \newpage
+
+	        \textit{(Question bonus 2): }Écrivez un programme qui demande à l'utilisateur d'entrer une liste de nombres (la fin de la liste est marquée par l'entrée d'un nombre négatif), puis utilise une boucle \texttt{for} pour calculer et afficher la moyenne de ces nombres.
+            \begin{solution}
+            	\begin{minted}
+            		[
+            		bgcolor = gray!15,
+            		fontsize = \footnotesize
+            		]
+            		{Python}
+# Constitution de la liste de nombres pour commencer
+Lst = []
+while a >= 0:
+    a = int(input("Nombre suivant SVP: "))
+    if a > 0:
+        Lst.append(a)
+# Calcul de la somme de tous les nombres de la liste ensuite
+moy = 0
+for i in range(len(Lst)):
+    moy += Lst[i]
+# Calcul de la moyenne enfin
+moy /= len(Lst)
+print(moy)
+            	\end{minted}
+            \end{solution} 
+            
+        \end{spacing}
+    \end{questions}
+\end{document}
