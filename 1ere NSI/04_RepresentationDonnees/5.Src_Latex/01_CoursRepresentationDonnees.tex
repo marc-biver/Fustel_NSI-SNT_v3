@@ -1295,7 +1295,7 @@
 			\item
 				\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} % One 'c' column type for each letter in the word
 					\hline
-					1&0&1&1&1&1&1&1&0&1&1&1&1&0&0&0 \\
+					1&0&1&1&1&1&1&0&1&1&1&1&1&0&0&0 \\
 					\hline
 					0&0&0&0&0&0&0&0&0&0&0&0&0&0&0&0 \\
 					\hline
@@ -1386,7 +1386,7 @@
 	\begin{MonExo}[C'est un peu fastidieux... et si on codait ça?]
 		\begin{alphenum}
 			\item Sur papier, écrire en pseudo-code l'algorithme d'une fonction qui prend en entrée une liste de 32 éléments représentant les 32 bits encodant un nombre flottant et qui calcule puis renvoie la valeur décimal du réel correspondant.
-			\item Dans IDLE, écrire cette fonction en Python. Si vous avez terminé, rendez cette fonction robuste -- qu'elle sache gérer des listes n'ayant pas le bon nombre d'éléments, ou ne contenant pas que des 0 ou des 1...
+			\item Dans IDLE, écrire cette fonction en Python. Si vous avez terminé, rendez cette fonction robuste -- qu'elle sache gérer des listes n'ayant pas le bon nombre d'éléments, ou ne contenant pas que des 0 ou des 1 (utilisez la fonction \texttt{assert} notamment)...
 		\end{alphenum}
 	\end{MonExo}
 	\begin{MaReponse}
@@ -1468,58 +1468,115 @@
 	
 	Ceci a donné naissance en 1963 au code ASCII (\textit{American Standard Code for Information Interchange}), toujours en usage, et permettant d'encoder 128 caractères: 33 caractères dits de contrôle (codes 0 à 32 et code 127 -- ils incluent des caractères "blancs" comme les espaces ou les tabulations, des suppressions, des retours à la ligne, des marqueurs de début et de fin de texte...), 94 caractères standards (codes 33 à 126) comportant les 26 lettres minuscules, les 26 lettres majuscules, les 10 chiffres, et 32 symboles (ponctuation, symboles arithmétiques...).
 	
-	Le tableau ci-dessous vous présente tout ceci exhaustivement (pour votre culture générale -- il est évident \textbf{que ce n'est pas à connaitre par cœur!}).
+	Le tableau ci-dessous vous présente tout ceci exhaustivement (pour votre culture générale -- il est évident \textbf{que ce n'est pas à connaitre par cœur!}). La colonne code contient deux valeurs - d'abord en décimal, puis en hexadécimal.
 	
-	\begin{tabular}{|c|l||c|l||c|l||c|l|}
-		\hline
-		Code & Caractères & Code & Caractères & Code & Caractères & Code & Caractères \\
-		\hline
-		0 & NUL & 32 & Espace & 64 & @ & 96 & ` \\
-		1 & SOH & 33 & ! & 65 & A & 97 & a \\
-		2 & STX & 34 & " & 66 & B & 98 & b \\
-		3 & ETX & 35 & \# & 67 & C & 99 & c \\
-		4 & EOT & 36 & \$ & 68 & D & 100 & d \\
-		5 & ENQ & 37 & \% & 69 & E & 101 & e \\
-		6 & ACK & 38 & \& & 70 & F & 102 & f \\
-		7 & BEL & 39 & ' & 71 & G & 103 & g \\
-		8 & BS & 40 & ( & 72 & H & 104 & h \\
-		9 & HT & 41 & ) & 73 & I & 105 & i \\
-		10 & LF & 42 & * & 74 & J & 106 & j \\
-		11 & VT & 43 & + & 75 & K & 107 & k \\
-		12 & FF & 44 & , & 76 & L & 108 & l \\
-		13 & CR & 45 & - & 77 & M & 109 & m \\
-		14 & SO & 46 & . & 78 & N & 110 & n \\
-		15 & SI & 47 & / & 79 & O & 111 & o \\
-		16 & DLE & 48 & 0 & 80 & P & 112 & p \\
-		17 & DC1 & 49 & 1 & 81 & Q & 113 & q \\
-		18 & DC2 & 50 & 2 & 82 & R & 114 & r \\
-		19 & DC3 & 51 & 3 & 83 & S & 115 & s \\
-		20 & DC4 & 52 & 4 & 84 & T & 116 & t \\
-		21 & NAK & 53 & 5 & 85 & U & 117 & u \\
-		22 & SYN & 54 & 6 & 86 & V & 118 & v \\
-		23 & ETB & 55 & 7 & 87 & W & 119 & w \\
-		24 & CAN & 56 & 8 & 88 & X & 120 & x \\
-		25 & EM & 57 & 9 & 89 & Y & 121 & y \\
-		26 & SUB & 58 & : & 90 & Z & 122 & z \\
-		27 & ESC & 59 & ; & 91 & [ & 123 & \{ \\
-		28 & FS & 60 & < & 92 & \textbackslash & 124 & | \\
-		29 & GS & 61 & = & 93 & ] & 125 & \} \\
-		30 & RS & 62 & > & 94 & \textasciicircum & 126 & \textasciitilde \\
-		31 & US & 63 & ? & 95 & \_ & 127 & DEL \\
-		\hline
-	\end{tabular}
+	\begin{center}
+			\begin{tabular}{|c|l||c|l||c|l||c|l|}
+			\hline
+			Code & Car. & Code & Car. & Code & Car. & Code & Car.  \\
+			\hline
+			0, 0 & NUL & 32, 20 & Espace & 64, 40 & @ & 96, 60 & ` \\
+			1, 1 & SOH & 33, 21 & ! & 65, 41 & A & 97, 61 & a \\
+			2, 2 & STX & 34, 22 & " & 66, 42 & B & 98, 62 & b \\
+			3, 3 & ETX & 35, 23 & \# & 67, 43 & C & 99, 63 & c \\
+			4, 4 & EOT & 36, 24 & \$ & 68, 44 & D & 100, 64 & d \\
+			5, 5 & ENQ & 37, 25 & \% & 69, 45 & E & 101, 65 & e \\
+			6, 6 & ACK & 38, 26 & \& & 70, 46 & F & 102, 66 & f \\
+			7, 7 & BEL & 39, 27 & ' & 71, 47 & G & 103, 67 & g \\
+			8, 8 & BS & 40, 28 & ( & 72, 48 & H & 104, 68 & h \\
+			9, 9 & HT & 41, 29 & ) & 73, 49 & I, 49 & 105, 69 & i \\
+			10, A & LF & 42, 2A & * & 74, 4A & J & 106, 6A & j \\
+			11, B & VT & 43, 2B & + & 75, 4B & K & 107, 6B & k \\
+			12, C & FF & 44, 2C & , & 76, 4C & L & 108, 6C & l \\
+			13, D & CR & 45, 2D & - & 77, 4D & M & 109, 6D & m \\
+			14, E & SO & 46, 2E & . & 78, 'E & N & 110, 6E & n \\
+			15, F & SI & 47, 2F & / & 79, 4F & O & 111, 6F & o \\
+			16, 10 & DLE & 48, 30 & 0 & 80, 50 & P & 112, 70 & p \\
+			17, 11 & DC1 & 49, 31 & 1 & 81, 51 & Q & 113, 71 & q \\
+			18, 12 & DC2 & 50, 32 & 2 & 82, 52 & R & 114, 72 & r \\
+			19, 13 & DC3 & 51, 33 & 3 & 83, 53 & S & 115, 73 & s \\
+			20, 14 & DC4 & 52, 34 & 4 & 84, 54 & T & 116, 74 & t \\
+			21, 15 & NAK & 53, 35 & 5 & 85, 55 & U & 117, 75 & u \\
+			22, 16 & SYN & 54, 36 & 6 & 86, 56 & V & 118, 76 & v \\
+			23, 17 & ETB & 55, 37 & 7 & 87, 57 & W & 119, 77 & w \\
+			24, 18 & CAN & 56, 38 & 8 & 88, 58 & X & 120, 78 & x \\
+			25, 19 & EM & 57, 39 & 9 & 89, 59 & Y & 121, 79 & y \\
+			26, 1A & SUB & 58, 3A & : & 90, 5A & Z & 122, 7A & z \\
+			27, 1B & ESC & 59, 3B & ; & 91, 5B & [ & 123, 7B & \{ \\
+			28, 1C & FS & 60, 3C & < & 92, 5C & \textbackslash & 124, 7C & | \\
+			29, 1D & GS & 61, 3D & = & 93, 5D & ] & 125, 7D & \} \\
+			30, 1E & RS & 62, 3E & > & 94, 5E & \textasciicircum & 126, 7E & \textasciitilde \\
+			31, 1F & US & 63, 3F & ? & 95, 5F & \_ & 127, 7F & DEL \\
+			\hline
+		\end{tabular}
+	\end{center}
 	
-	\MaQuestion{A première vue, qu'est-ce qui ne va pas ce tableau -- quel(s) problème(s) va-t-on rapidement rencontrer?}
-\begin{MaReponse}
-	Il manque énormément de caractères -- et d'autant plus si on n'est pas anglophone! Déjà, pour les francophones, on note qu'il n'y a aucun accent. Mais que devaient penser les Arabes, les Chinois, les Russes...?
-\end{MaReponse}
-
-	\MaQuestion{Sur combien de bits va-t-on encoder ces caractères ASCII?}
-\begin{MaReponse}
-	On compte 128 caractères soit (et ce n'est évidemment pas un hasard) $2^7$. Il serait donc possible de n'utiliser que 7 bits pour coder les caractères ASCII.
+	Un texte codé en ASCII est  simplement une suite d'octets (on va voir pourquoi tout de suite) correspondant à la séquence de caractères et utilisant les valeurs du tableau ci-dessus. Par exemple la phrase \texttt{Bonjour le monde!} correspond à la séquence d'octets:
 	
-	En pratique, on a toujours codé ces caractères sur un octet (donc 8 bits) en utilisant à l'origine le bit de poids fort comme un mécanisme de contrôle d'erreur (qui étaient fréquentes avec les premières mémoires électroniques). Le principe était d'en faire un bit de parité: il était positionné à 0 ou à 1 de manière à ce que tous les caractères aient toujours un nombre pair de bits à 1; et si ce n'était pas le cas, une erreur était détectée.
-\end{MaReponse}
+	\ttfamily
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+			\hline
+			B&o&n&j&o&u&r& &l&e& &m&o&n&d&e&! \\
+			\hline
+			42&6F&6E&6A&6F&75&72&20&6C&65&20&6D&6F&6E&64&65&21 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	\normalfont
+	\MaQuestion{Ce tableau nous permet donc d'encoder des textes simples, mais il est loin d'être parfait. A première vue, qu'est-ce qui ne va pas? Quel(s) problème(s) va-t-on rapidement rencontrer?}
+	\begin{MaReponse}
+		Il manque énormément de caractères -- et d'autant plus si on n'est pas anglophone! Déjà, pour les francophones, on note qu'il n'y a aucun accent. Mais que devaient penser les Arabes, les Chinois, les Russes...?
+	\end{MaReponse}
+	
+		\MaQuestion{Sur combien de bits va-t-on encoder ces caractères ASCII?}
+	\begin{MaReponse}
+		On compte 128 caractères soit (et ce n'est évidemment pas un hasard) $2^7$. Il serait donc possible de n'utiliser que 7 bits pour coder les caractères ASCII.
+		
+		En pratique, on a toujours codé ces caractères sur un octet (donc 8 bits) en utilisant à l'origine le bit de poids fort comme un mécanisme de contrôle d'erreur (qui étaient fréquentes avec les premières mémoires électroniques). Le principe était d'en faire un bit de parité: il était positionné à 0 ou à 1 de manière à ce que tous les caractères aient toujours un nombre pair de bits à 1; et si ce n'était pas le cas, une erreur était détectée.
+	\end{MaReponse}
+	
+	\subsection{Normes ISO 8859}
+	
+	Partant du constat de ces faiblesses, on a progressivement amélioré les capacités et méthodes de codage de texte pour les enrichir et les rendre compatibles avec de plus en plus de langues et de caractères spéciaux:
+	\begin{itemize}
+		\item On a commencé par utiliser ce fameux 8\textsuperscript{ème} bit de l'octet pour \textit{doubler} le nombre de caractères qu'on pouvait coder (norme ISO 8859) et arriver à 256, les 128 premiers demeurant les caractères ASCII. On a appelé cette nouvelle norme "ANSI".
+		\item C'était bien mieux, mais encore insuffisant -- pensez encore une fois aux Russes, Arabes, et Chinois pour ne citer qu'eux. On a donc multiplié ces codages en créant des \textit{pages} (ou tables de correspondances) de codes pour différents contextes, numérotées et nommées "8859-\textit{n}". Pour chaque page, on conserve les caractères ASCII sur les 128 premiers codes et on utilise les 128 restants pour coder des caractères spécifiques à une zone géographique. Ainsi (quelques exemples):
+		\begin{itemize}
+			\item La page 8859-1 est spécifique aux caractères de l'Europe occidentale;
+			\item La page 8859-5 est spécifique aux caractères cyriliques (donc, entre autres, au Russe);
+			\item La page 8859-6 est spécifique à l'Arabe;
+			\item La page 8859-9 est spécifique au Turc et au Kurde;
+			\item etc...
+		\end{itemize} 
+	\end{itemize}
+	
+	Tout ceci constitue évidemment une amélioration (16 tables ont été développées en tout, avec donc une capacité d'encodage totale 17 fois supérieure à ce que permettait la seule norme ASCII) mais:
+	
+	\begin{itemize}
+		\item Ca reste largement insuffisant: 10 de ces 16 pages sont consacrées aux seules langues latines!
+		\item Le fonctionnement impose de spécifier avant tout texte quelle page d'encodage on utilise (puisqu'un même caractère peut être codé différemment suivant la norme utilisée) et de s'y tenir -- ce qui peut entraîner beaucoup de confusion. Avez-vous par exemple déjà croisé un mail ou une page web ressemblant à ceci?
+	\end{itemize}
+	\begin{minipage}{0.95\textwidth}
+		\centering
+		\includegraphics[width=0.95\linewidth]{013_ANSI.png}
+	\end{minipage}
+	
+	\subsection{Une petite pause Python...}
+	Avant de passer à la norme Unicode qui est le coeur de ce chapitre, faisons un petit détour par Python, et plus spécifiquement:
+	\begin{itemize}
+		\item Quelques éléments de manipulation de chaines de caractères que nous n'avons pas encore vus jusqu'à présent;
+		\item Quelques fonctions spécifiques que propose le langage pour aller d'un caractère à son code et réciproquement.
+	\end{itemize}
+	
+	Jusqu'à présent on n'a pas vraiment manipulé de chaines de caractères -- on a affiché des messages à l'écran qui en utilisaient ("\texttt{print('Le nombre est pair'})" par exemple), ou, par le biais de la fonction \texttt{input}, on a pris du texte saisi par l'utilisateur en entrée. Mais on ne s'est pas vraiment demandé \textit{ce qu'était} une variable de type "string".
+	
+	
+	
+	\subsection{La norme Unicode}
+	\pagebreak
+	\section{Circuits \& logique booléenne}
 	
 \end{document}
 %Eléments manquants:
