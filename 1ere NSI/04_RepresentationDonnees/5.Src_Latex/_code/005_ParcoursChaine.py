@@ -1,0 +1,1 @@
+chaine = "Bonjour !"# Boucle 1: par indicefor i in range(len(chaine)):    print(chaine[i])# Boucle 2: par caractère / élémentfor car in chaine:    print(car)

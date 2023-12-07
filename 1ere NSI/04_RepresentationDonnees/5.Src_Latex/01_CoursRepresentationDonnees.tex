@@ -609,7 +609,7 @@
 		Il est essentiel de savoir effectuer ces conversions "à la main" comme on vient de le faire -- mais pour de grands nombres, ça prend du temps, et Python vous offre une solution beaucoup plus rapide:
 	\end{MonAmp}
 	
-	\MonPython{001_ConvBinaire.py}	
+	\MonPython{001_ConvBinaire.py}
 	Donc ca, c'est comment l'ordinateur stocke et manipule les nombres -- c'est pratique pour lui, mais un peu complique pour nous: par exemple, la population de la France est d'environ 64,8 millions de personnes. En binaire ca nous donne: 11110111001100010100000000... Même celle de Massy, qui n'est que de 50.506 habitants, donne 1100010101001010. Vous trouvez ca lisible, vous?
 	
 	\subsection{La base hexadécimale, ou base 16}
@@ -1423,7 +1423,7 @@
 			\State{mantisse $\leftarrow 1 + mantisse$}
 			\Comment{Application du "(1+m)" de la formule}
 			\\
-			\State{resultat $\leftarrow signe \times mantisse \times exposant$}
+			\State{resultat $\leftarrow signe \times mantisse \times 2^{exposant}$}
 			\\
 			\State\Return{resultat}
 			\EndFunction
@@ -1489,7 +1489,7 @@
 			11, B & VT & 43, 2B & + & 75, 4B & K & 107, 6B & k \\
 			12, C & FF & 44, 2C & , & 76, 4C & L & 108, 6C & l \\
 			13, D & CR & 45, 2D & - & 77, 4D & M & 109, 6D & m \\
-			14, E & SO & 46, 2E & . & 78, 'E & N & 110, 6E & n \\
+			14, E & SO & 46, 2E & . & 78, 4E & N & 110, 6E & n \\
 			15, F & SI & 47, 2F & / & 79, 4F & O & 111, 6F & o \\
 			16, 10 & DLE & 48, 30 & 0 & 80, 50 & P & 112, 70 & p \\
 			17, 11 & DC1 & 49, 31 & 1 & 81, 51 & Q & 113, 71 & q \\
@@ -1563,18 +1563,182 @@
 		\includegraphics[width=0.95\linewidth]{013_ANSI.png}
 	\end{minipage}
 	
+	\subsection{La norme UTF-8}
+	Dans un monde de plus en plus globalisé, le besoin d'un système de codage capable de gérer un vaste éventail de caractères est devenu impératif. C’est dans ce contexte que l'UTF-8 (8-bit Unicode Transformation Format) est devenu la norme dominante: elle s'appuie toujours, pour les premiers caractères, sur la norme ASCII mais permet d'utiliser jusqu'à 24 bits pour coder un caractère. Créé en 1992, UTF-8 peut représenter plus d’un million de caractères différents, ce qui le rend idéal pour les applications internationales, y compris les pages Web. En effet, si vous consultez le code source d’une page Web moderne, il est fort probable que "UTF-8" soit spécifié comme l’encodage de caractères utilisé.
+	
+	Nous ne couvrirons pas ici les principes de codage en UTF-8 -- il vous est suffisant de savoir d'où cette norme vient, dans quelle logique d'évolution elle s'inscrit.
+	
+	
+	
 	\subsection{Une petite pause Python...}
-	Avant de passer à la norme Unicode qui est le coeur de ce chapitre, faisons un petit détour par Python, et plus spécifiquement:
+	\subsubsection*{Fonctionnement de base des chaînes de caractères}
+	Faisons de nouveau un petit détour par Python, et plus spécifiquement:
 	\begin{itemize}
 		\item Quelques éléments de manipulation de chaines de caractères que nous n'avons pas encore vus jusqu'à présent;
 		\item Quelques fonctions spécifiques que propose le langage pour aller d'un caractère à son code et réciproquement.
 	\end{itemize}
 	
-	Jusqu'à présent on n'a pas vraiment manipulé de chaines de caractères -- on a affiché des messages à l'écran qui en utilisaient ("\texttt{print('Le nombre est pair'})" par exemple), ou, par le biais de la fonction \texttt{input}, on a pris du texte saisi par l'utilisateur en entrée. Mais on ne s'est pas vraiment demandé \textit{ce qu'était} une variable de type "string".
+	Jusqu'à présent on n'a pas vraiment manipulé de chaines de caractères -- on a affiché des messages à l'écran qui en utilisaient ("\texttt{print('Le nombre est pair'})" par exemple), ou, par le biais de la fonction \texttt{input}, on a pris du texte saisi par l'utilisateur en entrée. Mais on ne s'est pas vraiment demandé \textit{ce qu'était} une variable de type "str".
+
+	\begin{MonAmp}{Définition}
+		Une \textbf{chaîne de caractères} est une collection ordonnée (ou séquence) de caractères délimitée par des apostrophes (') ou des guillemets (").
+	\end{MonAmp}
 	
+	Le choix des délimitateurs est le plus souvent imposé par le contenu de la chaîne de caractères. Par exemple la chaîne 'Bonjour !' ne fonctionne très bien délimitée par des apostrophes, tandis que la chaîne "Aujourd'hui" contenant une apostrophe nécessite des guillemets comme délimitateur.
 	
+	Une chaîne de caractères fonctionne à bien des égards comme une liste:
+	\begin{itemize}
+		\item \texttt{len(chaine)} renvoie la longueur (en nombre de caractères) de la chaîne \texttt{chaine}.
+		\item On peut définir une chaîne de caractères de différentes manières:
+		\begin{itemize}
+			\item En partant d'une chaîne vide:
+			\begin{verbatim}
+				chaine1 = ''
+				chaine2 = ""
+			\end{verbatim}
+			\item Par extension, en indiquant directement les éléments entre délimitateurs:
+			\begin{verbatim}
+				chaine3 = 'Bonjour !'
+			\end{verbatim}
+			\item Par \textit{transtypage}, en utilisant la fonction \texttt{str()}:
+			\begin{verbatim}
+				chaine4 = str(123) # renverra la chaîne '123'
+			\end{verbatim}
+		\end{itemize}
+		\item Comme avec les listes on peut effectuer des opérations de \textbf{concaténation} et de \textbf{duplication} au moyen des opérateurs \texttt{+} et \texttt{*}. Si a ="Bonjour " et b = "Monsieur" alors:
+		\begin{itemize}
+			\item L'opération \texttt{c = a + b} affectera à la variable c la valeur "Bonjour Monsieur".
+			\item L'opération \texttt{d = a * 3} affectera à la variable d la valeur "Bonjour Bonjour Bonjour ".
+		\end{itemize}
+		\item Comme c'est le cas pour les listes, on peut effectuer divers tests sur les chaînes de caractères:
+		\begin{itemize}
+			\item Test d'égalité: \texttt{"Abc" == 'Abc'} renverra \texttt{True} puisque les deux listes sont égales (attention en revanche au fait que les majuscules et les minuscules sont bien des caractères différents: \texttt{"Abc" == 'abc'} renverra \texttt{False}).
+			\item Test d'inégalité: \texttt{"abc" != "acb"} renverra \texttt{True} puisque les chaînes ne sont pas égales entre elles.
+			\item Test d'appartenance au moyen du mot clé "\texttt{in}": \texttt{"jour" in "Bonjour !"} renverra donc \texttt{True}.
+			\item Et à l'inverse, test de "non appartenance" en utilisant l'opérateur logique \texttt{not} que l'on a déjà vu: \texttt{"nuit" not in "Bonjour !"} renverra \texttt{True}.
+			\item Test d'ordre, basé sur l'encodage des caractères - et notamment sur le code ASCII des lettres élémentaires non accentuées. Ainsi:
+			\begin{itemize}
+				\item \texttt{"a" < "n"} renverra \texttt{True} (codes ASCII respectifs: 61 et 6E)
+				\item \texttt{"N" < "a"} renverra \texttt{True} égaleement (codes ASCII respectifs: 4E et 61)
+			\end{itemize}
+		\end{itemize}
+		\item Les éléments (caractères) d'une chaîne sont ordonnés et indexés -- le plus à gauche a l'index 0, puis on incrémente de un en un, comme pour une liste. On peut accéder à ces éléments avec la même syntaxe que pour une liste - et avec les mêmes limites. Si on définit "\texttt{chaine = 'Bonjour !'}" alors:
+		\begin{itemize}
+			\item \texttt{chaine[0]} vaut "\texttt{B}";
+			\item \texttt{chaine[3]} vaut "\texttt{j}";
+			\item \texttt{chaine[8]} vaut "\texttt{!}" (puisque le point d'exclamation est précédé d'un espace);
+			\item Et \texttt{chaine[9]} renverra une erreur de type \texttt{IndexError: string index out of range}.
+		\end{itemize}
+		\item Et enfin, comme pour une liste, on peut parcourir une chaîne de caractères à l'aide d'une boucle, soit par indice soit par caractère (ou élément):
+		\MonPython{005_ParcoursChaine.py}
+		Les deux boucles ci-dessus donneront le même affichage à l'écran:
+		\begin{verbatim}
+			B
+			o
+			n
+			j
+			o
+			u
+			r
+			
+			!
+		\end{verbatim}
+	\end{itemize}
 	
-	\subsection{La norme Unicode}
+	\begin{MonAmp}{ATTENTION}
+		A l'inverse d'une liste, le type "str" est \textit{non modifiable} en Python. Ceci signifie en particulier qu'on ne peut pas modifier un caractère spécifique à l'intérieur d'une chaîne. Les commandes suivantes:
+		\begin{verbatim}
+			chaine = 'BonJour !'
+			chaine[3] = "j"
+		\end{verbatim}
+		renverront une erreur de type \texttt{TypeError: 'str' object does not support item assignment}.
+	\end{MonAmp}
+	
+	\begin{MonExo}[manipulons quelques chaînes de caractères...]
+		Rédigez d'abord en pseudo-code puis écrivez le code de:
+		\begin{alphenum}
+			\item Une fonction qui prend deux chaînes de caractères en entrée, et renvoie la concaténation des deux avec un espace ajouté au centre.
+			\item La même fonction qui cette fois vérifie qu'il n'y a qu'un seul espace entre les deux chaînes -- qui donc n'en ajoutera un que si la première ne se termine pas par un espace et la seconde ne commence pas par un espace.
+			\item Une fonction qui prend une chaîne de caractères en entrée, et renvoie, si sa longueur est impaire, le caractère situé au centre (donc pour "ABCDE" elle renverrait "C"), et si elle est paire les deux caractères du milieu (pour "ABCDEF", "CD").
+			\item Affectation d'élèves par groupe alphabétique: une fonction qui prend en entrée un nom (chaîne de caractères commençant par une majuscule) et retourne un nombre situé entre 1 et 3 -- 1 si l'initiale est comprise entre A et H; 2 si elle est entre I et Q; et 3 si elle est entre R et Z.
+			\item Séparation des caractères par des virgules: une fonction qui prend en entrée une chaîne de caractères et renvoie la même chaîne avec des virgules insérées entre tous les caractères (par exemple l'appel à cette fonction avec "NSI" renverra "N,S,I").
+		\end{alphenum}
+	\end{MonExo}
+	
+	\subsubsection*{Fonctions avancées}
+	Une chaîne de caractères n'étant pas modifiable, il est relativement difficile de la manipuler (par exemple, si on veut modifier certains de ses caractères). Pour contourner ce problème, une méthode consiste à transformer la chaîne en liste, à effectuer diverses manipulations sur celle-ci, puis à la retransformer en chaîne par concaténation.
+	
+	La première de ces méthodes s'appuie sur la fonction de transtypage \texttt{list()} qui renvoie une liste dont les éléments correspondent aux caractères de la chaîne:
+	\begin{verbatim}
+		list("Bonjour !")
+	\end{verbatim}
+	renverra
+	\begin{verbatim}
+		["B","o","n","j","o","u","r"," ","!"]
+	\end{verbatim}
+	L'inconvénient de cette approche est évidemment que cela découpe toutes les chaînes en caractères individuels - ce qui n'est pas nécessairement ce qu'on recherche. On peut vouloir par exemple isoler des mots (en repérant les espaces) ou des éléments d'une liste (en repérant des virgules ou point virgules). Pour cela on utilise la méthode \texttt{chaine.split(separateur)} dans laquelle on spécifie un séparateur:
+	\begin{verbatim}
+		"Thomas, Sirine, Aboubacar".split(", ")
+		"Thomas, Sirine, Aboubacar".split() # Pas de séparateur spécifié
+	\end{verbatim}
+	renverront
+	\begin{verbatim}
+		['Thomas', 'Sirine', 'Aboubacar']
+		['Thomas,', 'Sirine,', 'Aboubacar'] # sep par défaut: espace
+	\end{verbatim}
+	(Notez que le séparateur est éliminé de la chaîne par la méthode split).
+	
+	La méthode split a sa réciproque, qui est la méthode join:
+	\begin{verbatim}
+		mots = ["Rouge","Vert","Bleu"]
+		" ".join(mots)
+		" et ".join(mots)
+		"".join(mots)
+	\end{verbatim}
+	renverront
+	\begin{verbatim}
+		"Rouge Vert Bleu"
+		"Rouge et Vert et Bleu"
+		"RougeVertBleu"
+	\end{verbatim}
+	
+	\begin{MonExo}[quelques unes des nombreuses autres méthodes...]
+		Dans une console IDLE, testez avec différentes valeurs les commandes suivantes et déterminez ce que font ces différentes méthodes:
+		\begin{alphenum}
+			\item \texttt{chaine1.count(chaine2)}
+			\item \texttt{chaine1.find(chaine2)}
+			\item \texttt{chaine1.index(chaine2)}
+			\item \texttt{chaine1.replace(chaine2, chaine3)}
+			\item \texttt{chaine1.capitalize()}
+			\item \texttt{chaine1.isupper()}
+			\item \texttt{chaine1.upper()}
+			\item \texttt{chaine1.islower()}
+			\item \texttt{chaine1.lower()}
+			\item \texttt{chaine1.swapcase()}
+		\end{alphenum}
+	\end{MonExo}
+	
+	\begin{MonExo}[quelques méthodes permettant de coder / décoder des caractères...]
+		Dans une console IDLE, testez les commandes suivantes et déterminez ce qu'elles font:
+		\begin{alphenum}
+			\item \texttt{ord('a')}
+			\item \texttt{ord('Z')}
+			\item \texttt{chr(122)}
+			\item \texttt{chr(0x4D)}
+		\end{alphenum}
+	\end{MonExo}
+	
+	\begin{MonExo}[un hack de mot de passe!]
+		Dans cet exercice, nous allons simuler un simple crack de mot de passe. Choisissez un mot de passe composé de quatre caractères (lettres majuscules, minuscules sans accents, ou chiffres ), par exemple "Abc1" ou "ZZZZ". L'objectif est de créer un programme Python qui va tenter de deviner ce mot de passe.		
+		\\
+		
+		Il est évident que vous allez utiliser plusieurs des fonctions que l'on vient de découvrir... Je vous laisse deviner lesquelles. \textbf{Pensez bien à commencer par rédiger sur papier votre pseudo-code!!}.
+		\\
+		
+		Une fois le mot de passe trouvé, le programme doit afficher un message pour vous narguer.
+	\end{MonExo}
+
+	
 	\pagebreak
 	\section{Circuits \& logique booléenne}
 	
