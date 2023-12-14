@@ -1741,6 +1741,143 @@
 	
 	\pagebreak
 	\section{Circuits \& logique booléenne}
+	\subsection{Les variables booléennes}
+	On les a déjà vues sans formellement les présenter -- alors corrigeons cela:
+	\begin{MonAmp}{Définition}
+		Les \textit{valeurs booléennes} sont les valeurs 0 et 1 correspondant à l'état d’un bit: elles sont interprétées comme signifiant \texttt{False} (faux) et \texttt{True} (vrai) respectivement.
+		\\
+		
+		Une \textit{variable booléenne} est donc une variable ne pouvant prendre que l’une ou l’autre de ces deux valeurs.
+	\end{MonAmp}
+	
+	Dans ce cours on les a déjà vues à de multiples reprises quand on effectue des tests dans une console Python: \texttt{2 == 3} renvoie \texttt{False} et \texttt{3 in [1, 2, 3, 4]} renvoie \texttt{True}.
+	
+	\subsection{Les opérateurs booléens}
+	Eux aussi on a déjà commencé à les voir sans formellement les présenter -- et comme par ailleurs ils sont assez difficiles à définir (et qu'en plus c'est un peu futile d'essayer de le faire) le mieux est de directement présenter les principaux d'entre eux...
+	
+	\subsubsection*{L'opérateur "non"}
+	Il transforme 1 en 0 et réciproquement:
+	
+	\begin{verbatim}
+		non(1) = 0
+		non(0) = 1
+	\end{verbatim}
+	
+	Un opérateur booléen peut s'exprimer en "table de vérité" à deux ou plus colonnes -- les colonnes de gauche représentent les entrées, la colonne de droite représente la "sortie", soit le résultat de l'application de l'opérateur. Les lignes, elles, doivent contenir l'ensemble des combinaisons d'entrées possibles -- comme on va le voir, dans le cas d'un opérateur aussi simple que non(), il n'y en a que deux.
+	
+	\begin{MonExo}[table de vérité de l'opérateur "non"]
+		Compléter la table de vérité suivante:
+		\\
+		
+		\begin{center}		
+			\begin{tabular}{|c|c|}
+				\hline
+				$a$ & $non(a)$ \\ \hline
+				0 &  \\
+				\hline
+				1 &  \\
+				\hline
+			\end{tabular}
+		\end{center}
+	\end{MonExo}
+	
+	En Python, l'opérateur "non" est \texttt{not}.
+	
+	\subsubsection*{L'opérateur "ou"}
+	Soient $a$ et $b$ deux variables booléennes; l'opérateur \texttt{ou} appliqué à $a$ et $b$ renvoie 1 si l'une des deux variables au moins vaut 1, 0 sinon.
+	
+	\begin{MonExo}[table de vérité de l'opérateur "ou"]
+		Compléter la table de vérité suivante:
+		\\
+		
+		\begin{center}		
+			\begin{tabular}{|c|c|c|}
+				\hline
+				$a$ & $b$ & $a$ ou $b$ \\ \hline
+				1 & 1 &  \\ \hline
+				1 & 0 &  \\ \hline
+				0 & 1 &  \\ \hline
+				0 & 0 &  \\ \hline
+			\end{tabular}
+		\end{center}
+	\end{MonExo}
+	
+	En Python, l'opérateur "ou" est \texttt{or}.
+	
+	\subsubsection*{L'opérateur "et"}
+	Soient $a$ et $b$ deux variables booléennes; l'opérateur \texttt{et} appliqué à $a$ et $b$ renvoie 1 si les deux variables valent 1, 0 sinon.
+	
+	\begin{MonExo}[table de vérité de l'opérateur "et"]
+		Compléter la table de vérité suivante:
+		\\
+		
+		\begin{center}		
+			\begin{tabular}{|c|c|c|}
+				\hline
+				$a$ & $b$ & $a$ et $b$ \\ \hline
+				1 & 1 &  \\ \hline
+				1 & 0 &  \\ \hline
+				0 & 1 &  \\ \hline
+				0 & 0 &  \\ \hline
+			\end{tabular}
+		\end{center}
+	\end{MonExo}
+	
+	En Python, l'opérateur "et" est \texttt{and}.
+	
+	\subsubsection*{L'opérateur "xor" (également appelé "ou exclusif")}
+	Soient $a$ et $b$ deux variables booléennes; l'opérateur \texttt{xor} appliqué à $a$ et $b$ renvoie 1 si et seulement si exactement une des deux variables vaut 1, 0 sinon.
+	
+	\begin{MonExo}[table de vérité de l'opérateur "xor"]
+		Compléter la table de vérité suivante:
+		\\
+		
+		\begin{center}		
+			\begin{tabular}{|c|c|c|}
+				\hline
+				$a$ & $b$ & $a$ xor $b$ \\ \hline
+				1 & 1 &  \\ \hline
+				1 & 0 &  \\ \hline
+				0 & 1 &  \\ \hline
+				0 & 0 &  \\ \hline
+			\end{tabular}
+		\end{center}
+	\end{MonExo}
+	
+	En Python, l'opérateur "xor" est \texttt{\^}.
+	
+	\subsection{Expressions booléennes}
+	
+	\begin{MonAmp}{Définition}
+		Une \textit{expression booléenne} est une expression qui a pour valeur 0 ou 1; elle est construite à l'aide d'une combinaison de variables booléennes et d'opérateurs booléens.
+	\end{MonAmp}
+	
+	Par exemple \texttt{(a et b) ou non(c)} est une expression booléenne -- j'imagine que vous ne serez pas surpris que maintenant je vous demande...
+	
+	\begin{MonExo}[table de vérité de l'expression "(a et b) ou non(c)"]
+		Pour se faciliter la tâche, lorsqu'une expression booléenne devient compliquée, on ajoute des colonnes intermédiaires représentant les résultats des sous expressions -- et l'on combine ensuite ces résultats intermédiaires pour obtenir le résultat final.
+		\\
+		
+		Compléter la table de vérité suivante:
+		\\
+		
+		\begin{center}
+					
+			\begin{tabular}{|c|c|c|c|c|c|}
+				\hline
+				$a$ & $b$ & $c$ & $a$ et $b$ & non($c$) & ($a$ et $b$) ou non($c$)\\ \hline
+				1 & 1 & 1 &  &  &  \\ \hline
+				1 & 1 & 0 &  &  &  \\ \hline
+				1 & 0 & 1 & & & \\ \hline
+				1 & 0 & 0 & & & \\ \hline
+				0 & 1 & 1 &  &  &  \\ \hline
+				0 & 1 & 0 &  &  &  \\ \hline
+				0 & 0 & 1 & & & \\ \hline
+				0 & 0 & 0 & & & \\ \hline
+			\end{tabular}
+		\end{center}
+	\end{MonExo}
+	
 	
 \end{document}
 %Eléments manquants:
