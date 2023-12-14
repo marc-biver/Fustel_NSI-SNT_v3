@@ -1,0 +1,204 @@
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+% Le truc au-dessus pour avoir l'option shell-escape qui permet de faire du minted.
+\documentclass[12pt]{article}
+
+% Affichage ou non des reponses aux questions & exercices
+\newif\ifDispRep
+%\DispReptrue  % Show the text
+\DispRepfalse % Hide the text
+
+% Version du document
+\newcommand{\versiondoc}{v0.1}
+
+% Incorporation tous éléments de préambule communs à tous mes cours
+\usepackage{../../../CoursLFC}
+
+% Eléments de l'en-tête et de la page de garde spécifiques à ce doc
+\newcommand{\classe}{1\textsuperscript{ère} NSI}
+\newcommand{\themecours}{Exercices d'Entraînement}
+\newcommand{\datedoc}{décembre 2023}
+
+% Page de garde mise en page
+\title
+	{\vspace{3cm}
+		{\Large
+		\textit
+			{
+				\classe\hspace{0.1cm}
+				\textemdash\
+				\hspace{0.1cm}
+				\themecours
+			}
+			
+		\vspace{1cm}
+		\huge{Parcours de listes en Python} }
+		 
+		\vspace{1cm}
+	}
+\author{\etablissement}
+\date{
+	\auteur,
+	\datedoc,
+	\footnotesize{\textit{\versiondoc}} 
+	\vspace{6cm}
+	}
+
+% Header & Footer
+\lfoot{\etabshort}
+\cfoot{\thepage}
+\rfoot{\classe, \anneescol}
+\renewcommand{\footrulewidth}{0.2pt}
+\lhead{}
+\chead{}
+\rhead{}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+	
+	\maketitle
+	% pas de footer sur la première page
+	\thispagestyle{empty}
+				
+	\pagebreak	
+	
+	% Début du contenu du document
+	\begin{MonExo}[maximum d'une liste]
+		Écrivez une fonction qui prend une liste de nombres positifs et retourne le plus grand nombre de cette liste.
+	\end{MonExo}
+	
+	\begin{MaReponse}
+		Cet exercice est évidemment très proche de ce qu'on a fait en classe -- sauf qu'au lieu de calculer une moyenne on va identifier un maximum.
+		
+		\subsubsection*{Description simple de ce que notre fonction va faire:}
+		
+		\begin{itemize}
+			\item  Elle va initialiser une variable "Max" à 0 (parce que comme l'énoncé précise que les nombres sont positifs, on sait que leur maximum sera forcément supérieur ou égal à 0).
+			\item Elle va parcourir la liste dans l'ordre de ses indices et, pour chacun d'entre eux elle va:
+			\begin{itemize}
+				\item Si l'élément est strictement supérieur à Max, alors elle va remplacer Max par la valeur de l'élément.
+				\item Sinon elle va passer à l'élément suivant.
+			\end{itemize}
+			\item Enfin, elle va retourner le Max ainsi identifié.
+		
+		\end{itemize}
+		
+		\subsubsection*{Même chose, en pseudo-code un peu plus formalisé:}
+		 
+		 (manière plus structurée -- donc valant plus de points -- d'écrire la même chose)
+
+		\begin{algorithmic}[1]
+			\Require{$liste$ dont tous les éléments $\in \mathds{R+}$}
+			\Ensure{$Max \in \mathds{R+}$}
+			\Function{TrouveMax}{liste}
+			\State Max $\leftarrow$ 0
+			\ForAll{Element de liste}
+			\If{$Element > Max$}
+			\State Max $\leftarrow Element$
+			\EndIf
+			\EndFor
+			\State\Return{Max}
+			\EndFunction
+		\end{algorithmic}
+		
+		\subsubsection*{Et enfin en code Python:}
+		\MonPython{ExoParcLst_001_TrouveMax.py}
+	\end{MaReponse}
+
+
+	\begin{MonExo}[minimum d'une liste]
+		Écrivez une fonction qui prend une liste de nombres positifs et retourne le plus petit nombre de cette liste.
+	\end{MonExo}
+	
+	\begin{MaReponse}
+		Cet exercice est évidemment quasiment identique au précédent -- à une difficulté près: on ne sait pas comment initialiser notre variable Min (qui va jouer le même rôle que la variable Max dans l'exercice précédent). En effet, quelle que soit la valeur que l'on choisisse, on ne peut pas être sûr qu'elle soit supérieure au minimum réel.
+	
+		Par exemple: si j'initie Min à 100 et que j'applique la même démarche que dans l'exercice précédent:
+		\begin{itemize}
+			\item Sur la liste \texttt{[12, 200, 7, 89, 1000]}, cela fonctionnera puisque le minimum réel de la liste est inférieur à 100.
+			\item En revanche sur la liste \texttt{[110, 1000, 200, 354]}, ça ne fonctionnera pas -- la variable Min restera à 100, et la valeur retournée sera donc 100, ce qui est faux.
+		\end{itemize}
+
+		On va donc devoir "ruser" en initialisant Min à la première valeur de la liste -- puis poursuivre comme précédemment (sauf qu'on teste si l'élément est inférieur au min, au lieu de supérieur au max évidemment).
+	
+		\subsubsection*{Pseudo-code:}
+		\begin{algorithmic}[1]
+			\Require{$liste$ dont tous les éléments $\in \mathds{R+}$}
+			\Ensure{$Min \in \mathds{R+}$}
+			\Function{TrouveMax}{liste}
+			\State Max $\leftarrow$ liste[0]
+			\ForAll{Element de liste}
+			\If{$Element < Min$}
+			\State Min $\leftarrow Element$
+			\EndIf
+			\EndFor
+			\State\Return{Min}
+			\EndFunction
+		\end{algorithmic}
+	
+		\subsubsection*{Code Python:}
+		\MonPython{ExoParcLst_002_TrouveMin.py}
+	\end{MaReponse}
+
+
+	\begin{MonExo}[vérification de la présence d'un élément dans une liste]
+		\textbf{\textit{Sans (évidemment) utiliser l'opérateur \texttt{in}}}, écrivez une fonction qui prend en entrée une liste de nombres et un nombre, et retourne \texttt{True} si l'élément est présent dans la liste , et \texttt{False} sinon.
+	\end{MonExo}
+	
+	\begin{MaReponse}
+		Puisqu'on n'a pas le droit d'utiliser l'opérateur \texttt{in}, il est évident qu'on va devoir parcourir la liste et vérifier un à un si ses éléments correspondent à celui qui a été passé en entrée.
+		
+		\subsubsection*{Pseudo-code:}
+		\begin{algorithmic}[1]
+			\Require{$liste$ dont tous les éléments $\in \mathds{R}$; et $element_cherche\in \mathds{R}$}
+			\Ensure{\texttt{Vrai} ou \texttt{Faux}}
+			\Function{EstPresent}{liste, element}
+			\State resultat $\leftarrow$ \texttt{Faux}
+			\Comment{On part du principe que l'élément n'est pas présent, jusqu'à ce qu'on le trouve}
+			\ForAll{Element de liste}
+			\If{$Element = element_cherche$}
+			\State resultat $\leftarrow \texttt{Vrai}$
+			\EndIf
+			\EndFor
+			\State\Return{resultat}
+			\EndFunction
+		\end{algorithmic}
+		
+		Remarque: ce code fonctionne et répond à l'énoncé mais il est très loin d'être optimisé -- en effet, si on trouve l'élément dans le premier élément de la liste, on va continuer à parcourir tout le reste de la liste avant de renvoyer \texttt{Vrai}, alors qu'on sait que c'est ce qu'on va faire depuis le début. C'est pour ça que je vous propose ci-dessous deux versions du code:
+		\begin{itemize}
+			\item La première est une application stricte du pseudo-code ci-dessus; elle n'est pas optimale mais elle répond au besoin;
+			\item La seconde utilise le fait que "return" force la sortie d'une fonction et est optimisée -- mais pour les besoins du contrôle ce n'est pas grave si vous ne la comprenez pas.
+		\end{itemize}
+		\subsubsection*{Code Python non optimisé:}
+		\MonPython{ExoParcLst_003a_ChercheElt.py}
+		\subsubsection*{Code Python optimisé:}
+		\MonPython{ExoParcLst_003b_ChercheEltOptim.py}
+	\end{MaReponse}
+	
+	
+	\begin{MonExo}[liste de longueurs de mots]
+		Écrivez une fonction qui prend une liste de mots et retourne une liste des longueurs correspondantes de ces mots.
+	\end{MonExo}
+	
+	\begin{MaReponse}
+		Exercice qui devrait être assez trivial si vous avez bien assimilé les exercices précédents.
+		
+		\subsubsection*{Pseudo-code:}
+		\begin{algorithmic}[1]
+			\Require{$listeMots$ dont tous les éléments sont des chaînes de caractères (\texttt{str})}
+			\Ensure{$listeLongueurs$ dont les éléments sont les longueurs en nombre de caractères des chaînes de caractères présentes dans la liste passée en entrée}
+			\Function{Longueurs}{listeMots}
+			\State listeLongueurs $\leftarrow$ [liste vide]
+			\Comment{On initialise la liste qu'on renverra - pour le moment elle est vide}
+			\ForAll{Element de listeMots}
+			\State Ajout à ListeLongeurs de la valeur longueur(Element)
+			\EndFor
+			\State\Return{ListeLongueurs}
+			\EndFunction
+		\end{algorithmic}
+		
+		\subsubsection*{Code Python:}
+		\MonPython{ExoParcLst_004_LongueursMots.py}
+	\end{MaReponse}
+		
+	
+\end{document}
