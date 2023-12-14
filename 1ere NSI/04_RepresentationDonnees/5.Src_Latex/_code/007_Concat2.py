@@ -1,0 +1,1 @@
+def concat2(a, b):    # Dernier caractère de a    DernA = a[len(a) - 1]    # Premier caractère de b    PremB = b[0]    resultat = a    if DernA != " " and PremB != " ":        resultat += " " # on ajoute l'espace s'il n'y en a pas    resultat += b    return resultat

@@ -1,0 +1,1 @@
+def milieu(chn):    # Longueur de la chaîne    LongChn = len(chn)    if LongChn % 2 == 0:        resultat = "XX"    else:        centre = LongChn // 2        resultat = chn[centre]    return resultat

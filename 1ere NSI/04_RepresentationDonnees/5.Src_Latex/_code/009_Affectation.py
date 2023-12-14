@@ -1,0 +1,1 @@
+def affectation(nom):    # Récupération de l'initiale    Initiale = nom[0]    if Initiale <= "H":        resultat = 1    elif Initiale <= "Q":        resultat = 2    else:        resultat = 3    return resultat

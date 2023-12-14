@@ -1484,7 +1484,7 @@
 			6, 6 & ACK & 38, 26 & \& & 70, 46 & F & 102, 66 & f \\
 			7, 7 & BEL & 39, 27 & ' & 71, 47 & G & 103, 67 & g \\
 			8, 8 & BS & 40, 28 & ( & 72, 48 & H & 104, 68 & h \\
-			9, 9 & HT & 41, 29 & ) & 73, 49 & I, 49 & 105, 69 & i \\
+			9, 9 & HT & 41, 29 & ) & 73, 49 & I & 105, 69 & i \\
 			10, A & LF & 42, 2A & * & 74, 4A & J & 106, 6A & j \\
 			11, B & VT & 43, 2B & + & 75, 4B & K & 107, 6B & k \\
 			12, C & FF & 44, 2C & , & 76, 4C & L & 108, 6C & l \\
@@ -1566,11 +1566,10 @@
 	\subsection{La norme UTF-8}
 	Dans un monde de plus en plus globalisé, le besoin d'un système de codage capable de gérer un vaste éventail de caractères est devenu impératif. C’est dans ce contexte que l'UTF-8 (8-bit Unicode Transformation Format) est devenu la norme dominante: elle s'appuie toujours, pour les premiers caractères, sur la norme ASCII mais permet d'utiliser jusqu'à 24 bits pour coder un caractère. Créé en 1992, UTF-8 peut représenter plus d’un million de caractères différents, ce qui le rend idéal pour les applications internationales, y compris les pages Web. En effet, si vous consultez le code source d’une page Web moderne, il est fort probable que "UTF-8" soit spécifié comme l’encodage de caractères utilisé.
 	
-	Nous ne couvrirons pas ici les principes de codage en UTF-8 -- il vous est suffisant de savoir d'où cette norme vient, dans quelle logique d'évolution elle s'inscrit.
+	Nous ne couvrirons pas ici les principes de codage en UTF-8 -- il vous est suffisant de savoir d'où cette norme vient, dans quelle logique d'évolution elle s'inscrit. Si en revanche vous voulez en savoir plus à ce sujet, je vous invite à consulter \href{https://fr.wikipedia.org/wiki/UTF-8#Description_technique}{cette section de la page Wikipedia consacrée au codage UTF-8}.
 	
 	
-	
-	\subsection{Une petite pause Python...}
+	\subsection{Encore un détour par Python...}
 	\subsubsection*{Fonctionnement de base des chaînes de caractères}
 	Faisons de nouveau un petit détour par Python, et plus spécifiquement:
 	\begin{itemize}
@@ -1659,11 +1658,133 @@
 		\begin{alphenum}
 			\item Une fonction qui prend deux chaînes de caractères en entrée, et renvoie la concaténation des deux avec un espace ajouté au centre.
 			\item La même fonction qui cette fois vérifie qu'il n'y a qu'un seul espace entre les deux chaînes -- qui donc n'en ajoutera un que si la première ne se termine pas par un espace et la seconde ne commence pas par un espace.
-			\item Une fonction qui prend une chaîne de caractères en entrée, et renvoie, si sa longueur est impaire, le caractère situé au centre (donc pour "ABCDE" elle renverrait "C"), et si elle est paire les deux caractères du milieu (pour "ABCDEF", "CD").
+			\item Une fonction qui prend une chaîne de caractères en entrée, et renvoie, si sa longueur est impaire, le caractère situé au centre (donc pour "ABCDE" elle renverrait "C"), et si elle est paire:
+			\begin{itemize}
+				\item Version simple (corrigée ci-dessous): elle renvoie la chaîne de caractères "XX" à chaque fois (donc pour "ABCDEF" en entrée, elle renvoie "XX").
+				\item Version plus sophistiquée pour ceux qui veulent essayer: les deux caractères du milieu (pour "ABCDEF" en entrée, elle renvoie "CD").
+			\end{itemize} 
 			\item Affectation d'élèves par groupe alphabétique: une fonction qui prend en entrée un nom (chaîne de caractères commençant par une majuscule) et retourne un nombre situé entre 1 et 3 -- 1 si l'initiale est comprise entre A et H; 2 si elle est entre I et Q; et 3 si elle est entre R et Z.
 			\item Séparation des caractères par des virgules: une fonction qui prend en entrée une chaîne de caractères et renvoie la même chaîne avec des virgules insérées entre tous les caractères (par exemple l'appel à cette fonction avec "NSI" renverra "N,S,I").
 		\end{alphenum}
 	\end{MonExo}
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item En pseudo-code:
+			\begin{algorithmic}[1]
+				\Require{a et b, chaînes de caractères}
+				\Ensure{resultat, chaîne de caractères}
+				\Function{Concat1}{a, b}
+				\State resultat $\leftarrow$ a
+				\Comment{On commence par la première chaîne}
+				\State resultat $\leftarrow$ resultat + " "
+				\Comment{On ajoute l'espace}
+				\State resultat $\leftarrow$ resultat + b
+				\Comment{On ajoute la seconde chaîne}
+				\State\Return{resultat}
+				\Comment{C'est fini - on renvoie le résultat}
+				\EndFunction
+			\end{algorithmic}
+			Ce qui donne en Python:
+			\MonPython{006_Concat1.py}
+			\item En pseudo-code -- presque la même chose, évidemment, sauf que l'on vérifie au préalable la fin de la chaîne a et le début de la chaine b (on ne couvre pas ici le cas où a finit par un espace ET b commence par un espace)
+			\begin{algorithmic}[1]
+				\Require{a et b, chaînes de caractères}
+				\Ensure{resultat, chaîne de caractères}
+				\Function{Concat2}{a, b}
+				\State LongA $\leftarrow$ len(a)
+				\Comment{On récupère la longueur de la première chaine de caractères}
+				\State DernA $\leftarrow$ a[LongA]
+				\Comment{On isole le dernier caractère de a}
+				\State PremB $\leftarrow$ b[0]
+				\Comment{On isole le premier caractère de b}
+				\State resultat $\leftarrow$ a
+				\Comment{On commence par la première chaîne}
+				\If{DernA $\ne$ " " ET PremB $\ne$ " "}
+				\Comment{PAS d'espace}
+				\State resultat $\leftarrow$ resultat + " "
+				\Comment{On en ajoute donc un}
+				\EndIf
+				\State resultat $\leftarrow$ resultat + b
+				\Comment{On ajoute la seconde chaîne dans tous les cas}
+				\State\Return{resultat}
+				\Comment{C'est fini - on renvoie le résultat}
+				\EndFunction
+			\end{algorithmic}
+			Ce qui donne en Python:
+			\MonPython{007_Concat2.py}
+			\item En pseudo-code:
+			\begin{algorithmic}[1]
+				\Require{chn, une chaîne de caractères}
+				\Ensure{resultat, chaîne de caractères}
+				\Function{Milieu}{chn}
+				\State LongChn $\leftarrow$ len(chn)
+				\Comment{Longueur de la chaîne}
+				\If{LongChn est paire}
+				\State resultat $\leftarrow$ "XX"
+				\Else
+				\State centre $\leftarrow$ LongChn // 2
+				\State resultat $\leftarrow$ chn[centre]
+				\EndIf
+				\State\Return{resultat}
+				\EndFunction
+			\end{algorithmic}
+			Vérifions que le calcul ci-dessus fonctionne sur un exemple: imaginons qu'en entrée on ait \texttt{chn = [ABCDE]}. Alors:
+			\begin{itemize}
+				\item \texttt{LongChn = 5} (donc la longueur est bien impaire)
+				\item \texttt{centre = 5 // 2 = 2}
+				\item Et donc \texttt{chn[centre] = chn[2] = "C"} (puisque, comme pour les listes, les indices commencent à 0) -- ce qui est bien ce qu'on voulait.
+			\end{itemize}
+			Ce qui donne en Python:
+			\MonPython{008_Milieu.py}
+		\item En pseudo-code:
+		\begin{algorithmic}[1]
+			\Require{nom: chaîne de caractères débutant par une majuscule}
+			\Ensure{resultat, valant 1, 2, ou 3}
+			\Function{Affectation}{nom}
+			\State Initiale $\leftarrow$ nom[0]
+			\Comment{On ne vérifie pas que c'est une majuscule}
+			\If{Initiale $\le$ H}
+			\State resultat $\leftarrow$ 1
+			\ElsIf{Initiale $\le$ Q }
+			\State resultat $\leftarrow$ 2
+			\Else
+			\State resultat $\leftarrow$ 3
+			\EndIf
+			\State\Return{resultat}
+			\EndFunction
+		\end{algorithmic}
+		On s'appuie ici sur le fait que le code ASCII des lettres majuscules est séquentiel, commençant (en hexadécimal) à 41 pour A et allant jusqu'à 5A pour Z (ce qui fait que les comparaisons numériques implicites utilisant le symbole $\le$ fonctionnent bien).
+		
+		Ce qui donne en Python:
+		\MonPython{009_Affectation.py}
+		\item Cet exercice reprend l'ensemble de ce qu'on a vu dans les précédents et y ajoute le parcours d'une chaîne de caractères au moyen d'une boucle comme on sait déjà le faire pour une liste -- il est donc très complet, et je ne saurais trop vous conseiller de bien le comprendre / l'assimiler en vue des contrôles à venir...
+		
+		En pseudo-code:
+		\begin{algorithmic}[1]
+			\Require{chn, chaîne de caractères}
+			\Ensure{resultat, chaîne de caractères}
+			\Function{Decoupage}{chn}
+			\State LongChn $\leftarrow$ len(chn)
+			\Comment{Nombre de caractères}
+			\State resultat $\leftarrow$ ""
+			\Comment{Initialisation du résultat: chaîne vide}
+			\ForAll{$caractere$ de chaine}
+			\If{resultat $\ne$ ""}
+			\Comment{Pas de virgule avant 1er caractère}
+			\State resultat $\leftarrow$ resultat + ","
+			\EndIf
+			\State resultat $\leftarrow$ resultat + $caractere$
+			\Comment{Ajout caractère suivant}
+			\EndFor
+			\State\Return{resultat}
+			\EndFunction
+		\end{algorithmic}
+		On voit bien dans le pseudo-code ci-dessus et dans le code Python ci-dessous qu'on parcourt ici la chaîne de caractères exactement de la même manière qu'on parcourt habituellement les éléments d'une liste.
+		
+		Ce qui donne en Python:
+		\MonPython{010_Decoupage.py}
+		\end{alphenum}
+	\end{MaReponse}
 	
 	\subsubsection*{Fonctions avancées}
 	Une chaîne de caractères n'étant pas modifiable, il est relativement difficile de la manipuler (par exemple, si on veut modifier certains de ses caractères). Pour contourner ce problème, une méthode consiste à transformer la chaîne en liste, à effectuer diverses manipulations sur celle-ci, puis à la retransformer en chaîne par concaténation.
@@ -1707,7 +1828,6 @@
 		\begin{alphenum}
 			\item \texttt{chaine1.count(chaine2)}
 			\item \texttt{chaine1.find(chaine2)}
-			\item \texttt{chaine1.index(chaine2)}
 			\item \texttt{chaine1.replace(chaine2, chaine3)}
 			\item \texttt{chaine1.capitalize()}
 			\item \texttt{chaine1.isupper()}
@@ -1717,6 +1837,19 @@
 			\item \texttt{chaine1.swapcase()}
 		\end{alphenum}
 	\end{MonExo}
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item Renvoie le nombre de fois que l'on trouve \texttt{chaine2} dans \texttt{chaine1}. Donc \texttt{"ABACAD".count("A")} renvoie 3.
+			\item Renvoie la position de la première occurence (dans le sens de la lecture -- donc en partant de la gauche) de \texttt{chaine2} dans \texttt{chaine1}. Donc\\ \texttt{"ABCD".find("C")} renvoie 2 (puisque les indices commencent à 0)
+			\item Renvoie \texttt{chaine1} dans laquelle toutes les instances de \texttt{chaine2} auront été remplacées par \texttt{chaine3}. Donc \texttt{"ABACD".replace("A","99")} renvoie "\texttt{99B99CD}".
+			\item Renvoie \texttt{chaine1} avec le premier caractère en majuscule et tous les autres en minuscules. Donc \texttt{"aBBgD".capitalize()} renvoie "\texttt{Abbgd}".
+			\item Renvoie \texttt{True} si tous les caractères de \texttt{chaine1} sont des majuscules, \texttt{False} sinon.
+			\item Renvoie \texttt{chaine1} avec tous ses caractères passés en majuscules. Donc \texttt{"AbCd".upper()} renverra "\texttt{ABCD}".
+			\item Renvoie \texttt{True} si tous les caractères de \texttt{chaine1} sont des minuscules, \texttt{False} sinon.
+			\item Renvoie \texttt{chaine1} avec tous ses caractères passés en minuscules. Donc \texttt{"AbCd".lower()} renverra "\texttt{abcd}".
+			\item Renvoie \texttt{chaine1} avec toutes ses majuscules passées en minuscules et réciproquement. Donc \texttt{"AbCd".swapcase()} renverra "\texttt{aBcD}".
+		\end{alphenum}
+	\end{MaReponse}
 	
 	\begin{MonExo}[quelques méthodes permettant de coder / décoder des caractères...]
 		Dans une console IDLE, testez les commandes suivantes et déterminez ce qu'elles font:
@@ -1727,6 +1860,14 @@
 			\item \texttt{chr(0x4D)}
 		\end{alphenum}
 	\end{MonExo}
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item Renvoie 97, ce qui est (en base décimale) \textbf{le code ASCII de la lettre "a"}.
+			\item Renvoie 90, ce qui est (en base décimale) \textbf{le code ASCII de la lettre "Z"}.
+			\item Renvoie 'z', \textbf{dont le code ASCII (en base décimale) est 122}.
+			\item Renvoie 'M', \textbf{dont le code ASCII (en base hexadécimale) est 4D} (\textit{on rappelle que l'opérateur "0x" permet d'entrer des valeurs hexadécimales dans Python}).
+		\end{alphenum}
+	\end{MaReponse}
 	
 	\begin{MonExo}[un hack de mot de passe!]
 		Dans cet exercice, nous allons simuler un simple crack de mot de passe. Choisissez un mot de passe composé de quatre caractères (lettres majuscules, minuscules sans accents, ou chiffres ), par exemple "Abc1" ou "ZZZZ". L'objectif est de créer un programme Python qui va tenter de deviner ce mot de passe.		
@@ -1737,6 +1878,9 @@
 		
 		Une fois le mot de passe trouvé, le programme doit afficher un message pour vous narguer.
 	\end{MonExo}
+	\begin{MaReponse}
+		Celui-là, je ne vous en donne pas la solution -- je le laisse comme défi à ceux qui veulent s'y essayer. Envoyez-moi vos solutions si vous voulez!
+	\end{MaReponse}
 
 	
 	\pagebreak
@@ -1751,6 +1895,8 @@
 	\end{MonAmp}
 	
 	Dans ce cours on les a déjà vues à de multiples reprises quand on effectue des tests dans une console Python: \texttt{2 == 3} renvoie \texttt{False} et \texttt{3 in [1, 2, 3, 4]} renvoie \texttt{True}.
+	
+	Le codage des variables booléennes est bien entendu évident -- puisqu'elles ne peuvent prendre que deux valeurs (qui en plus sont 0 et 1) il va de soi qu'il suffit d'un bit pour les représenter en mémoire.
 	
 	\subsection{Les opérateurs booléens}
 	Eux aussi on a déjà commencé à les voir sans formellement les présenter -- et comme par ailleurs ils sont assez difficiles à définir (et qu'en plus c'est un peu futile d'essayer de le faire) le mieux est de directement présenter les principaux d'entre eux...
@@ -1780,6 +1926,19 @@
 			\end{tabular}
 		\end{center}
 	\end{MonExo}
+	\begin{MaReponse}
+		\begin{center}		
+			\begin{tabular}{|c|c|}
+				\hline
+				$a$ & $non(a)$ \\ \hline
+				0 & 1 \\
+				\hline
+				1 & 0 \\
+				\hline
+			\end{tabular}
+		\end{center}
+	\end{MaReponse}
+	
 	
 	En Python, l'opérateur "non" est \texttt{not}.
 	
@@ -1801,6 +1960,18 @@
 			\end{tabular}
 		\end{center}
 	\end{MonExo}
+	\begin{MaReponse}
+		\begin{center}		
+			\begin{tabular}{|c|c|c|}
+				\hline
+				$a$ & $b$ & $a$ ou $b$ \\ \hline
+				1 & 1 & 1 \\ \hline
+				1 & 0 & 1 \\ \hline
+				0 & 1 & 1 \\ \hline
+				0 & 0 & 0 \\ \hline
+			\end{tabular}
+		\end{center}
+	\end{MaReponse}
 	
 	En Python, l'opérateur "ou" est \texttt{or}.
 	
@@ -1822,6 +1993,19 @@
 			\end{tabular}
 		\end{center}
 	\end{MonExo}
+	\begin{MaReponse}
+		\begin{center}		
+			\begin{tabular}{|c|c|c|}
+				\hline
+				$a$ & $b$ & $a$ et $b$ \\ \hline
+				1 & 1 & 1 \\ \hline
+				1 & 0 & 0 \\ \hline
+				0 & 1 & 0 \\ \hline
+				0 & 0 & 0 \\ \hline
+			\end{tabular}
+		\end{center}
+	\end{MaReponse}
+
 	
 	En Python, l'opérateur "et" est \texttt{and}.
 	
@@ -1843,6 +2027,18 @@
 			\end{tabular}
 		\end{center}
 	\end{MonExo}
+	\begin{MaReponse}
+		\begin{center}		
+			\begin{tabular}{|c|c|c|}
+				\hline
+				$a$ & $b$ & $a$ xor $b$ \\ \hline
+				1 & 1 & 0 \\ \hline
+				1 & 0 & 1 \\ \hline
+				0 & 1 & 1 \\ \hline
+				0 & 0 & 0 \\ \hline
+			\end{tabular}
+		\end{center}
+	\end{MaReponse}
 	
 	En Python, l'opérateur "xor" est \texttt{\^}.
 	
@@ -1877,7 +2073,93 @@
 			\end{tabular}
 		\end{center}
 	\end{MonExo}
+	\begin{MaReponse}
+		\begin{center}		
+			\begin{tabular}{|c|c|c|c|c|c|}
+				\hline
+				$a$ & $b$ & $c$ & $a$ et $b$ & non($c$) & ($a$ et $b$) ou non($c$)\\ \hline
+				1 & 1 & 1 & 1 & 0 & 1 \\ \hline
+				1 & 1 & 0 & 1 & 1 & 1 \\ \hline
+				1 & 0 & 1 & 0 & 0 & 0 \\ \hline
+				1 & 0 & 0 & 0 & 1 & 1 \\ \hline
+				0 & 1 & 1 & 0 & 0 & 0 \\ \hline
+				0 & 1 & 0 & 0 & 1 & 1 \\ \hline
+				0 & 0 & 1 & 0 & 0 & 0 \\ \hline
+				0 & 0 & 0 & 0 & 1 & 1 \\ \hline
+			\end{tabular}
+		\end{center}
+	\end{MaReponse}
 	
+	\begin{MonExo}[vous avez compris le principe? Parfait!]
+		Vous n'aurez donc aucun mal à dresser les tables de vérité des expressions booléennes suivantes (où, bien entendu, \texttt{a}, \texttt{b}, et \texttt{c} sont des variables booléennes):
+		\begin{alphenum}
+			\item \texttt{f(a, b, c) = non(a et non(b)) ou c}
+			\item \texttt{g(a, b, c) = (a xor non(b)) et c}
+			\item \texttt{h(a, b, c) = non(a et b) et (b ou c)}
+		\end{alphenum}
+	\end{MonExo}
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item 
+			\begin{center}		
+				\begin{tabular}{|c|c|c|c|c|c|c|}
+					\hline
+					$a$ & $b$ & $c$ & non(b) & a et non(b) & non(a et non(b))& f(a, b, c)\\ \hline
+					1 & 1 & 1 & 0 & 0 & 1 & 1\\ \hline
+					1 & 1 & 0 & 0 & 0 & 1 & 1\\ \hline
+					1 & 0 & 1 & 1 & 1 & 0 & 1\\ \hline
+					1 & 0 & 0 & 1 & 1 & 0 & 0\\ \hline
+					0 & 1 & 1 & 0 & 0 & 1 & 1\\ \hline
+					0 & 1 & 0 & 0 & 0 & 1 & 1\\ \hline
+					0 & 0 & 1 & 1 & 0 & 1 & 1\\ \hline
+					0 & 0 & 0 & 1 & 0 & 1 & 1\\ \hline
+				\end{tabular}
+			\end{center}
+			\item 
+			\begin{center}		
+				\begin{tabular}{|c|c|c|c|c|c|}
+					\hline
+					$a$ & $b$ & $c$ & non(b) & a xor non(b) & g(a, b, c)\\ \hline
+					1 & 1 & 1 & 0 & 1 & 1 \\ \hline
+					1 & 1 & 0 & 0 & 1 & 0 \\ \hline
+					1 & 0 & 1 & 1 & 0 & 0 \\ \hline
+					1 & 0 & 0 & 1 & 0 & 0 \\ \hline
+					0 & 1 & 1 & 0 & 0 & 0 \\ \hline
+					0 & 1 & 0 & 0 & 0 & 0 \\ \hline
+					0 & 0 & 1 & 1 & 1 & 1 \\ \hline
+					0 & 0 & 0 & 1 & 1 & 0\\ \hline
+				\end{tabular}
+			\end{center}
+			\item 
+			\begin{center}		
+				\begin{tabular}{|c|c|c|c|c|c|c|}
+					\hline
+					$a$ & $b$ & $c$ & a et b & non(a et b) & b ou c& h(a, b, c)\\ \hline
+					1 & 1 & 1 & 1 & 0 & 1 & 0\\ \hline
+					1 & 1 & 0 & 1 & 0 & 1 & 0\\ \hline
+					1 & 0 & 1 & 0 & 1 & 1 & 1\\ \hline
+					1 & 0 & 0 & 0 & 1 & 0 & 0\\ \hline
+					0 & 1 & 1 & 0 & 1 & 1 & 1\\ \hline
+					0 & 1 & 0 & 0 & 1 & 1 & 1\\ \hline
+					0 & 0 & 1 & 0 & 1 & 1 & 1\\ \hline
+					0 & 0 & 0 & 0 & 1 & 0& 0\\ \hline
+				\end{tabular}
+			\end{center}
+		\end{alphenum}
+	\end{MaReponse}
+	
+	\subsection{Et pourquoi on apprend tout ça, au fait?}
+	Cette section n'est évidemment pas à apprendre en vue de contrôles; on verra, mais je ne pense même pas passer trop de temps dessus en cours. En revanche, il me semble que c'est clairement une question légitime que vous pourriez vous poser. Alors si c'est le cas et / ou que ça vous intéresse -- continuez à lire!
+	
+	Il y a plusieurs raisons pour s'intéresser à la logique booléenne, pour en acquérir tôt les fondamentaux comme vous le faites actuellement. Le problème est que ces raisons semblent lointaines et abstraites quand on est en 1\textsuperscript{ère} -- et on a un peu l'impression qu'on est en train de nous obliger à apprendre des trucs qui ne servent à rien.
+	
+	Je ne pense pas pouvoir vous passionner ici en quelques points -- mais si vous réfléchissez un peu aux raisons que je vous propose ci-dessous, peut-être pourrez-vous vous persuader de l'intérêt du sujet à long terme, pour vous.
+	\begin{itemize}
+		\item Bases de l'informatique: les ordinateurs fonctionnent grâce à des circuits logiques qui traitent les informations en utilisant des opérations booléennes. Comprendre cette logique est essentiel pour saisir comment fonctionnent les ordinateurs au niveau le plus élémentaire.
+		\item Fondements du codage et des algorithmes: la plupart des langages de programmation et algorithmes utilisent la logique booléenne pour la prise de décisions (structures conditionnelles comme if/else) et les boucles (while, for). Une compréhension solide de la logique booléenne est donc essentielle pour écrire et comprendre des codes et des algorithmes efficaces.
+		\item Plus largement -- résolution de problèmes et pensée critique: apprendre la logique booléenne vous aide à décomposer les problèmes complexes en parties plus petites et plus gérables, une compétence précieuse dans de nombreux domaines, pas seulement en informatique. C'est ce qu'on appelle une approche cartésienne -- quelque chose que vous apprendrez en cours de philosophie l'an prochain je crois.
+		\item Plus généralement encore: la logique booléenne n'est pas uniquement utilisée en informatique. Elle trouve des applications dans des domaines tels que les mathématiques, l'électronique, la philosophie, et même dans la vie quotidienne pour la prise de décision logique. Elle est une manière de raisonner qui vous sera utile dans vos études supérieures, quelles qu'elles soient.
+	\end{itemize}
 	
 \end{document}
 %Eléments manquants:
