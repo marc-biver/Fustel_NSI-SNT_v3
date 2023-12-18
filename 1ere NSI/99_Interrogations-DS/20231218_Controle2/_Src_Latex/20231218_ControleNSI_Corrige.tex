@@ -1,0 +1,300 @@
+% !TeX document-id = {63e2cb4c-39e5-4fe5-ae31-d450d2286238}
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+\documentclass[11pt,a4paper]{exam}
+%\printanswers % pour imprimer les réponses (corrigé)
+\noprintanswers % Pour ne pas imprimer les réponses (énoncé)
+\addpoints % Pour compter les points
+\usepackage[utf8]{inputenc}
+\usepackage{minted}
+
+\usepackage{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{dashundergaps}
+%\usepackage[monochrome]{xcolor} % Permet de tout mettre en N&B strict
+\usepackage{xcolor}
+%\selectcolormodel{gray} % Permet de tout mettre en niveaux de gris
+\geometry{left=1.5cm, right=1.5cm, top=2cm, bottom=2cm} % Définition des marges du doc
+
+%\newcommand{\class}{1\textsuperscript{ère} Spé. NSI Gr. 2\textsubscript{A}}
+\newcommand{\class}{1\textsuperscript{ère} Spé. NSI Gr. 2}
+\newcommand{\examnum}{Contrôle \#2}
+\newcommand{\examdate}{18/12/2023}
+\newcommand{\timelimit}{1 Heure}
+\newcommand{\lycee}{Lycée Fustel de Coulanges}
+
+\pagestyle{head}
+\firstpageheader{}{}{}
+\runningheader{\class}{\examnum\ - Page \thepage\ / \numpages}{\examdate}
+\runningheadrule
+
+
+\begin{document}
+% Espace d'en-tête
+    \noindent
+    \begin{spacing}{1}
+        \noindent
+        \begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} l @{\extracolsep{6pt}} l}
+            \textbf{\class} & \textbf{\examnum, \examdate}&\\
+            \textbf{\lycee} &\textbf{Durée: \timelimit} &\\
+        \end{tabular*}\\
+    \end{spacing}
+
+    \noindent
+    \vspace{10pt}
+    \hrule
+    \vspace{5pt} 
+    \noindent
+    \\
+    Ce contrôle comporte \numquestions\ questions; il sera noté sur \numpoints\ points. 
+    Les réponses sont à porter sur une copie \uline{comportant votre nom}.
+    Il n'est pas nécessaire de répondre aux questions dans l'ordre \textemdash\ commencez par celles où vous vous sentez le plus à l'aise \textit{(mais ne tentez les questions bonus qu'après avoir fini le reste!!)}.\\
+    Les calculatrices ne sont \uline{pas} autorisées.\\
+    \noindent
+    \hrule
+    \vspace{15pt} 
+
+    \begin{questions} % DEBUT DE L'EXAMEN
+		\begin{spacing}{1}
+    
+		\question[1 \half] \textit{Questions à choix multiples }(aucune justification de la réponse n'est nécessaire; plusieurs réponses sont possibles):
+   		        \begin{parts}
+       				\part L'ordre correct, de la plus petite quantité à la plus grande, est:
+   			        \begin{checkboxes}
+	       				\choice \textbf{A: }1 Mo (mégaoctet), 1 bit, 1 Go (gigaoctet), 1 To (téraoctet), 1 ko (kilooctet)
+						\correctchoice \textbf{B: }1 bit, 1 ko, 1 Mo, 1 Go, 1 To
+        				\choice \textbf{C: }1 bit, 1 ko, 1 Go, 1 To, 1 Mo
+        				\choice \textbf{D: }1 bit, 1 ko, 1 Mo, 1 To, 1 Go
+           			\end{checkboxes}
+    	   			\part Sélectionnez, parmi les affirmations ci-dessous, celle(s) qui est (ou sont) vraie(s):
+					\begin{checkboxes}
+						\choice \textbf{A: }Un nombre réel encodé au moyen de la norme IEEE 754 ne peut jamais être une valeur exacte -- c'est toujours une valeur approchée.
+						\correctchoice \textbf{B: }Il est dangereux de faire des comparaisons entre nombres flottants car du fait de leur encodage cela peut générer des erreurs.
+						\correctchoice \textbf{C: }L'encodage des nombres réels au moyen de la norme IEEE 754 s'appuie sur les mêmes principes que la notation scientifique (sauf que l'on utilise des puissances de 2 au lieu de puissances de 10).
+					\end{checkboxes}
+					\part Sélectionnez, parmi les affirmations ci-dessous, celle(s) qui est (ou sont) vraie(s):
+					\begin{checkboxes}
+						\correctchoice \textbf{A: }Un texte codé en ASCII est simplement une suite d'octets correspondant au codage de chacun des caractères du texte.
+						\correctchoice \textbf{B: }Un texte codé en ASCII ne peut pas contenir de lettres comportant des accents (comme "é" par exemple).
+						\correctchoice \textbf{C: }L'encodage ASCII est moins complet que l'encodage UTF-8.
+						\choice \textbf{D: }Un caractère codé en ASCII l'est sur 64 bits.
+					\end{checkboxes}
+				\end{parts}
+							
+            \question {\textit{Addition de nombres binaires} (posez bien votre addition -- un simple résultat ne sera pas accepté.)}
+	            \begin{parts}
+	            	\part[1] {Effectuez l'addition suivante:} 10001011 + 10001110
+	            	\part[1] {Est-ce-que cette addition peut être effectuée sans erreur si les entiers sont codés sur 8 bits? Justifiez votre réponse.}
+	           	\end{parts}
+	           	\begin{solution}
+	           		% MCO-TBD
+	           	\end{solution}
+            	
+		\question {\textit{Conversion entre bases de numération}} (le détail des calculs est demandé -- le résultat seul ne rapportera pas la totalité des points.)
+	           	\begin{parts}
+	           		\part[1] Convertissez de base 10 en base 2: $26_{(10)}$
+	           		\part[1] Convertissez de base 16 en base 2: $2B_{(16)}$
+	           	\end{parts}
+	           	\begin{solution}
+					% MCO-TBD
+				\end{solution}
+		
+		\question{\textit{Entiers relatifs}}
+		
+			On considère le nombre binaire $10011100_{(2)}$.
+			\begin{parts}
+				\part[1] Quelle est la valeur en base 10 de ce nombre, s'il représente un entier non signé sur un octet\footnote{Au cas où ça pourrait vous être utile: $2^7=128$}?
+				\part[1] Quel est le complément à un de 10011100?
+				\part[1] Quel est le complément à deux de 10011100?
+				\part[1] Quelle est la valeur en base 10 du nombre binaire 10011100 s'il représente un entier signé?
+			\end{parts}
+			
+		
+		
+		\question{\textit{Chiffrement}}
+       
+	       	On considère le code python ci-dessous\footnote{Deux rappels: \texttt{ord("X")} renvoie le code ASCII du caractère "X"; \texttt{chr(88)} renvoie le caractère dont le code ASCII est 88.\label{toto}}.
+	       	\begin{minted}
+	       		[
+	       		bgcolor = gray!15,
+	       		fontsize = \footnotesize,
+	       		linenos = true % numéros de ligne
+	       		]
+	       		{Python}
+message = ["M", "A", "X", "!"]
+decal = 5
+resultat = ""
+
+# Processus de transformation
+for i in range(len(message)):
+    caractere = message[i]
+    if ord("A") <= ord(caractere) <= ord("Z"):
+        code_ascii = ord(caractere)
+        print(code_ascii) # PRINT #1
+        nouveau_code = code_ascii + decal
+        nouveau_caractere = chr(nouveau_code)
+        print(nouveau_caractere) # PRINT #2
+        resultat = resultat + nouveau_caractere
+    else:
+        resultat = resultat + caractere
+
+# Affichage final
+print ("Resultat :", resultat ) # PRINT #3
+			\end{minted}
+	       	\begin{parts}
+	       		\part[2]Quel est l'affichage en console si l'on exécute ce code? (notez qu'il y a 3 print dans l'ensemble du code.) A quoi pourrait servir ce code?
+	       		
+	       		On pourra s'aider de l'extrait de la table ascii ci-dessous :
+	       		
+	       		\begin{tabular}{llllllllll}
+	       			65 : A & 66 : B & 67 : C & 68 : D & 69 : E & 70 : F & 71 : G & 72 : H & 73 : I & 74 : J \\
+	       			75 : K & 76 : L & 77 : M & 78 : N & 79 : O & 80 : P & 81 : Q & 82 : R & 83 : S & 84 : T \\
+	       			85 : U & 86 : V & 87 : W & 88 : X & 89 : Y & 90 : Z & 91 : [ & 92 : \textbackslash & 93 : ] & 94 : \textasciicircum \\
+	       			95 : \_ & 96 : ` & 97 : a & 98 : b & 99 : c & 100 : d
+	       		\end{tabular}
+	       		\part[1] Quel est le problème avec la lettre "X"?
+	       		\part[1] Comment pourriez-vous résoudre ce problème?
+	       	\end{parts}
+			\begin{solution}
+				%MCO - TBD
+			\end{solution} 
+			
+		\question{\textit{Parcours d'une liste}}
+		
+			On vous demande de coder une fonction CodeASCII(lst) qui prend en entrée une liste de caractères et renvoie en sortie une liste de même longueur contenant le code ASCII de chacun des caractères. Par exemple (en se référant à l'extrait de la table ASCII de l'exercice précédent) on aurait \texttt{CodeASCII(["M", "A", "X"]) = [77, 65, 88]}. \textit{Note: il est évident que l'on se servira ici de la fonction ord() utilisée dans l'exercice précédent}\footnotemark[2].
+			
+			\begin{parts}
+				\part[2] Rédigez dans un premier temps l'algorithme qui sera mis en œuvre par une telle fonction -- idéalement sous forme de pseudo-code.
+				\part[2] Rédigez dans un second temps le code python de la fonction CodeASCII(lst).
+			\end{parts}
+		
+		\question{\textit{Codage des flottants -- norme IEEE 754 à simple précision}}
+			
+			L'objectif de cet exercice est de découvrir quel est le nombre réel codé par 11000000110100000000000000000000.
+		
+			Ce nombre sera appelé N dans cet exercice.
+		
+			On rappelle que le premier bit est  \texttt{?????????????} (noté S), les 8 bits suivants correspondent à \texttt{?????????????} (noté E), et les 23 bits suivants à \texttt{?????????????} (noté M).
+		
+		Ainsi, on a $S = 1$, $E = 10000001$ et $M = 1010000000000000000000$.
+		
+		On rappelle que $2^{-1} = 0.5$, $2^{-2} = 0.25$, $2^{-3} = 0.125$.
+		
+		On rappelle la formule suivante : $N = (-1)^S \times (1 + M) \times 2^{E - 127}$.
+		
+		\begin{parts}
+			\part[1] Écrivez sur votre feuille, dans le bon ordre, les mots qui doivent figurer à la place des trois "\texttt{?????????????}" dans l'énoncé de cet exercice.
+			\part[\half] N est-il positif ou négatif?
+			\part[\half] Quelle est la valeur de E?
+			\part[\half] Quelle est la valeur de M?
+		\end{parts}
+            
+            \vspace{10pt} 
+            \hrule
+            \vspace{15pt} 
+            
+            \textit{(Question bonus 1)}
+            
+            Code mystère: quel est l’affichage obtenu en console si on exécute ce code? Que signifie-t-il / que fait ce code? On ne demande pas de détailler les étapes du calcul, mais d’expliciter le lien entre les variables de départ et ce qui est affiché à la fin du programme. (conseil: commencez par exécuter ce programme "à la main" pour voir ce qui se passe à chaque étape)
+            \begin{minted}
+            	[
+            	bgcolor = gray!15,
+            	fontsize = \footnotesize,
+            	linenos = true % numéros de ligne
+            	]
+            	{Python}
+x = 97
+puissance_2 = 2**7 #(ce qui vaut 128)
+res = ""
+while puissance_2 >= 1:
+    if puissance_2 <= x:
+        res += "1"
+        x = x - puissance_2
+    else:
+        res += "0"
+    puissance_2 = puissance_2 / 2
+print (res)
+            \end{minted}
+             \begin{solution}
+            	
+            \end{solution} 
+            
+            \textit{(Question bonus 2)}
+            
+            En cours on a codé une fonction CompUn(lst) qui renvoie le complément à un d'une liste de bits représentant un entier codé en binaire. On vous demande de coder une deuxième fonction, qu'on appellera Ajouter1(lst), qui prendra le résultat de la précédente, ajoutera un, et renverra donc le complément à deux de l'entier initial.
+            
+            Quelques remarques:
+            \begin{itemize}
+            	\item La syntaxe pour une boucle bornée dont l'indice va descendre de N à 0 est \texttt{for i in range(N,-1,-1):}
+            	\item On ignorera le cas d'une liste uniquement composée de 1 (et pour laquelle un ajout de un ajouterait un chiffre).
+            	\item Conseil: commencez par faire à la main \texttt{100111 + 1} et réfléchissez aux étapes que vous accomplissez, à comment vous gérez les retenues, à ce qui se passe quand il n'y a plus de retenue...
+            \end{itemize}
+            
+        \end{spacing}
+    \end{questions}
+\end{document}
+
+% SUPPRIME DU CONTROLE - TROP COMPLIQUE
+%          \question \textit{Complément à deux d'un entier exprimé en base 2} 
+%          
+%          Nous allons écrire une fonction qui prend en entrée une liste de bits représentant un entier exprimé en base 2 et qui va retourner une liste comprenant le complément à deux de cet entier.
+%          
+%          \begin{parts}
+	%          	\part[2] Complément à un pour commencer: compléter le code ci-dessous pour que la fonction CompUn renvoie le complément à un de l'entier\footnote{On rappelle que le complément à un est l'inversion de tous les bits du nombre écrit en binaire.}.
+	%			\begin{minted}
+		%				[
+		%				bgcolor = gray!15,
+		%				fontsize = \footnotesize,
+		%				linenos = true % numéros de ligne
+		%				]
+		%				{Python}
+		%def CompUn(lst):
+		%resultat = []
+		%for i in .............
+		%	if lst[i] == 1:
+		%		........
+		%	else:
+		%		.......
+		%return resultat
+		%			\end{minted} 
+	%			\part Reste maintenant à effectuer le complément à deux\footnote{On rappelle qu'il s'agit d'ajouter 1 au complément à un.}.
+	%			\begin{subparts}
+		%				\subpart[1] Posez et effectuez l'addition binaire \texttt{100111 + 1} -- et ce faisant réfléchissez aux étapes que vous êtes en train d'effectuer (pensez au sens dans lequel vous parcourez la liste; à comment vous gérez les retenues, etc.).
+		%				\subpart[2] Utilisez ce que vous venez de réaliser pour rédiger en pseudo-code une méthode pour effectuer l'addition de 1 à une liste représentant un entier codé en binaire. Si vous ne parvenez pas à rédiger un pseudo-code générique fonctionnant pour toute liste, rédigez un texte exprimant les étapes à appliquer à une liste \texttt{lst = [a, b, c, d}] où a, b, c, et d sont des bits.
+		%				\subpart[2] Complétez à présent le code de la fonction Ajoute1(lst) ci-dessous qui effectue cette opération:
+		%				\begin{minted}
+			%				[
+			%				bgcolor = gray!15,
+			%				fontsize = \footnotesize,
+			%				linenos = true % numéros de ligne
+			%				]
+			%				{Python}
+			%def Ajoute1(lst):
+			%    resultat = lst
+			%    longueur = len(lst) - 1
+			%    ajout = 1
+			%    for i in range(longueur, -1, -1):
+			%        if ajout + lst[i] <= 1:
+			%            ajout = 0
+			%            resultat[i] = ajout + lst[i]
+			%	    else:
+			%	        ajout = 1
+			%	        resultat[i] = 0
+			%
+			%    return resultat
+			%		
+			%........
+			%else:
+			%.......
+			%return resultat
+			%			\end{minted} 				
+		%				
+		%				 (et qui, bien évidemment, va parcourir la liste en entrée\footnote{Au cas où cela pourrait vous intéresser: \texttt{for i in range(n, -1, -1)} initie une boucle pour laquelle l'indice i démarre à n et descend jusqu'à 0.})
+		%				\subpart[1] Rédigez à présent le code d'une fonction CompDeux(lst) qui renvoie le complément à deux du nombre représenté dans la liste en entrée au moyen d'appels aux fonctions créées précédemment.
+		%			\end{subparts}
+	%          	
+	%        \end{parts}
+%		\begin{solution}
+	%		\end{solution}
