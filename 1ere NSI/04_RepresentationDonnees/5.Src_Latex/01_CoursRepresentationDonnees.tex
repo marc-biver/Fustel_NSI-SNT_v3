@@ -2148,6 +2148,151 @@
 		\end{alphenum}
 	\end{MaReponse}
 	
+	\begin{MonExo}[lois de De Morgan]
+		Soient $a$ et $b$ deux variables booléennes. A l’aide de tables de vérités, démontrez les lois de De Morgan suivantes:
+		\begin{alphenum}
+			\item \texttt{non(a) et non(b) = non(a ou b)}
+			\item \texttt{non(a) ou non(b) = non(a et b)}
+		\end{alphenum}
+	\end{MonExo}
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item 
+			On les place côte à côte pour les comparer:
+			\begin{center}		
+				\begin{tabular}{|c|c|c|c|c|c|}
+					\hline
+					$a$ & $b$ & a ou b & \textbf{non(a ou b)} & \textbf{non(a) et non(b)} \\ \hline
+					1 & 1 & 1 & \textbf{0} & \textbf{0}  \\ \hline
+					1 & 0& 1 & \textbf{0} & \textbf{0}  \\ \hline
+					0 & 1 & 1 & \textbf{0} & \textbf{0} \\ \hline
+					0 & 0 & 0 & \textbf{1} & \textbf{1}  \\ \hline
+				\end{tabular}
+			\end{center}
+			\item 
+			Et de même:
+			\begin{center}		
+				\begin{tabular}{|c|c|c|c|c|c|}
+					\hline
+					$a$ & $b$ & a et b & \textbf{non(a et b)} & \textbf{non(a) ou non(b)} \\ \hline
+					1 & 1 & 1 & \textbf{0} & \textbf{0}  \\ \hline
+					1 & 0& 0 & \textbf{1} & \textbf{1}  \\ \hline
+					0 & 1 & 0 & \textbf{1} & \textbf{1} \\ \hline
+					0 & 0 & 0 & \textbf{1} & \textbf{1}  \\ \hline
+				\end{tabular}
+			\end{center}
+		\end{alphenum}
+	\end{MaReponse}
+	\begin{MonExo}[un petit jeu logique pour se changer les idées...]
+		Un roi cruel avait pour habitude de proposer le marché suivant à ses condamnés: tout prisonnier doit choisir entre deux cellules. Chaque cellule peut contenir une corde ou une clé (un seul objet par cellule). Si le prisonnier choisit une cellule avec une corde, alors il est pendu. S’il choisit une cellule avec une clé, alors il est libéré. Pour rendre la situation encore plus cruelle, les deux cellules contiennent parfois toutes deux une corde, mais aussi parfois toutes deux une clé et parfois l’une contient une clé et l’autre une corde.
+		
+		Le roi donne cependant des indications. Voici celles proposées à l’un de ses condamnés:
+		\begin{itemize}
+			\item Sur la porte de la cellule 1 est inscrit: \textit{Il y a une clé dans cette cellule et une corde dans l’autre cellule.}
+			\item Sur la porte de la cellule 2 est inscrit: \textit{Il y a une clé dans une des deux cellules et une corde dans l’autre cellule.}
+		\end{itemize}
+		
+		De plus, le roi annonce qu’une seule de ces deux inscriptions est correcte.
+		
+		\begin{alphenum}
+			\item On note L1 la proposition"La cellule 1 contient une clé" et L2 la proposition "La cellule 2 contient une clé". Traduisez chacune des inscriptions des portes à l’aide des opérateurs logiques et des propositions L1 et L2.
+			\item Dressez les tables de vérité de chacune des inscriptions.
+			\item Quel choix doit faire le condamné ?
+		\end{alphenum}
+	\end{MonExo}
+	\begin{MaReponse}
+		Je vous accorde que cette énigme, en tant qu'énigme, n'est pas très difficile à résoudre -- l'enjeu ici est évidemment de le faire au moyen de logique booléenne et de tables de vérité.
+		\begin{alphenum}
+			\item Traduction des indications en expressions booléennes:
+			
+			\begin{itemize}
+				\item La première indication contient deux parties:
+				\begin{itemize}
+					\item "\textit{Il y a une clé dans cette cellule}" -- puisque ceci est affiché sur la cellule 1, cela revient à dire que L1 est vraie.
+					\item "\textit{Il y a une corde dans l’autre cellule}" -- ceci concerne donc la cellule 2, et comme il ne peut y avoir qu'un objet par cellule cela revient à dire qu'il n'y a pas de clé dedans, et donc que L2 est fausse.
+					\item Donc cette première indication se traduit par (puisqu'il y a un "et" entre ses deux parties) \texttt{L1 et non(L2)}.
+				\end{itemize}
+				\item La seconde également:
+				\begin{itemize}
+					\item "\textit{Il y a une clé dans une des deux cellules}" -- cela se traduit par \texttt{L1 xor L2} (et non pas "ou" parce que sinon on pourrait avoir une clé dans les deux cellules, ce qui est contredit par la seconde partie de l'indication).
+					\item "\textit{Il y a une corde dans l’autre cellule}" -- de même ceci se traduit par \texttt{non(L1) xor non(L2)}.
+					\item Si l'on y réfléchit bien, ces deux expressions reviennent exactement au même (je vous laisse faire les tables de vérité pour vous en convaincre) -- donc cette seconde indication se traduit au total par \texttt{L1 xor L2}.
+				\end{itemize}
+			\end{itemize}
+			\item On dresse les deux tables de vérité côte à côte pour pouvoir les lire par ligne:
+			\begin{center}		
+				\begin{tabular}{|c|c|c|c|c|c|}
+					\hline
+					$L1$ & $L2$ & non(L2) & \textbf{L1 et non(L2)} & \textbf{L1 xor L2} \\ \hline
+					1 & 1 & 0 & \textbf{0} & \textbf{0}  \\ \hline
+					1 & 0& 1 & \textbf{1} & \textbf{1}  \\ \hline
+					0 & 1 & 0 & \textbf{0} & \textbf{1} \\ \hline
+					0 & 0 & 1 & \textbf{0} & \textbf{0}  \\ \hline
+				\end{tabular}
+			\end{center}
+			
+			\item On constate que les deux indications sont vraies dans le cas de la deuxième ligne, donc dans le cas où L1 est vraie -- donc le fait qu'une seule des inscriptions soit correcte ne change rien à l'affaire et le condamné doit donc ouvrir la première cellule.
+			
+		\end{alphenum}
+	\end{MaReponse}
+	
+	Je vous l'ai dit -- tout ce que \textit{fait} un ordinateur n'est qu'une succession d'opérations booléennes qui, combinées entre elles, permettent tous les traitements que nous utilisons et / ou développons au quotidien. Un exemple? L'addition arithmétique, que nous allons étudier en deux temps: d'abord une "demi-addition" qui ne prend pas de retenues en entrée, puis une addition complète.
+	
+	\begin{MonExo}[demi-additionneur binaire sur un bit]
+		On donne la table de vérité de l'addition de deux bits A et B:
+		\vspace{0.5cm}
+		\begin{center}		
+			\begin{tabular}{|c|c|c|c|}
+				\hline
+				$A$ & $B$ & $R$ & $S$ \\ \hline
+				0 & 0 & 0 & 0 \\ \hline
+				0 & 1 & 0 & 1 \\ \hline
+				1 & 0 & 0 & 1 \\ \hline
+				1 & 1 & 1 & 0 \\ \hline
+			\end{tabular}
+		\end{center}
+		\vspace{0.5cm}
+		En entrée on donne donc deux bits A et B et en sortie on récupère deux nouveaux bits: S pour la somme et R pour la retenue. On obtient un nombre sur deux bits de la forme $(RS)_{2}$.
+		\begin{alphenum}
+			\item Quelle est l’expression booléenne correspondant à la colonne S (pour somme)?
+			\item Quelle est l’expression booléenne correspondant à la colonne R (pour retenue)?
+			\item Quelles sont les valeurs décimales des nombres binaires $(RS)_{2}$ obtenus?
+		\end{alphenum}
+	\end{MonExo}
+
+	\begin{MonExo}[additionneur complet sur un bit]
+		On appelle additionneur le résultat de la l’addition de trois bits A,B et C où C correspond à une retenue entrante: il est composé, comme pour le demi-additionneur, d’une somme S et d’une retenue sortante R.
+		
+		\begin{alphenum}
+			\item Compléter la table de vérité de l'additionneur:
+			\vspace{0.5cm}
+			\begin{center}		
+				\begin{tabular}{|c|c|c|c|c|}
+					\hline
+					$A$ & $B$ & $C$ & $R$ & $S$ \\ \hline
+					0 & 0 & 0 &  &  \\ \hline
+					0 & 0 & 1 &  &  \\ \hline
+					0 & 1 & 0 &  &  \\ \hline
+					0 & 1 & 1 &  &  \\ \hline
+					1 & 0 & 0 & & \\ \hline
+					1 & 0 & 1 & & \\ \hline
+					1 & 1 & 0 & & \\ \hline
+					1 & 1 & 1 & & \\ \hline
+				\end{tabular}
+			\end{center}
+			\vspace{0.5cm}
+			
+			\item Quelles sont les valeurs décimales des nombres binaires $(RS)_{2}$ produits? Quelle(s) différence(s) avec le demi-additionneur?
+			\item Si C vaut 0, quelles sont les expressions booléennes en fonction de A et B permettant d’obtenir R et S?
+			\item Même question si C vaut 1.
+		\end{alphenum}
+	\end{MonExo}
+	
+		\begin{minipage}{0.95\textwidth}
+		\centering
+		\includegraphics[width=0.5\linewidth]{014_Additionneur.png}
+	\end{minipage}
+	
 	\subsection{Et pourquoi on apprend tout ça, au fait?}
 	Cette section n'est évidemment pas à apprendre en vue de contrôles; on verra, mais je ne pense même pas passer trop de temps dessus en cours. En revanche, il me semble que c'est clairement une question légitime que vous pourriez vous poser. Alors si c'est le cas et / ou que ça vous intéresse -- continuez à lire!
 	
