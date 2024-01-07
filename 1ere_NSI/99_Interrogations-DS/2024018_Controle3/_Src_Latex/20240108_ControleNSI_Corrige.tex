@@ -1,0 +1,632 @@
+% !TeX document-id = {63e2cb4c-39e5-4fe5-ae31-d450d2286238}
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+\documentclass[11pt,a4paper]{exam}
+%\printanswers % pour imprimer les réponses (corrigé)
+\noprintanswers % Pour ne pas imprimer les réponses (énoncé)
+\addpoints % Pour compter les points
+\usepackage[utf8]{inputenc}
+\usepackage{minted}
+
+\usepackage{algorithm} % pour faire du pseudo-code
+\usepackage{algorithmicx} % pour faire du pseudo-code
+\usepackage{algpseudocode} % pour faire du pseudo-code
+
+% Traduction des commandes en pseudo-code
+\renewcommand{\algorithmicfor}{\textbf{pour}}
+\renewcommand{\algorithmicif}{\textbf{si}}
+\renewcommand{\algorithmicthen}{\textbf{alors}}
+\renewcommand{\algorithmicelse}{\textbf{sinon}}
+\renewcommand{\algorithmicfunction}{\textbf{fonction}}
+\renewcommand{\algorithmicforall}{\textbf{pour tout}}
+\renewcommand{\algorithmicdo}{\textbf{faire}}
+\renewcommand{\algorithmicwhile}{\textbf{tant que}}
+\renewcommand{\algorithmicend}{\textbf{fin}}
+\renewcommand{\algorithmicreturn}{\textbf{retourner}}
+\renewcommand{\algorithmicrequire}{\textbf{Entrée:}}
+\renewcommand{\algorithmicensure}{\textbf{Sortie:}} % Détournement du Ensure, mais ce n'est pas très grave...
+
+\usepackage{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{dashundergaps}
+%\usepackage[monochrome]{xcolor} % Permet de tout mettre en N&B strict
+\usepackage{xcolor}
+%\selectcolormodel{gray} % Permet de tout mettre en niveaux de gris
+\geometry{left=1.5cm, right=1.5cm, top=2cm, bottom=2cm} % Définition des marges du doc
+
+%\newcommand{\class}{1\textsuperscript{ère} Spé. NSI Gr. 2\textsubscript{A}}
+\newcommand{\class}{1\textsuperscript{ère} Spé. NSI Gr. 2}
+\newcommand{\examnum}{Contrôle \#3}
+\newcommand{\examdate}{08/01/2024}
+\newcommand{\timelimit}{1 Heure}
+\newcommand{\lycee}{Lycée Fustel de Coulanges}
+
+\pagestyle{head}
+\firstpageheader{}{}{}
+\runningheader{\class}{\examnum\ - Page \thepage\ / \numpages}{\examdate}
+\runningheadrule
+
+
+\begin{document}
+% Espace d'en-tête
+    \noindent
+    \begin{spacing}{1}
+        \noindent
+        \begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} l @{\extracolsep{6pt}} l}
+            \textbf{\class} & \textbf{\examnum, \examdate}&\\
+            \textbf{\lycee} &\textbf{Durée: \timelimit} &\\
+        \end{tabular*}\\
+    \end{spacing}
+
+    \noindent
+    \vspace{10pt}
+    \hrule
+    \vspace{5pt} 
+    \noindent
+    \\
+    Ce contrôle comporte \numquestions\ questions; il sera noté sur \numpoints\ points. 
+    Les réponses sont à porter sur une copie \uline{comportant votre nom}.
+    Il n'est pas nécessaire de répondre aux questions dans l'ordre \textemdash\ commencez par celles où vous vous sentez le plus à l'aise \textit{(mais ne tentez les questions bonus qu'après avoir fini le reste!!)}.\\
+    Les calculatrices ne sont \uline{pas} autorisées.\\
+    \noindent
+    \hrule
+    \vspace{15pt} 
+
+    \begin{questions} % DEBUT DE L'EXAMEN
+		\begin{spacing}{1}
+    
+		\question \textit{Questions de cours: }
+			\begin{parts}
+				\part[1] Expliquez (en une ou deux phrases) en quoi l'encodage UTF-8 est plus performant que son ancêtre, le codage ASCII, et est donc aujourd'hui presqu'universellement utilisé par exemple pour les sites web.
+				
+				\part[1] Quel est l'entier naturel (donc appartenant à l'ensemble $\mathbb{N}$) maximal que l'on peut coder sur 4 bits? (vous donnerez le détail du calcul)
+				
+				\part[1] Quel est l'entier relatif positif (donc appartenant à l'ensemble $\mathbb{Z}$) maximal que l'on peut coder sur 4 bits? (vous donnerez le détail de votre raisonnement)
+			\end{parts}
+		\begin{solution}
+
+		\end{solution}
+
+        \question {\textit{Addition de nombres binaires} (posez bien votre addition -- un simple résultat ne sera pas accepté.)}
+        \begin{parts}
+            	\part[1] {Effectuez l'addition suivante:} 11101011 + 01001111
+            	\part[1] {Si ces deux nombres binaires représentaient des entiers signés (ou entiers relatifs appartenant à l'ensemble $\mathbb{Z}$), quel serait le signe du résultat? Justifiez votre réponse.}
+       	\end{parts}
+        \begin{solution}
+%	           		\[
+%	           		\begin{array}{r *{10}{@{\;}c}}
+%	           			&& 1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 \\
+%	           			+ & & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 0 \\
+%	           			\cline{1-10}
+%	           			&1 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 1 \\
+%	           		\end{array}
+%	           		\]
+%	           		
+%	           		La dernière retenue fait que l'on va devoir utiliser un bit de plus pour encoder le résultat de cette addition -- et que donc on aura nécessairement une erreur si on essaye de l'effectuer sur un espace mémoire limité à un octet.
+        \end{solution}
+            	
+		\question {\textit{Conversion entre bases de numération}} (le détail des calculs est demandé -- le résultat seul ne rapportera pas la totalité des points.)
+	           	\begin{parts}
+	           		\part[1] Convertissez de base hexadécimale (16) en base décimale (10): $2AF_{(16)}$ (on rappelle que $16^2 = 256$)
+	           		\part[1] Convertissez de base 10 en base 2: $37_{(10)}$
+	           	\end{parts}
+	           	\begin{solution}
+%					(a) On sait qu'il y a deux méthodes -- je vous laisse revoir le cours pour celle dite des "soustractions successives" et je vous détaille ici celle des "divisions successives" que vous aviez préférée lors de nos exercices en cours:
+%					\[
+%					\begin{array}{ll}
+%						26 / 2 = 13 & \text{reste } 0 \\
+%						13 / 2 = 6 & \text{reste } 1 \\
+%						6 / 2 = 3 & \text{reste } 0 \\
+%						3 / 2 = 1 & \text{reste } 1 \\
+%						1 / 2 = 0 & \text{reste } 1 \\
+%					\end{array}
+%					\]
+%					
+%					La conversion en base 2 de $26_{10}$ est la liste des restes de ces divisions prises de bas en haut: $11010_{2}$.
+%					
+%					(b) La conversion de base 16 en base 2 est assez simple -- il suffit de convertir chacun des chiffres en base 2 et de mettre les résultats côte à côte (c'est un des intérêts de la base hexadécimale, dû au fait que 16 est une puissance de 2 -- je vous renvoie au cours si cette notion n'est pas claire).
+%					
+%					$2_{16} = 2_{10} = 10_2$ -- ça, ça devrait être assez immédiat.
+%					
+%					$B_{16}$, c'est 11 en base 10 -- puisque lorsqu'on compte dans les deux bases cela donne:
+%					\[
+%					\begin{array}{r *{18}{@{\;}c}}
+%						0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & \uline{\textbf{}11} & 12 & 13 & 14 & 15 & 16 & 17 \\
+%						0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & A & \uline{\textbf{}B} & C & D & E & F & 10 & 11 \\
+%					\end{array}
+%					\]
+%					
+%					Reste donc à convertir 11 de base 10 en base 2 -- pour cela on peut utiliser la méthode utilisée à l'exercice (a) précédent, ou bien tout simplement compter en base 2 jusqu'à 11:
+%					\[
+%					\begin{array}{r *{12}{@{\;}c}}
+%						0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & \uline{\textbf{}11} \\
+%						0 & 1 & 10 & 11 & 100 & 101 & 110 & 111 & 1000 & 1001 & 1010 & \uline{\textbf{}1011} \\
+%					\end{array}
+%					\]
+%					
+%					Et donc si l'on met bout à bout ces deux conversions on obtient: $2B_{(16)} = 101011_{(2)}$.
+%					
+				\end{solution}
+		
+		\question{\textit{Entiers relatifs}}
+		
+			On considère le nombre binaire $10011010_{(2)}$.
+			\begin{parts}
+				\part[1] Quelle est la valeur en base 10 de ce nombre, s'il représente un entier non signé (ou entier naturel appartenant à l'ensemble $\mathbb{N}$) sur un octet\footnote{Au cas où ça pourrait vous être utile: $2^7=128$}?
+				\part[1] Quel est le complément à un de 10011010?
+				\part[1] Quel est le complément à deux de 10011010?
+				\part[1] Quelle est la valeur en base 10 du nombre binaire 10011010 s'il représente un entier signé (ou entier relatif appartenant à l'ensemble $\mathbb{Z}$)?
+			\end{parts}
+			
+				           	\begin{solution}
+				(a) On parle d'entier "non signé" -- donc un entier naturel qui ne porte pas de bit de signe. On applique donc une stricte conversion de base 2 en base 10, en parcourant le nombre de droite à gauche et en lui appliquant les puissances de 2 successives:
+				\[ 0 \times 2^0 + 0 \times 2^1 + 1 \times 2^2 + 1 \times 2^3 + 1 \times 2^4 + 0 \times 2^5 + 0 \times 2^6 + 1 \times 2^7 = 4 + 8 + 16 + 128 = 156\]
+				Donc: $10011100_{(2)} = 156_{(10)}$
+				
+				(b) Le complément à un (voir le cours) est une simple inversion de tous les bits qui constituent le nombre -- donc ici: 01100011
+				
+				(c) Le complément à deux (voir, encore une fois, le cours) est un ajout de 1 au complément à un -- donc ici:
+					\[
+				\begin{array}{r *{9}{@{\;}c}}
+					& 0 & 1 & 1 & 0 & 0 & 0 & 1 & 1 \\
+					+ &  &  &  &  &  &  &  & 1 \\
+					\cline{1-9}
+					& 0 & 1 & 1 & 0 & 0 & 1 & 0 & 0 \\
+				\end{array}
+				\]
+				
+				(d) Si ce nombre 10011100 représente un entier signé, alors son complément à deux représente son opposé -- c'est le principe-même de l'encodage des entiers relatifs qu'on a vu en cours. Donc puisqu'on sait que ce nombre est négatif (son bit de signe, bit de poids fort, vaut 1), il nous suffit de convertir de base 2 en base 10 son complément à deux que l'on vient de calculer (01100011) pour connaître sa valeur, en appliquant la même méthode qu'à la partie (a) de cette question:
+				\[ 0 \times 2^0 + 0 \times 2^1 + 1 \times 2^2 + 0 \times 2^3 + 0 \times 2^4 + 1 \times 2^5 + 1 \times 2^6 + 0 \times 2^7 = 4 + 32 + 64 = 100\]
+				Donc la valeur en base 10 du nombre binaire 10011100 s'il représente un entier signé est \textbf{-100}.				
+				
+			\end{solution}
+		
+		
+		\question[2]{\textit{Chiffrement}}
+       
+	       	On considère le code python suivant\footnote{Deux rappels: \texttt{ord("X")} renvoie le code ASCII du caractère "X"; \texttt{chr(88)} renvoie le caractère dont le code ASCII est 88.\label{toto}}.
+	       	\newpage
+	       	\begin{minted}
+	       		[
+	       		bgcolor = gray!15,
+	       		fontsize = \footnotesize,
+	       		linenos = true % numéros de ligne
+	       		]
+	       		{Python}
+message = ["N", "S", "I", "!"]
+decal = 3
+resultat = ""
+
+# Processus de transformation
+for i in range(len(message)):
+    caractere = message[i]
+    if ord("A") <= ord(caractere) <= ord("Z"):
+        code_ascii = ord(caractere)
+        print(code_ascii) # PRINT #1
+        nouveau_code = code_ascii + decal
+        nouveau_caractere = chr(nouveau_code)
+        print(nouveau_caractere) # PRINT #2
+        resultat = resultat + nouveau_caractere
+    else:
+        resultat = resultat + caractere
+
+# Affichage final
+print ("Resultat :", resultat ) # PRINT #3
+			\end{minted}
+	       	Quel est l'affichage en console si l'on exécute ce code? (notez qu'il y a 3 print dans l'ensemble du code.) A quoi pourrait servir ce code?
+	       		
+	       	On pourra s'aider de l'extrait de la table ascii ci-dessous :
+	       		
+	       	\begin{tabular}{llllllllll}
+	       		65 : A & 66 : B & 67 : C & 68 : D & 69 : E & 70 : F & 71 : G & 72 : H & 73 : I & 74 : J \\
+	       		75 : K & 76 : L & 77 : M & 78 : N & 79 : O & 80 : P & 81 : Q & 82 : R & 83 : S & 84 : T \\
+	       		85 : U & 86 : V & 87 : W & 88 : X & 89 : Y & 90 : Z & 91 : [ & 92 : \textbackslash & 93 : ] & 94 : \textasciicircum \\
+	       		95 : \_ & 96 : ` & 97 : a & 98 : b & 99 : c & 100 : d
+	       	\end{tabular}
+			\begin{solution}
+				(a) Je veux m'attarder un peu ici sur la \textit{\textbf{méthode}} qu'il convient d'utiliser pour ce genre de question -- et plus généralement quand vous êtes amenés à lire du code:
+				\begin{itemize}
+					\item Commencez par repérer les structures logiques majeures (conditions, boucles...) -- en python c'est facile, puisqu'elles sont indentées. Regardez où elles commencent, où elles finissent -- et isolez dans votre tête ce qu'elle font unitairement.
+					\item Dans un second temps, exécutez pas à pas sur une feuille de papier (ou dans votre tête si c'est suffisamment simple) les premières étapes du code pour repérer sa logique. Dans le cas de ce code-ci, cela donne:
+					\begin{itemize}
+						\item J'initialise mes variables puis je rentre dans la boucle qui parcourt la liste message.
+						\begin{itemize}
+							\item i = 0, donc caractere = message[0] = "M"
+							\item ord(caractere) = 77 (d'après la table ASCII fournie) qui est bien entre ord("A") (65) et ord("Z") (90) -- donc on rentre dans le if:
+							\begin{itemize}
+								\item code\_ascii = ord(caractere) = 77
+								\item print(code\_ascii) $\rightarrow$ On a la première sortie dans la console: \textbf{77}
+								\item nouveau\_code = code\_ascii + decal = 77 + 5 = 82
+								\item nouveau\_caractere = chr(nouveau\_code) = chr(82) = "R" (toujours d'après la table ASCII fournie).
+								\item print(nouveau\_caractere) $\rightarrow$ On a la deuxième sortie dans la console: \textbf{R}
+								\item resultat = resultat + nouveau\_caractere $\rightarrow$ Comme on avait initialisé resultat à "", cela signifie que resultat vaut maintenant "R".
+							\end{itemize}
+							\item On est sorti du "if"
+						\end{itemize}
+						\item On a fini la première instance de la boucle "for", donc...
+						\item On recommence avec i = 1, donc caractere = message[1] = "A"
+					\end{itemize}
+				\end{itemize}
+				
+				Arrêtons-nous là un instant et réfléchissons à ce que nous avons appris:
+				\begin{itemize}
+					\item Nous avons parcouru intégralement une instance de la boucle -- donc tout ce qui va suivre ne sera que des répétitions de ce qu'on vient de faire.
+					\item On a vu que si le caractère était inclus entre A et Z -- ce qui est le cas des trois premiers de la liste message -- on allait faire ce décalage de "decal" (soit 5) pour récupérer une nouvelle lettre dans la table ASCII.
+					\item Donc on \textit{sait} que pour chacun des deux caractères suivants "A" et "X" on va faire la même chose: ajouter 5 au code ASCII et produire le caractère correspondant.
+					\item Donc à quoi sert ce code qui remplace systématiquement un caractère par un autre? Dans un exercice qui en plus s'appelle "chiffrement"? A coder / chiffrer un texte bien sûr!
+				\end{itemize}
+				
+				Pour ce qui est de la suite en affichage console, on reproduit ce qu'on vient de faire avec les deux éléments suivants de la liste ("A" et "X"), puis avec le dernier ("!") on se rend compte qu'on n'est pas dans l'intervalle [ord("A"),ord("Z")], que donc on ne rentre pas dans le "if" -- et qu'on ajoute donc directement le caractère "!" à resultat sans le coder avant de produire le print final. Au total cela donne:
+				\begin{verbatim}
+					77
+					R
+					65
+					F
+					88
+					]
+					Resultat : RF]!
+				\end{verbatim}
+				
+				\uline{\textbf{Les questions suivantes sont beaucoup plus difficiles que ce que je prévoyais.}}
+				\\
+				\uline{ \textbf{Vous n'avez PAS besoin de les revoir pour le contrôle de remédiation.}}
+				\\ \\
+				(b) Le problème avec la lettre "X" est qu'en ajoutant 5 à son code ASCII on dépasse l'intervalle des lettres majuscules pour entrer dans celui des signes de ponctuation -- dans ce cas, "]", ce qui si on est en train de crypter un texte risque de faire tâche et donner une indication à d'éventuels ennemis sur comment on a codé le texte.
+				
+				(c) La solution la plus évidente consisterait à "reboucler" vers la valeur du code de la lettre A -- quand on est à U (85), on passe à Z (90), puis quand on est à V (86) on passe à A (65) et ainsi de suite. Comment réaliser cela en pratique? En utilisant l'opérateur "\%" (modulo):
+				\begin{minted}
+				[
+				bgcolor = gray!15,
+				fontsize = \footnotesize,
+				linenos = true % numéros de ligne
+				]
+				{Python}
+nouveau_code = code_ascii + decal
+if nouveau_code > ord("Z"):
+    nouveau_code = nouveau_code % ord("Z") + ord("A") - 1
+				\end{minted}
+				
+			\end{solution} 
+			
+		\question{\textit{Parcours d'une liste}}
+		
+			On vous demande de coder une fonction \texttt{TempSeuil(lst, seuil)}:
+			\begin{itemize}
+				\item Elle prend en entrée deux arguments:
+				\begin{enumerate}
+					\item Une liste d'entiers représentant des températures (\texttt{lst})
+					\item Un entier représentant une température seuil (\texttt{seuil})
+				\end{enumerate}
+				\item Elle renvoie en sortie une liste de toutes les températures présentes dans la liste fournie en entrée qui sont strictement supérieures au seuil.
+			\end{itemize}
+			Par exemple on aurait \texttt{TempSeuil([-2, 10, 15, 8, 17], 10) = [15, 17]}. \textit{Note: la valeur 10 n'est pas présente en sortie puisqu'on considère les valeurs strictement supérieures au seuil uniquement}.
+			
+			\begin{parts}
+				\part[2] Rédigez dans un premier temps l'algorithme qui sera mis en œuvre par une telle fonction -- idéalement sous forme de pseudo-code.
+				\part[2] Rédigez dans un second temps le code python de la fonction \texttt{TempSeuil(lst, seuil)}.
+			\end{parts}
+			
+			\begin{solution}
+				Cet exercice est pratiquement identique à ceux que l'on a effectués en cours et dans la feuille d'exercices supplémentaires que je vous ai envoyée (recherche du maximum d'une liste, du minimum, calcul de la moyenne, etc.) -- ce qui diffère, c'est ce que l'on fait \textit{dans} la boucle, tandis que la réelle difficulté (le parcours de la liste) est strictement la même.
+				
+				(a)
+				\begin{algorithmic}[1]
+					\Require{ListeCar, liste de caractères individuels}
+					\Ensure{resultat, liste d'entiers correspondant à la valeur du code ASCII en entrée}
+					\Function{CodeASCII}{chn}
+					\State LongChn $\leftarrow$ len(ListeCar)
+					\Comment{Nombre de caractères en entrée}
+					\State resultat $\leftarrow$ [ ]
+					\Comment{Initialisation du résultat: liste vide}
+					\ForAll{$caractere$ de ListeCar}
+					\State CodeCourant $\leftarrow$ ord($caractere$)
+					\Comment{Récupération code ASCII}
+					\State resultat $\leftarrow$ resultat + $CodeCourant$
+					\Comment{Ajout en bout de liste}
+					\EndFor
+					\State\Return{resultat}
+					\EndFunction
+				\end{algorithmic}
+				
+				(b)
+				\begin{minted}
+					[
+					bgcolor = gray!15,
+					fontsize = \footnotesize,
+					linenos = true % numéros de ligne
+					]
+					{Python}
+def CodeASCII(lst):
+    NbCar = len(lst)
+    resultat = []
+    for i in range(NbCar):
+        CodeCourant = ord(lst[i])
+        resultat.append(CodeCourant)
+    return resultat
+				\end{minted}
+			\end{solution} 
+			
+		
+		\question{\textit{Codage des flottants -- norme IEEE 754 à simple précision}}
+			
+			L'objectif de cet exercice est de découvrir quel est le nombre réel codé par:
+			
+			11000001010110000000000000000000
+		
+			Ce nombre sera appelé N dans cet exercice.
+		
+			On rappelle que le premier bit est  \texttt{?????????????} (noté S), les 8 bits suivants correspondent à \texttt{?????????????} (noté E), et les 23 bits suivants à \texttt{?????????????} (noté M).
+		
+		Ainsi, on a $S = 1$, $E = 10000010$ et $M = 1011000000000000000000$.
+		
+		On rappelle que $2^{-1} = 0.5$, $2^{-2} = 0.25$, $2^{-3} = 0.125$, $2^{-4} = 0.0625$ (\textit{mais vous pouvez vous passer de cela pour répondre aux questions -- sauf si vous préférez les calculs compliqués)...}).
+		
+		On rappelle la formule suivante : $N = (-1)^S \times (1 + M) \times 2^{E - 127}$.
+		
+		\begin{parts}
+			\part[1] Écrivez sur votre feuille, dans le bon ordre, les mots qui doivent figurer à la place des trois "\texttt{?????????????}" dans l'énoncé de cet exercice.
+			\part[\half] N est-il positif ou négatif?
+			\part[\half] Quelle est la valeur de E?
+			\part[1] Quelle est la valeur de N (il n'est pas obligatoire de calculer la valeur exacte de M, juste celle de N; on rappelle que $x^a \times x^{-b} = x^{a-b}$ quels que soient les entiers $a$ et $b$)?
+		\end{parts}
+		\begin{solution}
+			
+			(a) \begin{itemize}
+				\item Bit de signe
+				\item Exposant
+				\item Mantisse
+			\end{itemize}
+			
+			(b) Le bit de signe étant positionné à 1, on aura $(-1)^1 = -1$ et donc le nombre sera négatif.
+			
+			(c) E, en binaire, vaut 10000001. Le calcul est donc simple puisqu'on n'a que la première et la dernière puissances de 2 qui sont positionnées à 1: $E = 2^0 + 2^7 = 1 + 128 = 129$
+			
+			(d) M, en binaire, vaut 1010000000000000000000. On n'a donc de nouveau que deux puissances de 2 qui sont positionnées à 1 -- et dont l'énoncé nous donne la valeur, donc le calcul est immédiat: $M = 2^{-1} + 2^{-3} = 0.5 + 0.125 = 0.625$
+			
+			Et enfin la question (e) qui n'était pas posée dans le contrôle:
+			\[ N = (-1)^1 \times (1 + 0.625) \times 2^{(129 - 127)} = -1 \times 1.625 \times 4 = -6.5 \]
+			
+
+		\end{solution} 
+            
+            \vspace{10pt} 
+            \hrule
+            \vspace{15pt} 
+            
+            \textit{(Question bonus 1)}
+            
+            Code mystère: quel est l’affichage obtenu en console si on exécute ce code? Que signifie-t-il / que fait ce code? On ne demande pas de détailler les étapes du calcul, mais d’expliciter le lien entre les variables de départ et ce qui est affiché à la fin du programme. (conseil: commencez par exécuter ce programme "à la main" pour voir ce qui se passe à chaque étape)
+            \begin{minted}
+            	[
+            	bgcolor = gray!15,
+            	fontsize = \footnotesize,
+            	linenos = true % numéros de ligne
+            	]
+            	{Python}
+x = 97
+puissance_2 = 2**7 #(ce qui vaut 128)
+res = ""
+while puissance_2 >= 1:
+    if puissance_2 <= x:
+        res += "1"
+        x = x - puissance_2
+    else:
+        res += "0"
+    puissance_2 = puissance_2 / 2
+print (res)
+            \end{minted}
+             \begin{solution}
+             	Cet exercice est plus compliqué que le reste du contrôle mais il reste très abordable et la plupart d'entre vous devrait être capable de le faire -- je vous invite donc à bien étudier sa correction.
+             	
+             	Commençons par exécuter pas à pas les premières étapes de ce code pour essayer de comprendre ce qu'il se passe:
+             	
+             	\begin{center}		
+             		\begin{tabular}{|c|c|l|}
+             			\hline
+             			\textbf{Etape} & \textbf{Ligne} & \textbf{Action} \\ \hline
+             			1 & 1 & x = 97 \\ \hline
+             			2 & 2 & puissance\_2 = 128 \\ \hline
+             			3 & 3 & res = "" \\ \hline
+             			4 & 4 & puissance\_2 = 128 $\ge$ 1, donc on rentre dans la boucle \\ \hline
+             			5 & 5 & puissance\_2 = 128 $>$ 97 = x, donc on ne rentre pas dans le if \\ \hline
+             			6 & 8 & else \\ \hline
+             			7 & 9 & res += "0" donc res = "0" \\ \hline
+             			8 & 10 & puissance\_2 = puissance\_2 / 2 = 128 / 2 = 64 ($= 2^6$) \\ \hline
+             			9 & 4 & puissance\_2 = 64 $\ge$ 1, donc on va effectuer une nouvelle itération de la boucle \\ \hline
+             			10 & 5 & puissance\_2 = 64 $\le$ 97 = x, donc on rentre dans le if \\ \hline
+             			11 & 6 & res += "1" donc res = "01" \\ \hline
+             			12 & 7 & x = x -- puissance\_2 = 97 -- 64 = 33 \\ \hline
+             			13 & 10 & puissance\_2 = puissance\_2 / 2 = 64 / 2 = 32 ($= 2^5$) \\ \hline
+             			14 & 4 & puissance\_2 = 32 $\ge$ 1, donc on va effectuer une nouvelle itération de la boucle \\ \hline
+             			15 & 5 & puissance\_2 = 32 $\le$ 33 = x, donc on rentre dans le if \\ \hline
+             			16 & 6 & res += "1" donc res = "011" \\ \hline
+             			17 & 7 & x = x -- puissance\_2 = 33 -- 32 = 1 \\ \hline
+             			18 & 10 & puissance\_2 = puissance\_2 / 2 = 32 / 2 = 16 ($= 2^4$) \\ \hline
+             		\end{tabular}
+             	\end{center}
+             	
+             	Quelques constats:
+             	\begin{itemize}
+             		\item On voit que "res", qui est la valeur qui va être affichée à l'utilisateur en fin de programme (et qui donc est a priori le "but" de ce programme), est une chaîne de caractères qui ne peut contenir \textit{que} des "0" (ligne 9) et des "1" (ligne 6).
+             		\item On voit que l'on fait diminuer x progressivement en en soustrayant toujours une puissance de 2 (ligne 7): ça, on le sait parce que la variable s'appelle "puissance\_2" mais aussi parce qu'elle est initialisée à une puissance de 2 (ligne 2) et n'est par la suite modifiée \textit{que} par division par 2 (ligne 10).
+             	\end{itemize}
+             	
+             	Prenez ces constats, ajoutez-y le fait que le thème principal du contrôle est la représentation de données et notamment le passage d'une base à une autre et il est évident que ce programme convertit un entier décimal x (de valeur 97 en l'occurrence) en binaire sous forme d'une chaine de caractères (des "1" et des "0" successifs). On peut noter que l'on commence par un "0" puisque la première puissance de 2 que "regarde" le programme est $2^7$ qui est supérieure à la valeur de x.
+             	
+             	L'affichage en console sera donc la conversion en base 2 de 97:
+             	\begin{verbatim}
+             		01100001
+             	\end{verbatim}
+             	
+            \end{solution} 
+            
+            \textit{(Question bonus 2)}
+            
+            En cours on a codé une fonction CompUn(lst) qui renvoie le complément à un d'une liste de bits représentant un entier codé en binaire. On vous demande de coder une deuxième fonction, qu'on appellera Ajouter1(lst), qui prendra le résultat de la précédente, ajoutera un, et renverra donc le complément à deux de l'entier initial.
+            
+            Quelques remarques:
+            \begin{itemize}
+            	\item La syntaxe pour une boucle bornée dont l'indice va descendre de N à 0 est \texttt{for i in range(N,-1,-1):}
+            	\item On ignorera le cas d'une liste uniquement composée de 1 (et pour laquelle un ajout de un ajouterait un chiffre).
+            	\item Conseil: commencez par faire à la main \texttt{100111 + 1} et réfléchissez aux étapes que vous accomplissez, à comment vous gérez les retenues, à ce qui se passe quand il n'y a plus de retenue...
+            \end{itemize}
+            
+            \begin{solution}
+            	Cet exercice est \textit{nettement} plus compliqué que le reste du contrôle: je vous invite bien évidemment à étudier sa correction, mais ne vous inquiétez pas s'il vous semble trop difficile -- il l'est.
+            	
+            	On commence par appliquer le conseil et on exécute à la main \texttt{100111 + 1}:
+            	\[
+            	\begin{array}{r *{7}{@{\;}c}}
+            		&1 & 0 & 0 & 1 & 1 & 1 \\
+            		+ & &  &  &  &  & 1 \\
+            		\cline{1-7}
+            		&1 & 0 & 1 & 0 & 0 & 0 \\
+            	\end{array}
+            	\]
+            	Dans le détail, ce qu'on effectue comme opérations est:
+            	\begin{enumerate}
+            		\item On affecte à "somme" l'ajout de 1 au chiffre le plus à droite: le résultat est nécessairement inférieur à 2;
+            		\item Si somme est $\le$ 1 (ce qui n'est \textbf{\textit{pas}} le cas ici):
+            		\begin{itemize}
+            			\item On place "somme" à la droite du résultat et on passe à la suite: en pratique, on a terminé -- aucun des autres chiffres ne sera modifié puisqu'on n'ajoute que 1 en tout.
+            		\end{itemize}
+            		\item Sinon (si somme = 2 -- c'est notre cas):
+            		\begin{itemize}
+            			\item On convertit le résultat en binaire -- $2_{10} = 10_2$
+            			\item On écrit donc 0 à droite du résultat, et on fait une retenue de 1.
+            		\end{itemize}            		
+            	\end{enumerate}
+
+           		Ces étapes nous ont permis d'écrire le chiffre le plus à droite du résultat; pour écrire les suivants, on reprend exactement le même raisonnement, en modifiant simplement la toute première étape -- "Ajout de 1 au chiffre le plus à droite" devient "Ajout de l'éventuelle retenue au chiffre suivant".
+           		
+           		Dès lors, si on a une retenue on réitère le même raisonnement, et dès qu'on n'en a plus (à partir du 5\textsuperscript{ème} chiffre dans notre exemple) on n'a plus qu'à "faire descendre" les chiffres suivants dans le résultat, jusqu'au dernier.
+           		
+           		Attention: si on a "ajouté" les chiffres au résultat en utilisant la méthode "append", on les a placés de gauche à droite. Il faudra donc inverser l'ordre de la liste avant de la renvoyer à la fin de la fonction.
+           		
+           		En pseudo-code, ceci se traduit par:
+           		
+           		\begin{algorithmic}[1]
+           			\Require{NbBin, nombre binaire sous forme de liste de 0 et de 1}
+           			\Ensure{resultat, nombre binaire sous forme de liste de 0 et de 1}
+           			\Function{Ajouter1}{NbBin}
+           			\State ProchainAjout $\leftarrow$ 1
+           			\Comment{Ajout à effectuer à la prochaine étape: 1, puis retenue éventuelle}
+           			\State resultat $\leftarrow$ [ ]
+           			\Comment{Initialisation du résultat: liste vide}
+           			\ForAll{$chiffre$ de NbBin \uline{de droite à gauche}}
+           			\State Somme $\leftarrow$ $chiffre + ProchainAjout$
+           			\If{$Somme \le 1$}
+           			\Comment{Cas où il n'y aura pas de retenue}
+           			\State resultat $\leftarrow$ resultat + $Somme$
+           			\Comment{Ajout du chiffre calculé à la liste résultat }
+           			\State ProchainAjout $\leftarrow$ 0
+           			\Comment{Pas de retenue}
+           			\Else
+           			\State resultat $\leftarrow$ resultat + $0$
+           			\Comment{Le résultat était 2, donc 10 en binaire}
+           			\State ProchainAjout $\leftarrow$ 1
+           			\Comment{Retenue}
+           			\EndIf
+           			\EndFor
+           			\State Inverser l'ordre des éléments de $resultat$ (ce qui en python peut se faire en une commande)
+           			\State\Return{resultat}
+           			\EndFunction
+           		\end{algorithmic}
+           		
+           		Et enfin cette fonction, traduite en Python, donne:
+           		            \begin{minted}
+           			[
+           			bgcolor = gray!15,
+           			fontsize = \footnotesize,
+           			linenos = true % numéros de ligne
+           			]
+           			{Python}
+def Ajouter1(lst):
+    ProchainAjout = 1
+    resultat = []
+    for i in range(len(lst) - 1, -1, -1):
+        Somme = ProchainAjout + lst[i]
+        if Somme <= 1:
+            resultat.append(Somme)
+            ProchainAjout = 0
+        else:
+            resultat.append(0)
+            ProchainAjout = 1
+
+    # Méthode qui inverse l'ordre d'une liste
+    # (note: on aurait évidemment pu faire ça à la main par le biais d'une boucle for)
+    resultat.reverse()
+
+    return resultat
+           		\end{minted}
+
+            \end{solution}
+            
+        \end{spacing}
+    \end{questions}
+\end{document}
+
+% SUPPRIME DU CONTROLE - TROP COMPLIQUE
+%          \question \textit{Complément à deux d'un entier exprimé en base 2} 
+%          
+%          Nous allons écrire une fonction qui prend en entrée une liste de bits représentant un entier exprimé en base 2 et qui va retourner une liste comprenant le complément à deux de cet entier.
+%          
+%          \begin{parts}
+	%          	\part[2] Complément à un pour commencer: compléter le code ci-dessous pour que la fonction CompUn renvoie le complément à un de l'entier\footnote{On rappelle que le complément à un est l'inversion de tous les bits du nombre écrit en binaire.}.
+	%			\begin{minted}
+		%				[
+		%				bgcolor = gray!15,
+		%				fontsize = \footnotesize,
+		%				linenos = true % numéros de ligne
+		%				]
+		%				{Python}
+		%def CompUn(lst):
+		%resultat = []
+		%for i in .............
+		%	if lst[i] == 1:
+		%		........
+		%	else:
+		%		.......
+		%return resultat
+		%			\end{minted} 
+	%			\part Reste maintenant à effectuer le complément à deux\footnote{On rappelle qu'il s'agit d'ajouter 1 au complément à un.}.
+	%			\begin{subparts}
+		%				\subpart[1] Posez et effectuez l'addition binaire \texttt{100111 + 1} -- et ce faisant réfléchissez aux étapes que vous êtes en train d'effectuer (pensez au sens dans lequel vous parcourez la liste; à comment vous gérez les retenues, etc.).
+		%				\subpart[2] Utilisez ce que vous venez de réaliser pour rédiger en pseudo-code une méthode pour effectuer l'addition de 1 à une liste représentant un entier codé en binaire. Si vous ne parvenez pas à rédiger un pseudo-code générique fonctionnant pour toute liste, rédigez un texte exprimant les étapes à appliquer à une liste \texttt{lst = [a, b, c, d}] où a, b, c, et d sont des bits.
+		%				\subpart[2] Complétez à présent le code de la fonction Ajoute1(lst) ci-dessous qui effectue cette opération:
+		%				\begin{minted}
+			%				[
+			%				bgcolor = gray!15,
+			%				fontsize = \footnotesize,
+			%				linenos = true % numéros de ligne
+			%				]
+			%				{Python}
+			%def Ajoute1(lst):
+			%    resultat = lst
+			%    longueur = len(lst) - 1
+			%    ajout = 1
+			%    for i in range(longueur, -1, -1):
+			%        if ajout + lst[i] <= 1:
+			%            ajout = 0
+			%            resultat[i] = ajout + lst[i]
+			%	    else:
+			%	        ajout = 1
+			%	        resultat[i] = 0
+			%
+			%    return resultat
+			%		
+			%........
+			%else:
+			%.......
+			%return resultat
+			%			\end{minted} 				
+		%				
+		%				 (et qui, bien évidemment, va parcourir la liste en entrée\footnote{Au cas où cela pourrait vous intéresser: \texttt{for i in range(n, -1, -1)} initie une boucle pour laquelle l'indice i démarre à n et descend jusqu'à 0.})
+		%				\subpart[1] Rédigez à présent le code d'une fonction CompDeux(lst) qui renvoie le complément à deux du nombre représenté dans la liste en entrée au moyen d'appels aux fonctions créées précédemment.
+		%			\end{subparts}
+	%          	
+	%        \end{parts}
+%		\begin{solution}
+	%		\end{solution}
