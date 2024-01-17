@@ -1,8 +1,8 @@
 % !TeX document-id = {63e2cb4c-39e5-4fe5-ae31-d450d2286238}
 % !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
 \documentclass[11pt,a4paper]{exam}
-%\printanswers % pour imprimer les réponses (corrigé)
-\noprintanswers % Pour ne pas imprimer les réponses (énoncé)
+\printanswers % pour imprimer les réponses (corrigé)
+%\noprintanswers % Pour ne pas imprimer les réponses (énoncé)
 \addpoints % Pour compter les points
 \usepackage[utf8]{inputenc}
 \usepackage{minted}
@@ -80,14 +80,26 @@
 		\question \textit{Questions de cours: }
 			\begin{parts}
 				\part[1] Expliquez (en une ou deux phrases) en quoi l'encodage UTF-8 est plus performant que son ancêtre, le codage ASCII, et est donc aujourd'hui presqu'universellement utilisé par exemple pour les sites web.
+				\begin{solution}
+					
+					Le code ASCII, le premier système d'encodage de caractères alphanumériques en binaire, utilisait 7 bits et permettait donc l'encodage de 128 caractères ($2^7$). Il était donc extrêmement limité et n'autorisait ni les accents, ni encore moins les alphabets ou syllabaires autres que l'alphabet latin -- l'arabe, le cyrillique, l'hébreu, l'amharique... L'UTF-8, créé dans les années 1990, permet lui d'utiliser un nombre variable de bits pour encoder un caractère pouvant aller jusqu'à 24 bits. Il peut représenter jusqu'à 1 million de caractères différents ce qui le rend idéal pour les applications internationales, y compris les pages Web.			
+				\end{solution}
+				
 				
 				\part[1] Quel est l'entier naturel (donc appartenant à l'ensemble $\mathbb{N}$) maximal que l'on peut coder sur 4 bits? (vous donnerez le détail du calcul)
 				
+				\begin{solution}
+					
+					Sur 4 bits, le nombre maximal que l’on peut coder est $1111_2$ soit, en décimal: $2^0 +2^1 +2^2 +2^3 = 15$. Mais on peut effectuer un calcul plus simple: en effet $(1111 + 1)_2 = 10000_2$; donc $1111_2 = 10000_2 - 1 = 2^4 - 1 = 16 - 1 = 15$.
+				\end{solution}
+				
 				\part[1] Quel est l'entier relatif positif (donc appartenant à l'ensemble $\mathbb{Z}$) maximal que l'on peut coder sur 4 bits? (vous donnerez le détail de votre raisonnement)
+				
+				\begin{solution}
+					
+					Si on veut stocker des entiers relatifs sur 4 bits, il faut stocker les nombres positifs \textit{et} les nombres négatifs, donc on peut en stocker moitié moins que d'entiers naturels. On peut donc stocker 8 entiers négatifs, et 7 positifs, ce qui fait bien un total de 15 (le 16\textsuperscript{ème} nombre étant le 0). La réponse à la question est donc 7 -- mais 8 était également accepté (puisque -8 est le plus petit nombre négatif que l'on peut coder sur 4 bits).
+				\end{solution}
 			\end{parts}
-		\begin{solution}
-
-		\end{solution}
 
         \question {\textit{Addition de nombres binaires} (posez bien votre addition -- un simple résultat ne sera pas accepté.)}
         \begin{parts}
@@ -95,16 +107,16 @@
             	\part[1] {Si ces deux nombres binaires représentaient des entiers signés (ou entiers relatifs appartenant à l'ensemble $\mathbb{Z}$), quel serait le signe du résultat? Justifiez votre réponse.}
        	\end{parts}
         \begin{solution}
-%	           		\[
-%	           		\begin{array}{r *{10}{@{\;}c}}
-%	           			&& 1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 \\
-%	           			+ & & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 0 \\
-%	           			\cline{1-10}
-%	           			&1 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 1 \\
-%	           		\end{array}
-%	           		\]
-%	           		
-%	           		La dernière retenue fait que l'on va devoir utiliser un bit de plus pour encoder le résultat de cette addition -- et que donc on aura nécessairement une erreur si on essaye de l'effectuer sur un espace mémoire limité à un octet.
+	           		\[
+	           		\begin{array}{r *{10}{@{\;\;\;\;\;}r}}
+	           			&& ^11 & 1 & 1 & ^10 & ^11 & ^10 & ^11 & 1 \\
+	           			+ & & 0 & 1 & 0 & 0 & 1 & 1 & 1 & 1 \\
+	           			\cline{1-10}
+	           			&1 & 0 & 0 & 1 & 1 & 1 & 0 & 1 & 0 \\
+	           		\end{array}
+	           		\]
+	           		
+	           		La dernière retenue fait que l'on a un resultat comportant 9 bits; or on sait que lorsqu'on additionne deux entiers relatifs codés sur \textit{n} octets, s'il y a une retenue finale on l'ignore (comme on l'a vu en cours, c'est grâce à cette "astuce" que la méthode du complement à 2 fonctionne) et on ne retient donc que les \textit{n} bits de droite -- ici, puisque l'on est sur un octet, les 8 bits de droite: \texttt{00111010}. On regarde alors le bit de poids fort (le plus à gauche) de ce resultat pour déterminer le signe, et ici, puisque ce bit est à 0, on conclut que le résultat de cette addition est un entier positif.
         \end{solution}
             	
 		\question {\textit{Conversion entre bases de numération}} (le détail des calculs est demandé -- le résultat seul ne rapportera pas la totalité des points.)
@@ -113,41 +125,37 @@
 	           		\part[1] Convertissez de base 10 en base 2: $37_{(10)}$
 	           	\end{parts}
 	           	\begin{solution}
-%					(a) On sait qu'il y a deux méthodes -- je vous laisse revoir le cours pour celle dite des "soustractions successives" et je vous détaille ici celle des "divisions successives" que vous aviez préférée lors de nos exercices en cours:
-%					\[
-%					\begin{array}{ll}
-%						26 / 2 = 13 & \text{reste } 0 \\
-%						13 / 2 = 6 & \text{reste } 1 \\
-%						6 / 2 = 3 & \text{reste } 0 \\
-%						3 / 2 = 1 & \text{reste } 1 \\
-%						1 / 2 = 0 & \text{reste } 1 \\
-%					\end{array}
-%					\]
-%					
-%					La conversion en base 2 de $26_{10}$ est la liste des restes de ces divisions prises de bas en haut: $11010_{2}$.
-%					
-%					(b) La conversion de base 16 en base 2 est assez simple -- il suffit de convertir chacun des chiffres en base 2 et de mettre les résultats côte à côte (c'est un des intérêts de la base hexadécimale, dû au fait que 16 est une puissance de 2 -- je vous renvoie au cours si cette notion n'est pas claire).
-%					
-%					$2_{16} = 2_{10} = 10_2$ -- ça, ça devrait être assez immédiat.
-%					
-%					$B_{16}$, c'est 11 en base 10 -- puisque lorsqu'on compte dans les deux bases cela donne:
-%					\[
-%					\begin{array}{r *{18}{@{\;}c}}
-%						0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & \uline{\textbf{}11} & 12 & 13 & 14 & 15 & 16 & 17 \\
-%						0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & A & \uline{\textbf{}B} & C & D & E & F & 10 & 11 \\
-%					\end{array}
-%					\]
-%					
-%					Reste donc à convertir 11 de base 10 en base 2 -- pour cela on peut utiliser la méthode utilisée à l'exercice (a) précédent, ou bien tout simplement compter en base 2 jusqu'à 11:
-%					\[
-%					\begin{array}{r *{12}{@{\;}c}}
-%						0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & \uline{\textbf{}11} \\
-%						0 & 1 & 10 & 11 & 100 & 101 & 110 & 111 & 1000 & 1001 & 1010 & \uline{\textbf{}1011} \\
-%					\end{array}
-%					\]
-%					
-%					Et donc si l'on met bout à bout ces deux conversions on obtient: $2B_{(16)} = 101011_{(2)}$.
-%					
+	           		
+	           		(a) On sait que chacun des "chiffres" de ce nombre représente le multiple d'une puissance de 16 puisque nous sommes en base hexadécimale.
+	           		
+	           		On sait par ailleurs compter en hexadécimal de 0 à 15:
+	           		\[
+	           		\begin{array}{r *{16}{@{\;}c}}
+	           			0 & 1 & \uline{\textbf{2}} & 3 & 4 & 5 & 6 & 7 & 8 & 9 & \uline{\textbf{A}} & B & C & D & E & \uline{\textbf{F}} \\
+	           			0 & 1 & \uline{\textbf{2}} & 3 & 4 & 5 & 6 & 7 & 8 & 9 & \uline{\textbf{10}} & 11 & 12 & 13 & 14 & \uline{\textbf{15}} \\
+	           		\end{array}
+	           		\]
+	           		
+	           		Il ne reste plus qu'à effectuer la somme des puissances de 16 correspondantes:
+	           		\[
+	           		2AF_{16} = (2 \times 16^2 + 10 \times 16^1 + 15 \times 16^0)_{10} = (2 \times 256 + 10 \times 16 + 15 \times 1)_{10} = (512 + 160 + 15)_{10} = 687_{10}
+	           		\]
+	           		
+	           		
+	           		
+					(b) On sait qu'il y a deux méthodes -- je vous laisse revoir le cours pour celle dite des "soustractions successives" et je vous détaille ici celle des "divisions successives" que vous aviez préférée lors de nos exercices en cours:
+					\[
+					\begin{array}{ll}
+						37 / 2 = 18 & \text{reste } 1 \\
+						18 / 2 = 9 & \text{reste } 0 \\
+						9 / 2 = 4 & \text{reste } 1 \\
+						4 / 2 = 2 & \text{reste } 0 \\
+						2 / 2 = 1 & \text{reste } 0 \\
+						1 / 2 = 0 & \text{reste } 1 \\
+					\end{array}
+					\]
+					
+					La conversion en base 2 de $37_{10}$ est la liste des restes de ces divisions prises de bas en haut: $100101_{2}$.
 				\end{solution}
 		
 		\question{\textit{Entiers relatifs}}
@@ -160,26 +168,46 @@
 				\part[1] Quelle est la valeur en base 10 du nombre binaire 10011010 s'il représente un entier signé (ou entier relatif appartenant à l'ensemble $\mathbb{Z}$)?
 			\end{parts}
 			
-				           	\begin{solution}
-				(a) On parle d'entier "non signé" -- donc un entier naturel qui ne porte pas de bit de signe. On applique donc une stricte conversion de base 2 en base 10, en parcourant le nombre de droite à gauche et en lui appliquant les puissances de 2 successives:
-				\[ 0 \times 2^0 + 0 \times 2^1 + 1 \times 2^2 + 1 \times 2^3 + 1 \times 2^4 + 0 \times 2^5 + 0 \times 2^6 + 1 \times 2^7 = 4 + 8 + 16 + 128 = 156\]
-				Donc: $10011100_{(2)} = 156_{(10)}$
+			\begin{solution}
 				
-				(b) Le complément à un (voir le cours) est une simple inversion de tous les bits qui constituent le nombre -- donc ici: 01100011
+				(a) On parle d'entier "non signé" -- donc un entier naturel qui ne porte pas de bit de signe. On applique donc une stricte conversion de base 2 en base 10, en parcourant le nombre de droite à gauche et en lui appliquant les puissances de 2 successives:
+				\[
+				0 \times 2^0 + 
+				1 \times 2^1 + 
+				0 \times 2^2 + 
+				1 \times 2^3 + 
+				1 \times 2^4 + 
+				0 \times 2^5 + 
+				0 \times 2^6 + 
+				1 \times 2^7 
+				= 2 + 8 + 16 + 128 
+				= 154\]
+				Donc: $10011010_{(2)} = 154_{(10)}$
+				
+				(b) Le complément à un (voir le cours) est une simple inversion de tous les bits qui constituent le nombre -- donc ici: 01100101
 				
 				(c) Le complément à deux (voir, encore une fois, le cours) est un ajout de 1 au complément à un -- donc ici:
 					\[
 				\begin{array}{r *{9}{@{\;}c}}
-					& 0 & 1 & 1 & 0 & 0 & 0 & 1 & 1 \\
+					& 0 & 1 & 1 & 0 & 0 & 1 & 0 & 1 \\
 					+ &  &  &  &  &  &  &  & 1 \\
 					\cline{1-9}
-					& 0 & 1 & 1 & 0 & 0 & 1 & 0 & 0 \\
+					& 0 & 1 & 1 & 0 & 0 & 1 & 1 & 0 \\
 				\end{array}
 				\]
 				
-				(d) Si ce nombre 10011100 représente un entier signé, alors son complément à deux représente son opposé -- c'est le principe-même de l'encodage des entiers relatifs qu'on a vu en cours. Donc puisqu'on sait que ce nombre est négatif (son bit de signe, bit de poids fort, vaut 1), il nous suffit de convertir de base 2 en base 10 son complément à deux que l'on vient de calculer (01100011) pour connaître sa valeur, en appliquant la même méthode qu'à la partie (a) de cette question:
-				\[ 0 \times 2^0 + 0 \times 2^1 + 1 \times 2^2 + 0 \times 2^3 + 0 \times 2^4 + 1 \times 2^5 + 1 \times 2^6 + 0 \times 2^7 = 4 + 32 + 64 = 100\]
-				Donc la valeur en base 10 du nombre binaire 10011100 s'il représente un entier signé est \textbf{-100}.				
+				(d) Si ce nombre 10011010 représente un entier signé, alors son complément à deux représente son opposé -- c'est le principe-même de l'encodage des entiers relatifs qu'on a vu en cours. Donc puisqu'on sait que ce nombre est négatif (son bit de signe, bit de poids fort, vaut 1), il nous suffit de convertir de base 2 en base 10 son complément à deux que l'on vient de calculer (01100110) pour connaître sa valeur, en appliquant la même méthode qu'à la partie (a) de cette question:
+				\[ 
+				0 \times 2^0 + 
+				1 \times 2^1 + 
+				1 \times 2^2 + 
+				0 \times 2^3 + 
+				0 \times 2^4 + 
+				1 \times 2^5 + 
+				1 \times 2^6 + 
+				0 \times 2^7 
+				= 2 + 4 + 32 + 64 = 102\]
+				Donc la valeur en base 10 du nombre binaire 10011010 s'il représente un entier signé est \textbf{-102}.				
 				
 			\end{solution}
 		
@@ -226,68 +254,19 @@ print ("Resultat :", resultat ) # PRINT #3
 	       		95 : \_ & 96 : ` & 97 : a & 98 : b & 99 : c & 100 : d
 	       	\end{tabular}
 			\begin{solution}
-				(a) Je veux m'attarder un peu ici sur la \textit{\textbf{méthode}} qu'il convient d'utiliser pour ce genre de question -- et plus généralement quand vous êtes amenés à lire du code:
-				\begin{itemize}
-					\item Commencez par repérer les structures logiques majeures (conditions, boucles...) -- en python c'est facile, puisqu'elles sont indentées. Regardez où elles commencent, où elles finissent -- et isolez dans votre tête ce qu'elle font unitairement.
-					\item Dans un second temps, exécutez pas à pas sur une feuille de papier (ou dans votre tête si c'est suffisamment simple) les premières étapes du code pour repérer sa logique. Dans le cas de ce code-ci, cela donne:
-					\begin{itemize}
-						\item J'initialise mes variables puis je rentre dans la boucle qui parcourt la liste message.
-						\begin{itemize}
-							\item i = 0, donc caractere = message[0] = "M"
-							\item ord(caractere) = 77 (d'après la table ASCII fournie) qui est bien entre ord("A") (65) et ord("Z") (90) -- donc on rentre dans le if:
-							\begin{itemize}
-								\item code\_ascii = ord(caractere) = 77
-								\item print(code\_ascii) $\rightarrow$ On a la première sortie dans la console: \textbf{77}
-								\item nouveau\_code = code\_ascii + decal = 77 + 5 = 82
-								\item nouveau\_caractere = chr(nouveau\_code) = chr(82) = "R" (toujours d'après la table ASCII fournie).
-								\item print(nouveau\_caractere) $\rightarrow$ On a la deuxième sortie dans la console: \textbf{R}
-								\item resultat = resultat + nouveau\_caractere $\rightarrow$ Comme on avait initialisé resultat à "", cela signifie que resultat vaut maintenant "R".
-							\end{itemize}
-							\item On est sorti du "if"
-						\end{itemize}
-						\item On a fini la première instance de la boucle "for", donc...
-						\item On recommence avec i = 1, donc caractere = message[1] = "A"
-					\end{itemize}
-				\end{itemize}
 				
-				Arrêtons-nous là un instant et réfléchissons à ce que nous avons appris:
-				\begin{itemize}
-					\item Nous avons parcouru intégralement une instance de la boucle -- donc tout ce qui va suivre ne sera que des répétitions de ce qu'on vient de faire.
-					\item On a vu que si le caractère était inclus entre A et Z -- ce qui est le cas des trois premiers de la liste message -- on allait faire ce décalage de "decal" (soit 5) pour récupérer une nouvelle lettre dans la table ASCII.
-					\item Donc on \textit{sait} que pour chacun des deux caractères suivants "A" et "X" on va faire la même chose: ajouter 5 au code ASCII et produire le caractère correspondant.
-					\item Donc à quoi sert ce code qui remplace systématiquement un caractère par un autre? Dans un exercice qui en plus s'appelle "chiffrement"? A coder / chiffrer un texte bien sûr!
-				\end{itemize}
+				C'est évidemment exactement le même exercice qu'au contrôle précédent, au détail près que le texte en entrée diffère. Je ne reviens donc pas en détails ici sur les raisonnements -- je vous renvoie pour celà à la correction du contrôle précédent.
 				
-				Pour ce qui est de la suite en affichage console, on reproduit ce qu'on vient de faire avec les deux éléments suivants de la liste ("A" et "X"), puis avec le dernier ("!") on se rend compte qu'on n'est pas dans l'intervalle [ord("A"),ord("Z")], que donc on ne rentre pas dans le "if" -- et qu'on ajoute donc directement le caractère "!" à resultat sans le coder avant de produire le print final. Au total cela donne:
+				Ce que va afficher ce code est:
 				\begin{verbatim}
-					77
-					R
-					65
-					F
-					88
-					]
-					Resultat : RF]!
+					78
+					Q
+					83
+					V
+					73
+					L
+					Resultat : QVL!
 				\end{verbatim}
-				
-				\uline{\textbf{Les questions suivantes sont beaucoup plus difficiles que ce que je prévoyais.}}
-				\\
-				\uline{ \textbf{Vous n'avez PAS besoin de les revoir pour le contrôle de remédiation.}}
-				\\ \\
-				(b) Le problème avec la lettre "X" est qu'en ajoutant 5 à son code ASCII on dépasse l'intervalle des lettres majuscules pour entrer dans celui des signes de ponctuation -- dans ce cas, "]", ce qui si on est en train de crypter un texte risque de faire tâche et donner une indication à d'éventuels ennemis sur comment on a codé le texte.
-				
-				(c) La solution la plus évidente consisterait à "reboucler" vers la valeur du code de la lettre A -- quand on est à U (85), on passe à Z (90), puis quand on est à V (86) on passe à A (65) et ainsi de suite. Comment réaliser cela en pratique? En utilisant l'opérateur "\%" (modulo):
-				\begin{minted}
-				[
-				bgcolor = gray!15,
-				fontsize = \footnotesize,
-				linenos = true % numéros de ligne
-				]
-				{Python}
-nouveau_code = code_ascii + decal
-if nouveau_code > ord("Z"):
-    nouveau_code = nouveau_code % ord("Z") + ord("A") - 1
-				\end{minted}
-				
 			\end{solution} 
 			
 		\question{\textit{Parcours d'une liste}}
@@ -309,24 +288,25 @@ if nouveau_code > ord("Z"):
 			\end{parts}
 			
 			\begin{solution}
-				Cet exercice est pratiquement identique à ceux que l'on a effectués en cours et dans la feuille d'exercices supplémentaires que je vous ai envoyée (recherche du maximum d'une liste, du minimum, calcul de la moyenne, etc.) -- ce qui diffère, c'est ce que l'on fait \textit{dans} la boucle, tandis que la réelle difficulté (le parcours de la liste) est strictement la même.
+				
+				Cet exercice est pratiquement identique à ceux que l'on a effectués en cours, dans la feuille d'exercices supplémentaires que je vous ai envoyée (recherche du maximum d'une liste, du minimum, calcul de la moyenne, etc.), et dans le contrôle précédent. Il s'agit de parcourir une liste et d'effectuer un traitement simple (ici un test pour voir si la valeur considérée est strictement supérieure à un seuil) pour chacune des valeurs qui la composent.
 				
 				(a)
 				\begin{algorithmic}[1]
-					\Require{ListeCar, liste de caractères individuels}
-					\Ensure{resultat, liste d'entiers correspondant à la valeur du code ASCII en entrée}
-					\Function{CodeASCII}{chn}
-					\State LongChn $\leftarrow$ len(ListeCar)
-					\Comment{Nombre de caractères en entrée}
-					\State resultat $\leftarrow$ [ ]
+					\Require{ListeTemp, liste de températures sous forme d'entiers; Seuil, un entier}
+					\Ensure{Resultat, liste d'entiers correspondant aux températures supérieures au seuil}
+					\Function{TempSeuil}{ListeTemp, Seuil}
+					\State LongChn $\leftarrow$ len(ListeTemp)
+					\Comment{Nombre de températures en entrée}
+					\State Resultat $\leftarrow$ [ ]
 					\Comment{Initialisation du résultat: liste vide}
-					\ForAll{$caractere$ de ListeCar}
-					\State CodeCourant $\leftarrow$ ord($caractere$)
-					\Comment{Récupération code ASCII}
-					\State resultat $\leftarrow$ resultat + $CodeCourant$
+					\ForAll{$temp$ de ListeTemp}
+					\If{$temp > Seuil$}
+					\State $Resultat \leftarrow Resultat + temp$
 					\Comment{Ajout en bout de liste}
+					\EndIf
 					\EndFor
-					\State\Return{resultat}
+					\State\Return{Resultat}
 					\EndFunction
 				\end{algorithmic}
 				
@@ -338,12 +318,12 @@ if nouveau_code > ord("Z"):
 					linenos = true % numéros de ligne
 					]
 					{Python}
-def CodeASCII(lst):
+def TempSeuil(lst, seuil):
     NbCar = len(lst)
     resultat = []
     for i in range(NbCar):
-        CodeCourant = ord(lst[i])
-        resultat.append(CodeCourant)
+        if lst[i] > seuil:
+            resultat.append(lst[i])
     return resultat
 				\end{minted}
 			\end{solution} 
@@ -381,14 +361,15 @@ def CodeASCII(lst):
 			
 			(b) Le bit de signe étant positionné à 1, on aura $(-1)^1 = -1$ et donc le nombre sera négatif.
 			
-			(c) E, en binaire, vaut 10000001. Le calcul est donc simple puisqu'on n'a que la première et la dernière puissances de 2 qui sont positionnées à 1: $E = 2^0 + 2^7 = 1 + 128 = 129$
+			(c) E, en binaire, vaut 10000010. Le calcul est donc simple puisqu'on n'a que la première et l'avant-dernière puissances de 2 qui sont positionnées à 1: $E = 2^1 + 2^7 = 2 + 128 = 130$
 			
-			(d) M, en binaire, vaut 1010000000000000000000. On n'a donc de nouveau que deux puissances de 2 qui sont positionnées à 1 -- et dont l'énoncé nous donne la valeur, donc le calcul est immédiat: $M = 2^{-1} + 2^{-3} = 0.5 + 0.125 = 0.625$
-			
-			Et enfin la question (e) qui n'était pas posée dans le contrôle:
-			\[ N = (-1)^1 \times (1 + 0.625) \times 2^{(129 - 127)} = -1 \times 1.625 \times 4 = -6.5 \]
-			
-
+			(d) Vous pouvez vous amuser à calculer la valeur exacte de M si vous voulez (elle est de $2^{-1} + 2^{-3} + 2^{-4} = 0,6875$) mais en utilisant son developpement en puissances de 2 le calcul devient extrêmement simple:
+			\begin{align*}
+				N &= (-1)^1 \times (1 + 2^{-1} + 2^{-3} + 2^{-4}) \times 2^{130 - 127}\\
+				&= (-1) \times (1 \times 2^3 + 2^{-1 + 3} + 2^{-3 + 3} + 2^{-4 + 3}) \\
+				&= (-1) \times (8 + 4 + 1 + \frac{1}{2}) \\
+				&= -13,5
+			\end{align*}
 		\end{solution} 
             
             \vspace{10pt} 
