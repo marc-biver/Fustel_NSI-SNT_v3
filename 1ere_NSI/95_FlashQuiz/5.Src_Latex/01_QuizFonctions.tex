@@ -1,0 +1,61 @@
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+% Le truc au-dessus pour avoir l'option shell-escape qui permet de faire du minted.
+\documentclass[12pt]{article}
+
+\newcommand{\thmquiz}{fonctions}
+\newcommand{\idquiz}{01}
+
+\newcommand{\classe}{1\textsuperscript{ère} NSI}
+
+% Affichage ou non des reponses aux questions & exercices
+\newif\ifDispRep
+%\DispReptrue  % Show the text
+\DispRepfalse % Hide the text - en général pas de solutions publiées pour les quiz
+
+% Incorporation tous éléments de préambule communs à tous mes cours
+%\usepackage{../../../CoursLFC}
+% Windows / Atos janvier 2024 - passé à variable d'environnement TEXINPUTS (voir Evernote)
+\usepackage{CoursLFC}
+
+\begin{document}
+	\thispagestyle{empty} % pas de header / footer - il ramenait une ligne dasn l'en-tête qui devait venir de quelque part dans CoursLFC
+	% Titre minimaliste
+	\begin{center}
+		\setlength{\fboxrule}{2pt}
+		\setlength{\fboxsep}{5pt}
+		\fbox{\textbf{{\large \classe \ --- Quiz \idquiz: \thmquiz}}}
+		\vspace{0.5em}
+	\end{center}
+	
+	\begin{MonQz}{retour de fonction}
+		\MonPython{01_1.py}
+		Que retourne cette fonction?
+		\begin{alphenum}
+			\item La somme de a et b
+			\item Rien
+			\item Une erreur
+			\item Le produit de a et b
+		\end{alphenum}
+	\end{MonQz}
+	
+	\begin{MonQz}{retour de fonction}
+		\MonPython{01_2.py}
+		Si j'execute ce code, qu'est-ce qui va s'afficher à l'écran?
+	\end{MonQz}
+	
+	\begin{MonQz}{retour de fonction}
+		\MonPython{01_3.py}
+		Que vaut la variable \texttt{res}?
+	\end{MonQz}
+
+	\begin{MonQz}{message d'erreur}
+		Que veut dire ceci?
+		\begin{verbatim}
+			Traceback (most recent call last):
+			File "C:\Users\Marc\PyProj\exemple.py", line 4, in <module>
+			MaFonction()
+			TypeError: MaFonction() missing 1 required positional argument: 'a'
+		\end{verbatim}
+	\end{MonQz}
+
+\end{document}
