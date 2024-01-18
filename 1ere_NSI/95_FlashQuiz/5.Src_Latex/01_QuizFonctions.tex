@@ -9,8 +9,8 @@
 
 % Affichage ou non des reponses aux questions & exercices
 \newif\ifDispRep
-%\DispReptrue  % Show the text
-\DispRepfalse % Hide the text - en général pas de solutions publiées pour les quiz
+\DispReptrue  % Show the text
+%\DispRepfalse % Hide the text
 
 % Incorporation tous éléments de préambule communs à tous mes cours
 %\usepackage{../../../CoursLFC}
@@ -37,16 +37,29 @@
 			\item Le produit de a et b
 		\end{alphenum}
 	\end{MonQz}
+	\begin{MaReponse}
+		Réponse \textbf{b} -- en effet cette fonction, de fait, ne fait rien puisqu'elle n'affiche rien à l'utilisateur (pas de \texttt{print}) et ne renvoie aucune valeur qui pourrait être utilisée dans le programme qui l'a appellée (pas de \texttt{return}).
+	\end{MaReponse}
 	
 	\begin{MonQz}{retour de fonction}
 		\MonPython{01_2.py}
 		Si j'execute ce code, qu'est-ce qui va s'afficher à l'écran?
 	\end{MonQz}
+	\begin{MaReponse}
+		L'affichage sera:
+		\begin{verbatim}
+			Calcul en cours...
+		\end{verbatim}
+		... et strictement rien d'autre! Un \texttt{return} n'affiche rien et, surtout, un \texttt{return} force une sortie de la fonction; donc "\texttt{Calcul termine!}" ne pourra jamais s'afficher.
+	\end{MaReponse}
 	
 	\begin{MonQz}{retour de fonction}
 		\MonPython{01_3.py}
 		Que vaut la variable \texttt{res}?
 	\end{MonQz}
+	\begin{MaReponse}
+		Elle ne vaut rien!! (ou, plus exactement, elle vaut \texttt{None}) Un \texttt{print} n'est \textit{\textbf{pas}} un retour, c'est juste un affichage -- donc en l'état \texttt{division(a, b)} ne renvoie strictement rien.
+	\end{MaReponse}
 
 	\begin{MonQz}{message d'erreur}
 		Que veut dire ceci?
@@ -57,5 +70,15 @@
 			TypeError: MaFonction() missing 1 required positional argument: 'a'
 		\end{verbatim}
 	\end{MonQz}
+	\begin{MaReponse}
+		Le message d'erreur est très clair: "missing 1 required positional argument: 'a'". L'appel à une fonction a été effectué avec un argument manquant -- et le message précise même le nom du paramètre correspondant, 'a'. Et à la ligne précédente on voit l'appel fautif en question:
+		\begin{verbatim}
+			MaFonction()
+		\end{verbatim}
+		Donc on peut même (presque) en déduire la syntaxe exacte de la ligne de définition de la fonction:
+		\begin{verbatim}
+			def MaFonction(a):
+		\end{verbatim}
+	\end{MaReponse}
 
 \end{document}
