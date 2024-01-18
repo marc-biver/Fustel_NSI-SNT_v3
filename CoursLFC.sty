@@ -113,6 +113,16 @@
 % Style pour mes questions rhétoriques
 \newcommand{\MaQuestion}[1]{\par\vspace{0.3\baselineskip}\noindent$\rightarrow$\textit{#1}?\par\vspace{0.3\baselineskip}}
 
+% Environnement de quiz
+\newcounter{qzcnt}
+\newenvironment{MonQz}[1]{%
+	\refstepcounter{qzcnt}
+	\noindent\textbf{\uline{Question \theqzcnt\ -- #1}}\par
+	\vspace{0.1em}% Espace après le titre
+}{%
+	\par
+	\vspace{0.5em} % Fin de l'environnement
+}
 % Style pour les réponses (aux questions rhétoriques et aux exos - enfin une solution perenne)
 % Definition du booleen d'affichage - fait en tete de preambule
 %\newif\ifDispRep
@@ -165,7 +175,7 @@
 	right=2mm           % Space between the frame and the content on the right
 }
 
-% Format d'inclusion de code Python
+% Format d'inclusion de code Python - avec un fichier en entrée
 \newcommand{\MonPython}[1]{
 		\inputminted[
 		bgcolor=gray!15,
