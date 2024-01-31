@@ -1,0 +1,137 @@
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+\documentclass[11pt,a4paper]{exam}
+%\printanswers % pour imprimer les réponses (corrigé)
+\noprintanswers % Pour ne pas imprimer les réponses (énoncé)
+\addpoints % Pour compter les points
+\usepackage[utf8]{inputenc}
+\usepackage{minted}
+
+%\usepackage[margin=1 in]{geometry}
+\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=1.5cm,right=1.5 cm,marginparwidth=1.75cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{dashundergaps}
+
+\newcommand{\examnum}{Contrôle majeur \#2}
+\newcommand{\class}{SNT 2\textsuperscript{nde}}
+\newcommand{\examdate}{15/01/2024}
+\newcommand{\timelimit}{45 Minutes}
+\newcommand{\lycee}{Lycée Fustel de Coulanges}
+
+\pagestyle{head}
+\firstpageheader{}{}{}
+\runningheader{\class}{\examnum\ - Page \thepage\ / \numpages}{\examdate}
+\runningheadrule
+
+
+\begin{document}
+% Espace d'en-tête
+\noindent
+\begin{spacing}{1}
+	\noindent
+	\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} l @{\extracolsep{6pt}} l}
+		\textbf{\class} & \textbf{\examnum, \examdate}&\\
+		\textbf{\lycee} &\textbf{Durée: \timelimit} &\\
+	\end{tabular*}\\
+\end{spacing}
+
+\noindent
+\vspace{10pt}
+\hrule
+\vspace{5pt} 
+\noindent
+\\
+Ce contrôle comporte \numquestions\ questions; le maximum possible de points est de \numpoints\ points.\\ 
+Les réponses sont à porter sur une \uline{\textbf{copie}} (\textbf{PAS} un morceau de papier arraché d'un cahier ou une copie déchirée) \uline{comportant votre nom}.\\
+Il n'est pas nécessaire de répondre aux questions dans l'ordre \textemdash\ commencez par celles où vous vous sentez le plus à l'aise (mais numérotez bien les questions sur votre copie).\\
+Les calculatrices ne sont \uline{pas} autorisées.\\
+\noindent
+\hrule
+\vspace{15pt} 
+
+    \begin{spacing}{1,1}
+        \begin{questions} % DEBUT DE L'EXAMEN
+        	
+        	\question QCM -- reportez sur votre copie la ou les réponses correctes \textit{en mentionnant bien la lettre de la question à chaque fois}.
+			\begin{parts}
+				\part[1]Le code RVB 0-255-0 correspond à la couleur:
+        			\begin{choices}
+		        			\choice Jaune.
+		        			\choice Rouge.
+		        			\correctchoice Verte.
+		        			\choice Noire.
+        			\end{choices}
+        		\part[1]Coder une couleur sur 4 bits permet de différencier:
+	        		\begin{choices}
+	        			\choice 2 couleurs.
+	        			\choice 4 couleurs.
+	        			\choice 8 couleurs.
+	        			\correctchoice 16 couleurs.
+	        			\choice 32 couleurs.
+	        		\end{choices}
+        		\part[1]Le langage HTML sert à:
+	        		\begin{choices}
+	        			\correctchoice Structurer et présenter le contenu sur les pages Web.
+	        			\choice Protéger les sites web contre les hackers.
+	        			\correctchoice Décrire la structure de base d'un document sur Internet
+	        			\choice Créer et gérer des bases de données.
+	        			\choice Toutes les réponses ci-dessus sont vraies.
+	        		\end{choices}
+			\end{parts}
+			        	
+        	\question[2] Si vous désactivez les cookies dans votre navigateur, quel impact cela pourrait-il avoir sur votre navigation sur Internet ? Donnez un exemple concret (en citant un site web spécifique et au moins deux conséquences précises).
+        	
+        	\question[2] Un ami vous appelle en panique car il pense que son ordinateur a été infecté par un logiciel malveillant. Quels trois conseils pratiques lui donneriez-vous pour gérer la situation et protéger ses données?
+        	
+        	\question[2] Imaginons que la neutralité du net a été abolie: expliquez (en donnant trois exemples concrets en tout) les conséquences possibles d'une telle mesure -- pour vous, en tant qu'utilisateur d'internet, et pour une petite entreprise / startup de vente en ligne.
+        	
+        	\question[2] "\textit{Les moteurs de recherche coome Google, ça fonctionne parfaitement: on pose une question, ça nous donne la meilleure réponse possible, et c'est absolument tout.}" Donnez deux arguments qui pourraient aller à l'encontre d'une telle affirmation.
+        	
+        	\question[2] Une de vos amies, résidant en France, a trouvé lors d'une recherche Google de vieux articles négatifs la concernant publiés sur un site américain. Ces articles décrivaient des faits qui étaient vrais il y a longtemps mais qui ne le sont plus actuellement. Elle craint que cette cela nuise à sa recherche d'emploi et souhaite qu'ils soient supprimés. Elle vous demande votre avis: que lui conseillez-vous? Quels sont ses droits en termes de suppression de ces informations selon la législation, notamment le RGPD?
+        	
+        	\question Considérez le code HTML suivant:
+        	\begin{verbatim}
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Ma page HTML
+    </head>
+    <body>
+        <h1>Mes gouts</h1>
+        <h2>La lecture</h2>
+        <img src="livre.jpg">
+        <br /> <br /> <br />
+        Ce que j'aime lire:
+        <ul>
+            <li>Des livres</a></li>
+            <li><a www.lemonde.fr>Le journal</a></li>
+        <FinDeListe>
+        <h2>Le sport</h2>
+    </body>
+</html>
+        	\end{verbatim}
+        	\begin{parts}
+        		\part[2] Ce code contient plusieurs erreurs: identifiez-en au moins deux et expliquez comment il faut les corriger.
+        		\part[1] En supposant que le code a été corrigé, dessinez sur votre copie le rendu qu'aurait cette page dans un navigateur web comme Firefox par exemple.
+        		\part[1] En supposant toujours que le code a été corrigé, où s'afficherait le texte "Ma page HTML"?
+        	\end{parts}
+        		
+			\question[2 \half] Considérez le texte suivant:
+			
+			\textit{Dans un appareil photo numérique, la lumière passe à travers \uline{\ \ \ \ }\textbf{(A)}\uline{\ \ \ \ } et frappe le \uline{\ \ \ \ }\textbf{(B)}\uline{\ \ \ \ }, qui est composé de millions de \uline{\ \ \ \ }\textbf{(C)}\uline{\ \ \ \ } sensibles à la lumière; chacun de ces \uline{\ \ \ \ }\textbf{(C)}\uline{\ \ \ \ } convertit la lumière en un signal analogique, puis un signal numérique dans lequel l'image est découpée en \uline{\ \ \ \ }\textbf{(D)}\uline{\ \ \ \ }, avant d'être stockée dans la \uline{\ \ \ \ }\textbf{(E)}\uline{\ \ \ \ } de l'appareil pour une visualisation ultérieure.}
+			
+			Donnez les mots manquants dans ce texte -- de \textbf{(A)} à \textbf{(E)}.
+			
+			\question On considère une image numérique de forme carrée de 1000 pixels de côté, que l'on imprime sur une feuille 10 pouces (environ 25 cm) de côté.
+			
+			\begin{parts}
+				\part[1] Quelle est la définition de cette image?
+				\part[1] Sa résolution?
+				\part[\half] Combien devrait mesurer le côté de la feuille pour atteindre une résolution de 400 ppp?				
+			\end{parts}
+  
+        \end{questions}
+    \end{spacing}
+\end{document}
