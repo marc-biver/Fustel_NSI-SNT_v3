@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+</head>
+
+
+<br/><br/>
+<b>Consignes données dans le bloc-notes "Script-Console" de Capytale V2 pour l'activité d'analyse de données sur le fichier DataLycees2022.csv</b>
+<br/><br/>
+
+<p>Nous allons réutiliser les notions vues lors des TDs précédents et les appliquer à des analyses de données "réelles" (en l'occurence les effectifs de tous les lycées de France à la rentrée 2022, avec les effectifs de chaque LV1 choisie - source INSEE).</p>
+<p>Ce travail sera noté et il faudra le compléter à la maison (je vous dirai en fin de séance jusqu'où il faut aller).</p>
+<p>Le travail est à effectuer dans la fenêtre "script" ci-dessous en respectant les consignes suivantes:</p>
+<ul>
+<li>Numérotez bien les tâches que vous effectuez au moyen de commentaires (donc avec le signe #) en utilisant la numérotation de la liste ci-dessous - "#Exercice 4.2:" par exemple.</li>
+<li>Faites les "à la suite" (donc quand vous aurez fini une question, passez à la suivante sans effacer ce que vous avez écrit avant).</li>
+<li>Conseil: ouvrez dans un autre onglet l'activité Capytale qu'on a faite la dernière fois "Fichiers CSV / Traitement de donnees en table" - ce n'est pas obligatoire mais ça vous permettra de faire des copier / coller de syntaxe de manipulation de fichiers CSV sans avoir à tout retaper</li>
+<li>IMPORTANT - ne négligez pas cette étape: téléchargez le fichier joint "DataLycees2022.csv", et ouvrez le pour prendre connaissance de sa structure - comprenez ce qu'il contient, ce que signifient les titres des colonnes, etc...</li>
+<li>SAUVEZ votre travail régulièrement (Ctrl + S ou bouton "disquette" en haut à droite).</li>
+<li>EXECUTEZ (au moyen du bouton en bas à gauche) votre script régulièrement pour vérifier que vous partez bien dans la bonne direction - dans le pire des cas ça plantera avec un message d'erreur, ce qui vous fournira une information utile...</li>
+</ul>
+<p>&nbsp;</p>
+<p>Les tâches demandées:</p>
+<ol>
+<li>Ouvrez en lecture (donc 'r') le fichier joint ici, "DataLycees2022.csv" au moyen de la fonction open() comme on l'a fait plusieurs fois par le passé (<em>dans le jupyter notebook qu'on a ouvert avant, regardez la section 3 de l'exercice 2</em>).</li>
+<li>Chargez le contenu de ce fichier dans une liste de dictionnaires au moyen de la fonction DictReader du module csv.</li>
+<li>Tâches initiales - niveau 1:
+<ol>
+<li>Affichez à l'écran les 5 premières lignes du fichier.</li>
+<li>Affichez à l'écran les lignes 1500 à 1510 du fichier.</li>
+<li>Affichez le nombre de lignes que compte le fichier.</li>
+</ol>
+</li>
+<li>Tâches niveau 2 - affichez à l'écran les réponses aux questions suivantes:
+<ol>
+<li>Quel est le département de la commune appelée Ambert?</li>
+<li>Combien de lycées compte la région Nouvelle-Aquitaine?</li>
+<li>Existe-t-il un lycée nommé "Docteur Dupont"? Si oui dans quelle commune?</li>
+<li>Existe-t-il un lycée nommé "Docteur Koeberle"? Si oui dans quelle commune?</li>
+</ol>
+</li>
+<li>Tâches niveau 3 - affichez à l'écran les résultats des calculs suivants, qui portent tous sur le Lycée Général de Uturoa en Polynésie Française:
+<ol>
+<li>Combien y a-t-il d'élèves en 2nde GT?</li>
+<li>Quelle est la proportions de filles parmi ceux-ci?</li>
+<li>Affichez cette proportion sous forme d'un pourcentage (avec, donc, le caractère "%" à la fin), arrondi à deux chiffres après la virgule.</li>
+</ol>
+</li>
+<li>Tâches niveau 4 - généralisation des tâches précédentes:
+<ol>
+<li>Ecrivez une fonction de validation des données de la table (<em>dans le jupyter notebook qu'on a ouvert avant, regardez la section 8 de l'exercice 2</em>) - le but est que toutes les données soient bien dans un format exploitable.</li>
+<li>Ecrivez une fonction qui renvoie le pourcentage de filles en 2nde GT d'un lycée identifié par sa dénomination principale et son patronyme (qui sont donc des arguments de la fonction).</li>
+</ol>
+</li>
+<li>Tâches niveau 5 - statistiques sur toute la table:
+<ol>
+<li>Affichez à l'écran le nombre total d'élèves en 2nde GT en France à la rentrée 2022.</li>
+<li>Quelle est le pourcentage du nombre total d'élèves qui sont en établissement privé et ont choisi allemand comme LV1?</li>
+<li>Quelle est le pourcentage du nombre total d'élèves qui sont en établissement privé, ont choisi allemand comme LV1, et sont des filles?</li>
+<li>Combien y a-t-il d'élèves en 2nde GT en moyenne en établissement privé? En établissement public?</li>
+<li>Quel est le pourcentage moyen de filles en 2nde GT en établissement privé? En établissement public? Au total?</li>
+</ol>
+</li>
+</ol>
+<p><br><br><br></p>
