@@ -1,0 +1,122 @@
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+% Le truc au-dessus pour avoir l'option shell-escape qui permet de faire du minted.
+\documentclass[12pt]{article}
+
+\newcommand{\thmquiz}{dictionnaires}
+\newcommand{\idquiz}{02}
+
+\newcommand{\classe}{1\textsuperscript{ère} NSI}
+
+% Affichage ou non des reponses aux questions & exercices
+\newif\ifDispRep
+%\DispReptrue  % Show the text
+\DispRepfalse % Hide the text
+
+% Incorporation tous éléments de préambule communs à tous mes cours
+% Fonctionne comme ceci quand la variable d'environnement TEXINPUTS est bien positionnée ET prise en compte - dans mon cas ça implique de lancer TexStudio par script interposé. (voir Evernote)
+% Sinon on donne le chemin complet:
+%\usepackage{/Users/marcbiver/Documents/01_Prof/10_Forge_AEIF/_Forge/CoursLFC}
+\usepackage{CoursLFC}
+
+
+
+\begin{document}
+	\thispagestyle{empty} % pas de header / footer - il ramenait une ligne dasn l'en-tête qui devait venir de quelque part dans CoursLFC
+	% Titre minimaliste
+	\begin{center}
+		\setlength{\fboxrule}{2pt}
+		\setlength{\fboxsep}{5pt}
+		\fbox{\textbf{{\large \classe \ --- Quiz \idquiz: \thmquiz}}}
+		\vspace{0.5em}
+	\end{center}
+	
+	\begin{MonQz}{vérification de syntaxe Python}
+		Quelles syntaxes parmi les suivantes sont correctes en Python? (sachant que ";" équivaut à un retour à la ligne) -- \textit{attention, il y a un (petit) piège...}
+		\begin{alphenum}
+		\item \texttt{dico = ["a": 1, "b": 2]}
+		\item \texttt{dico = \{"a": 1, "b": 2\}}
+		\item \texttt{dico = ("a"=1, "b"=2)}
+		\item \texttt{dico = dict(); dico['a'] = 1; dico['b'] = 2}
+		\item \texttt{dico = ["a", 1, "b", 2]}
+		\end{alphenum}
+	\end{MonQz}
+	\begin{MaReponse}
+		Réponses \textbf{a}, \textbf{d}... et \textbf{e}!
+		\begin{itemize}
+			\item Ce sont les accolades (\{\}) qu'on utilise pour créer des dictionnaires.
+			\item Mais on peut également définir un dictionnaire vide au moyen de la fonction \texttt{dict()} puis le "remplir" clé par clé comme dans la réponse \textbf{d} ici.
+			\item Enfin la syntaxe de la réponse \textbf{e} est tout à fait correcte -- même si elle ne renvoie pas du tout un dictionnaire mais plutôt une liste! (\textit{oui, c'est hors programme, mais on peut faire des listes de ce qu'on veut -- y compris avec des types de données différents comme ici}).
+		\end{itemize}
+	\end{MaReponse}
+	
+	\begin{MonQz}{boucle sur un dictionnaire}
+		\MonPython{02_1.py}
+		Si j'execute ce code, qu'est-ce qui va s'afficher à l'écran?
+	\end{MonQz}
+	\begin{MaReponse}
+		L'affichage sera:
+		\begin{verbatim}
+			a
+			b
+		\end{verbatim}
+		Pour rappel quand on parcourt un dictionnaire au moyen d'une boucle comme ici, ce sont implicitement les \textbf{\textit{clés}} du dictionnaire que l'on parcourt. Si l'on voulait, dans le code précédent, accéder aux valeurs à l'intérieur de la boucle, on devrait utiliser \texttt{dico[cle]}; et si l'on voulait que la boucle parcourre non pas les clés mais les valeurs du dictionnaire on devrait utiliser:
+		
+		\texttt{for valeur in dico.values()}
+	\end{MaReponse}
+	
+	\begin{MonQz}{liste de dictionnaires / code mystère}
+		\MonPython{02_2.py}
+		Que fait ce code? (Si l'utilisateur entre "Fernandez"? "Dupont"?)
+	\end{MonQz}
+	\begin{MaReponse}
+		Exercice certes un peu plus compliqué mais qui ressemble comme deux gouttes d'eau à ce qu'on a fait en TP avec le fichier des langues vivantes dans les lycées français à la rentrée 2022 (je vous invite à revoir les deux en parallèle dans le cadre de vos révisions!).
+		
+		\texttt{LstNoms} est une liste de dictionnaires, et chacun ne comporte que deux clés, \texttt{nom} et \texttt{prenom}.
+		
+		\texttt{trouve} est une variable booléenne (donc qui ne peut prendre qu'une de deux valeurs -- \texttt{True} ou \texttt{False}) que l'on a initialisée à la valeur \texttt{False}.
+		
+		Lisons en détails ce code à partir de la ligne 7:
+		\begin{itemize}
+			\item On demande (au moyen de la fonction \texttt{input()}) à l'utilisateur de taper un nom et on le stocke dans la variable \texttt{cherche}.
+			\item La boucle principale parcourt cette liste sur toute sa longueur. A chaque élément
+			  (donc à chaque dictionnaire identifié par \texttt{LstNoms[i]}):
+			  \begin{itemize}
+			  	\item On regarde la valeur associée à la clé \texttt{nom} et on la compare au contenu de la variable \texttt{cherche}:
+			  	\begin{itemize}
+			  		\item Si ils sont égaux on affiche un message dans lequel on incorpore la valeur associée à la clé \texttt{prenom} et on positionne la variable \texttt{trouve} à \texttt{True}.
+			  		\item Dans le cas contraire, on ne fait rien.
+			  	\end{itemize}
+			  \end{itemize}
+		\end{itemize}
+		Arrivés à la sortie de la boucle, si on a trouvé au moins une fois le nom dans la liste, alors la variable \texttt{trouve} aura été positionnée à \texttt{True} -- et on ne fait rien. (note: si on a trouvé le nom plusieurs fois ça ne change rien - tout ce qu'on aura fait, c'est positionner plusieurs fois la variable à \texttt{True}).
+		
+		Si en revanche on n'a pas trouvé le nom dans la liste, alors la variable \texttt{trouve} aura  conservé sa valeur initiale (donc \texttt{False}) et on affichera donc le message "\texttt{Absent de la liste!}".
+		
+		Spécifiquement, il est aisé de se convaincre que:
+		\begin{itemize}
+			\item Pour "Fernandez" on affichera "\texttt{Son prénom est Lucas}";
+			\item Pour "Dupont" on affichera "\texttt{Absent de la lsite!}".
+		\end{itemize}
+	\end{MaReponse}
+
+	\begin{MonQz}{message d'erreur}
+		Que veut dire ceci, sachant que "dico" est un dictionnaire qui a été correctement défini?
+		\begin{verbatim}
+			Traceback (most recent call last):
+			File "C:\Users\Marc\PyProj\exemple.py", line 3, in <module>
+			dico[1]+=1
+			~~~~^^^
+			KeyError: 1
+		\end{verbatim}
+	\end{MonQz}
+	\begin{MaReponse}
+		Comme toujours, un message d'erreur se lit de bas en haut: à la fin on voit la nature de l'erreur ("\texttt{KeyError:1}"), au-dessus l'instruction qui a posé problème ("\texttt{dico[1] += 1}"), et encore au-dessus la localisation de cette instruction (dans ce cas la 3\textsuperscript{ème} ligne du fichier exemple.py).
+		
+		En l'occurence l'erreur vient du fait qu'on a cherché à accéder à une clé, 1, qui n'existe pas. Deux remarques:
+		\begin{itemize}
+			\item Le plus probable est que le développeur a fait ici une erreur fréquente -- essayer d'accéder à une valeur d'un dictionnaire par \textit{indice} alors qu'on y accède uniquement par \textit{clé}. Pour rappel si on a défini \texttt{dico = \{'pommes': 3, 'bananes': 5\}} alors pour accéder au nombre de bananes on doit utiliser \texttt{dico['bananes']}.
+			\item On peut en revanche tout à fait avoir des clés qui sont des entiers. Par exemple si on avait défini notre dictionnaire ainsi: \texttt{dico = \{0: 0, 1: 1, 2: 4\}}, l'instruction n'aurait pas posé problème (et dico serait devenu \texttt{\{0: 0, 1: 2, 2: 4\}}).
+		\end{itemize}
+	\end{MaReponse}
+
+\end{document}
