@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+</head>
+
+
+<br/><br/>
+<b>Consignes données dans le bloc-notes "Script-Console" de Capytale V2 pour l'activité d'analyse de données sur les fichiers INSEE de prénoms par département</b>
+<br/><br/>
+
+<p>Description des colonnes des fichiers joints:</p>
+<ol>
+<li><strong>sexe:</strong> 1 pour garçon, 2 pour fille</li>
+<li><strong>preusuel:</strong> prénom tel qu'il est utilisé (sauf pour "_PRENOMS_RARES"</li>
+<li><strong>annais:</strong> année considérée</li>
+<li><strong>dpt:</strong> numéro du département considéré</li>
+<li><strong>nombre:</strong> nombre de fois où le prénom a été donné</li>
+</ol>
+<p>------------------------------------------------------------------------------------------------------------------------------------------</p>
+<p><span style="text-decoration: underline;"><strong>CONSEIL:</strong></span> les fichiers de l'Ile-de-France, sur lesquels portent les questions, sont assez lourds et donc assez longs à charger. Pour gagner du temps pour vos tests je vous conseille d'utiliser le fichier Dept48 (Lozère), qui est&nbsp;<em>très</em> nettement plus petit.</p>
+<p>------------------------------------------------------------------------------------------------------------------------------------------</p>
+<p><u><strong>Problème A:</strong></u> Quel est le prénom de fille le plus donné en Essonne entre 2000 et 2010? Entre 2010 et 2020 ?</p>
+<p>------------------------------------------------------------------------------------------------------------------------------------------</p>
+<p><u><strong>Problème B:</strong></u> Combien y a-t-il eu de prénoms unisexes (utilisés à la fois pour des garçons et pour des filles) donnés entre 2000 et 2020 en Ile-de-France? Lequel a été donné le plus souvent? Et, pour celui-là, combien de fois à des filles et combien de fois à des garçons?</p>
+<p>------------------------------------------------------------------------------------------------------------------------------------------</p>
+<p><u><strong>Problème C:</strong></u> Quel est le prénom (garçons ou filles) dont l'attribution a le plus augmenté entre 2000 et 2022 pour chacun des départements étudiés et pour toute l'Ile-de-France? (En nombre d'abord, puis en pourcentage?</p>
+<p>------------------------------------------------------------------------------------------------------------------------------------------</p>
+<p><u><strong>Problème D:</strong></u> Faites tourner le code ci-dessous pour voir ce qu'il fait, puis tracez la courbe de l'évolution de l'attribution du prénom réponse à la question précédente entre 2000 et 2022.</p>
+<p><code>
+import matplotlib.pyplot as plt
+<br><br>
+# Données<br>
+x = [1, 2, 3, 4, 5]  # Axe des abscisses<br>
+y = [2, 3, 5, 7, 11]  # Axe des ordonnées<br>
+<br><br>
+# Création de la courbe<br>
+plt.plot(x, y)<br>
+<br><br>
+# Ajout d'un titre et des labels pour les axes<br>
+plt.title("Exemple de Courbe")<br>
+plt.xlabel("Axe des X")<br>
+plt.ylabel("Axe des Y")<br>
+<br><br>
+# Affichage de la courbe<br>
+plt.show()<br>
+</code></p>
+<p>------------------------------------------------------------------------------------------------------------------------------------------</p>
+<p><strong>Problèmes E, F, G...:</strong> Si vraiment vous avez fini tout ça demandez-moi - j'ai plein d'autres idées...! :)</p>
