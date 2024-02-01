@@ -9,8 +9,8 @@
 
 % Affichage ou non des reponses aux questions & exercices
 \newif\ifDispRep
-%\DispReptrue  % Show the text
-\DispRepfalse % Hide the text
+\DispReptrue  % Show the text
+%\DispRepfalse % Hide the text
 
 % Incorporation tous éléments de préambule communs à tous mes cours
 % Fonctionne comme ceci quand la variable d'environnement TEXINPUTS est bien positionnée ET prise en compte - dans mon cas ça implique de lancer TexStudio par script interposé. (voir Evernote)
@@ -88,7 +88,7 @@
 			  	\end{itemize}
 			  \end{itemize}
 		\end{itemize}
-		Arrivés à la sortie de la boucle, si on a trouvé au moins une fois le nom dans la liste, alors la variable \texttt{trouve} aura été positionnée à \texttt{True} -- et on ne fait rien. (note: si on a trouvé le nom plusieurs fois ça ne change rien - tout ce qu'on aura fait, c'est positionner plusieurs fois la variable à \texttt{True}).
+		Arrivés à la sortie de la boucle, si on a trouvé au moins une fois le nom dans la liste, alors la variable \texttt{trouve} aura été positionnée à \texttt{True} -- et on ne fait rien. (note: si on a trouvé le nom plusieurs fois ça ne change rien -- tout ce qu'on aura fait, c'est positionner plusieurs fois la variable à \texttt{True}).
 		
 		Si en revanche on n'a pas trouvé le nom dans la liste, alors la variable \texttt{trouve} aura  conservé sa valeur initiale (donc \texttt{False}) et on affichera donc le message "\texttt{Absent de la liste!}".
 		

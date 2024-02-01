@@ -1,6 +1,6 @@
 LstNoms = [
     {'prenom': 'Fatima', 'nom': 'Diallo'},
-    {'prenom': 'Lucas', 'nom': 'Fernandez'},
+    {'prenom': 'Lucas', 'nom': 'Fernandez'}
     ]
 
 trouve = False
