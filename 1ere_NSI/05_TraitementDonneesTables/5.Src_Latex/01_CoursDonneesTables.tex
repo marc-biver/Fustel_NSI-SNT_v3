@@ -1,0 +1,136 @@
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+% Le truc au-dessus pour avoir l'option shell-escape qui permet de faire du minted.
+\documentclass[12pt]{article}
+
+% Affichage ou non des reponses aux questions & exercices
+\newif\ifDispRep
+%\DispReptrue  % Show the text
+\DispRepfalse % Hide the text
+
+% Version du document
+\newcommand{\versiondoc}{v0.1}
+
+% Incorporation tous éléments de préambule communs à tous mes cours
+\usepackage{CoursLFC}
+
+% Eléments de l'en-tête et de la page de garde spécifiques à ce doc
+\newcommand{\classe}{1\textsuperscript{ère} NSI}
+\newcommand{\themecours}{Thème 5: Traitement de Données en Tables}
+\newcommand{\datedoc}{janvier 2024}
+
+% Page de garde mise en page
+\title
+	{\vspace{3cm}
+		{\Large
+		\textit
+			{
+				\classe\hspace{0.1cm}
+				\textemdash\
+				\hspace{0.1cm}
+				\themecours
+			}
+			
+		\vspace{1cm}
+		\huge{Fichiers CSV \& Manipulations de Tables} }
+		 
+		\vspace{1cm}
+	}
+\author{\etablissement}
+\date{
+	\auteur,
+	\datedoc,
+	\footnotesize{\textit{\versiondoc}} 
+	\vspace{6cm}
+	}
+
+% Header & Footer
+\lfoot{\etabshort}
+\cfoot{\thepage}
+\rfoot{\classe, \anneescol}
+\renewcommand{\footrulewidth}{0.2pt}
+\lhead{}
+\chead{}
+\rhead{}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+	
+	\maketitle
+	% pas de footer sur la première page
+	\thispagestyle{empty}
+		
+	\section*{}
+		{\noindent
+		\resumecours
+		}
+		
+	\pagebreak	
+	\tableofcontents
+	
+	\pagebreak
+	
+	% Début du contenu du document
+	\section{Point d'étape -- où est-on / où va-t-on?}
+	\subsection{Ce qu'on a couvert jusqu'à présent}
+	
+	\begin{itemize}
+		\item Rudiments de l'architecture physique d'un ordinateur - le modèle de Von Neumann.
+		\item Mise en jambes sur de l'écriture de code: réalisation d'une page Web en HTML.
+		\item Et surtout: introduction à Python, et plus spécifiquement:
+		\begin{itemize}
+			\item Ce qu'on appelle ses "constructions élémentaires" -- variables, fonctions, conditions \& embranchements, boucles...
+			\item Les types et valeurs de base: entiers (naturels et relatifs), flottants (réels), chaînes de caractères et booléens (qu'on n'a que brièvement abordés pour l'instant).
+			\item Un type dit "construit" -- les listes.
+		\end{itemize}
+		\item Un peu de théorie: la représentation des types et valeurs de base en machine.
+		\item Un peu plus de théorie: logique booléenne.
+	\end{itemize}
+	
+	\subsection{Ce dont on va parler dans ce nouveau chapitre}
+	Après notre "pas de recul théorique" du chapitre précédent, nous allons de nouveau nous plonger dans le code Python et plus spécifiquement dans une des utilisations majeures de l'outil informatique de nos jours: le stockage, l'organisation, et le traitement de grands volumes de données.
+	
+	Même s'il existe de logiciels dédiés pour le traitement de données, il est assez facile en Python de mettre en oeuvre des opérations de base : chargement de données structurées, recherche d'une donnée particulière, suppression des doublons, fusion de données -- c'est ce que nous allons étudier dans ce chapitre.
+	
+	On peut donner de nombreux exemples d'applications possibles: la liste de tous les élèves, de leurs données et de leurs notes telles que stockées dans ProNote; l'ensemble des produits, leurs stocks, leurs prix et leurs dates de péremption tels qu'utilisé par un supermarché; l'ensemble des mesures de températures relevées a la surface de la terre avec leurs localisations GPS et les dates de mesure qui sont exploitées par les scientifiques qui étudient le changement climatique; etc...
+		
+	Spécifiquement, on va aborder les points suivants:
+	\begin{itemize}
+		\item Lorem ipsum;
+		\item Lorem ipsum.
+	\end{itemize}
+	
+	\subsection{Comment on va procéder}
+	\lipsum[1]
+
+	\vspace{\baselineskip}
+	On va donc devoir travailler différemment du chapitre sur l'introduction à Python:
+	 \begin{itemize}
+	 	\item \textbf{Prise de notes essentielle};
+	 	\item Plusieurs exercices sur papier qu'on fera en classe et dont il sera très important que vous gardiez une trace;
+	 	\item $\underline{\textbf{Attention:}}$ régulièrement je vous demanderai de terminer à la maison les exercices commencés en classe -- il faudra donc en avoir pris suffisamment de notes!
+	 	\item Quand même, quelques applications / exercices sur machine.
+	 \end{itemize}
+	 
+	 \pagebreak
+	 
+	 \section{Dictionnaires}
+	 
+	 
+	 \subsection{Lorem Ipsum}
+	 \lipsum[1]
+	 
+	 \pagebreak
+	 
+	 \section{Manipulation de fichiers}
+	 \lipsum[1]
+
+	\pagebreak
+	
+	\section{Traitement des fichiers CSV}
+	\lipsum[1]
+	
+	\pagebreak
+	
+	
+\end{document}
+%Eléments manquants:
