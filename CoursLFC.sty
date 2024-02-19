@@ -82,6 +82,9 @@
 \renewcommand{\algorithmicrequire}{\textbf{Entrée:}}
 \renewcommand{\algorithmicensure}{\textbf{Sortie:}} % Détournement du Ensure, mais ce n'est pas très grave...
 
+% Environnement highlight pour WIP
+\newmdenv[backgroundcolor=yellow!20, linecolor=yellow!20, innerleftmargin=10pt, innerrightmargin=10pt, innertopmargin=10pt, innerbottommargin=10pt, skipabove=\baselineskip, skipbelow=\baselineskip]{monhlt}
+
 
 % Environnement d'exos
 \definecolor{myblue}{rgb}{0.12, 0.3, 0.84} % Adjust the rgb values as needed
@@ -111,8 +114,12 @@
 }
 
 
-% Style pour mes questions rhétoriques
+% Style pour mes questions rhétoriques - conservé pour compatibilité
 \newcommand{\MaQuestion}[1]{\par\vspace{0.3\baselineskip}\noindent$\rightarrow$\textit{#1}?\par\vspace{0.3\baselineskip}}
+
+% Style pour mes questions rhétoriques - sans le point d'interrogation débile
+\newcommand{\MaQuest}[1]{\par\vspace{0.3\baselineskip}\noindent$\rightarrow$\textit{#1}\par\vspace{0.3\baselineskip}}
+
 
 % Environnement de quiz
 \newcounter{qzcnt}
