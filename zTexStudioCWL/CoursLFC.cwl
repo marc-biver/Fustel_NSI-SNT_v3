@@ -24,6 +24,7 @@
 #include:ulem
 #include:wrapfig
 #include:xcolor
+#include:textcomp
 
 
 # Custom commands
