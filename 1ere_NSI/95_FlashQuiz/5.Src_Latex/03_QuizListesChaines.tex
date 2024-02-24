@@ -1,0 +1,97 @@
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+% Le truc au-dessus pour avoir l'option shell-escape qui permet de faire du minted.
+\documentclass[12pt]{article}
+
+\newcommand{\thmquiz}{listes \& chaines de caractères}
+\newcommand{\idquiz}{03}
+
+\newcommand{\classe}{1\textsuperscript{ère} NSI}
+
+% Affichage ou non des reponses aux questions & exercices
+\newif\ifDispRep
+%\DispReptrue  % Show the text
+\DispRepfalse % Hide the text
+
+% Incorporation tous éléments de préambule communs à tous mes cours
+% Fonctionne comme ceci quand la variable d'environnement TEXINPUTS est bien positionnée ET prise en compte - dans mon cas ça implique de lancer TexStudio par script interposé. (voir Evernote)
+% Sinon on donne le chemin complet:
+%\usepackage{/Users/marcbiver/Documents/01_Prof/10_Forge_AEIF/_Forge/CoursLFC}
+\usepackage{CoursLFC}
+
+
+
+\begin{document}
+	\thispagestyle{empty} % pas de header / footer - il ramenait une ligne dasn l'en-tête qui devait venir de quelque part dans CoursLFC
+	% Titre minimaliste
+	\begin{center}
+		\setlength{\fboxrule}{2pt}
+		\setlength{\fboxsep}{5pt}
+		\fbox{\textbf{{\large \classe \ --- Quiz \idquiz: \thmquiz}}}
+		\vspace{0.5em}
+	\end{center}
+	
+	\begin{MonQz}{manipulation de liste}
+		\MonPython{03_1.py}
+		Qu'affichera l'exécution de ce script?
+	\end{MonQz}
+	\begin{MaReponse}
+		Aucun piège ici: la deuxième ligne augmente ("+=") l'élément d'indice 1 de la liste de lui-même, donc ici 4 de 4 (puisque les indices commencent à 0). L'affichage sera donc:
+		\texttt{[2, 8, 6, 8]}
+	\end{MaReponse}
+	
+	\begin{MonQz}{comportement listes et chaines}
+		\MonPython{03_2.py}
+		Si j'execute ce code en console (donc une ligne après l'autre, en poursuivant même si une erreur est rencontrée), qu'est-ce qui va s'afficher à l'écran (il n'y a qu'un seul piège...)?
+	\end{MonQz}
+	\begin{MaReponse}
+		L'affichage sera, pour chaque ligne:
+		\begin{enumerate}
+			\item Rien (c'est juste une affectation).
+			\item Rien (c'est juste une affectation).
+			\item Élément d'indice 1 de la liste: \texttt{b}.
+			\item Élément d'indice 2 de la chaine: \texttt{c}.
+			\item Rien (c'est juste une affectation d'une valeur à un élément de la liste).
+			\item La nouvelle valeur de l'élément d'indice 1 de la liste: \texttt{ZZ}.
+			\item (Il est là, le piège...) Les chaines de caractère sont ce qu'on appelle "immutables" -- il n'est pas possible d'en modifier directement les éléments, il faut passer si on souhaite faire ça par une autre variable. Donc l'opération demandée ici est impossible en Python et on obtiendra donc un message d'erreur "\texttt{TypeError: 'str' object does not support item assignment}".
+			\item L'opération précédente s'étant soldée par une erreur (et comme on est ici en console, c'est-à-dire qu'on exécute toutes les lignes du code même si on rencontre une erreur), on affichera ici l'élément d'indice 2 de la chaine qui n'a pas changé: \texttt{c}.
+		\end{enumerate}
+	\end{MaReponse}
+	
+	\begin{MonQz}{une syntaxe qu'on a vue -- mais très rapidement...}
+		\MonPython{03_3.py}
+		Qu'affichera ce code? (essayez de deviner même si vous ne vous souvenez pas de la méthode "split"!)
+	\end{MonQz}
+	\begin{MaReponse}
+		Un but de cette question était de vous convaincre que même si vous ne vous souvenez pas d'une syntaxe spécifique vous pouvez tout à fait la retrouver simplement en lisant et en vous forçant à vous plonger dans le code...
+		
+		"Split", comme son nom l'indique, découpe une chaine de caractères selon un séparateur et en met les éléments dans une liste.
+		
+		Donc le premier split va découper selon le séparateur "." et générer la liste suivante:
+		\texttt{['Python est amusant', " J'ai envie d'en apprendre plus", '']}
+		(notez la phrase vide à la fin -- puisque la déclaration se termine par un point)
+		
+		Donc l'affichage de la ligne 3 donnera \texttt{Python est amusant}
+		
+		Le second split, lui, n'a pas de séparateur spécifié -- et par défaut, ce sera l'espace qui sera utilisé (ce que le nom de la liste, "mots", aurait dû vous permettre de deviner). Donc il génèrera la liste suivante:
+		\texttt{['Python', 'est', 'amusant.', "J'ai", 'envie', "d'en", 'apprendre', 'plus.']}
+		
+		Donc l'affichage de la ligne 5 donnera \texttt{envie}
+	\end{MaReponse}
+
+	\begin{MonQz}{message d'erreur}
+		\MonPython{03_4.py}
+		J'ai cherché à exécuter ce script et j'ai obtenu l'erreur suivante. Quel veut-elle dire?
+		\begin{verbatim}
+			Traceback (most recent call last):
+			File "C:\Users\Marc\PyProj\exemple.py", line 3, in <module>
+			message = "Je m'appelle " + nom + "et j'ai " + age + " ans"
+			TypeError: can only concatenate str (not "int") to str
+		\end{verbatim}
+	\end{MonQz}
+	\begin{MaReponse}
+		Comme toujours, un message d'erreur se lit de bas en haut: à la fin on voit la nature de l'erreur ("\texttt{TypeError}"), au-dessus l'instruction qui a posé problème ("\texttt{message = ...}"), et encore au-dessus la localisation de cette instruction (dans ce cas la 3\textsuperscript{ème} ligne du fichier exemple.py).
+		
+		En l'occurrence l'erreur vient du fait qu'on a cherché à concaténer (mettre bout à bout) des chaînes de caractères avec un entier -- ici, age. Pour remédier à cela il faudrait mettre \texttt{str(age)} dans l'affectation de la variable message.
+	\end{MaReponse}
+
+\end{document}
