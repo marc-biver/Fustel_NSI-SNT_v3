@@ -1,0 +1,265 @@
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+\documentclass[11pt,a4paper]{exam}
+%\printanswers % pour imprimer les réponses (corrigé)
+\noprintanswers % Pour ne pas imprimer les réponses (énoncé)
+\addpoints % Pour compter les points
+\usepackage[utf8]{inputenc}
+\usepackage{minted}
+
+%\usepackage[margin=1 in]{geometry}
+\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=1.5cm,right=1.5 cm,marginparwidth=1.75cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{dashundergaps}
+
+% Pour afficher des numéros de ligne dans verbatim
+\usepackage{listings}
+\lstset{
+	basicstyle=\ttfamily, % Set the basic style to typewriter font
+	numbers=left,         % Position line numbers on the left
+	numberstyle=\tiny,    % Set the style of the line numbers
+	stepnumber=1,         % Line number increment
+	numbersep=5pt,        % How far the line numbers are from the code
+	%frame=single,         % Adds a frame around the code
+	tabsize=2,            % Sets default tabsize to 2 spaces
+	breaklines=true,      % Enables line breaking
+	breakatwhitespace=false, % Break lines not only at whitespaces
+}
+
+
+\newcommand{\examnum}{Contrôle majeur \#3}
+\newcommand{\class}{SNT 2\textsuperscript{nde}}
+\newcommand{\examdate}{26/02/2024}
+\newcommand{\timelimit}{45 Minutes}
+\newcommand{\lycee}{Lycée Fustel de Coulanges}
+
+\pagestyle{head}
+\firstpageheader{}{}{}
+\runningheader{\class}{\examnum\ - Page \thepage\ / \numpages}{\examdate}
+\runningheadrule
+
+
+\begin{document}
+% Espace d'en-tête
+\noindent
+\begin{spacing}{1}
+	\noindent
+	\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} l @{\extracolsep{6pt}} l}
+		\textbf{\class} & \textbf{\examnum, \examdate}&\\
+		\textbf{\lycee} &\textbf{Durée: \timelimit} &\\
+	\end{tabular*}\\
+\end{spacing}
+
+\noindent
+\vspace{10pt}
+\hrule
+\vspace{5pt} 
+\noindent
+\\
+Ce contrôle comporte \numquestions\ questions; le maximum possible de points est de \numpoints\ points.\\ 
+Les réponses sont à porter sur une \uline{\textbf{copie}} (\textbf{PAS} un morceau de papier arraché d'un cahier ou une copie déchirée) \uline{comportant votre nom}.\\
+Il n'est pas nécessaire de répondre aux questions dans l'ordre \textemdash\ commencez par celles où vous vous sentez le plus à l'aise (mais numérotez bien les questions sur votre copie).\\
+Les calculatrices ne sont \uline{pas} autorisées.\\
+\noindent
+\hrule
+\vspace{15pt} 
+
+    \begin{spacing}{1,1}
+        \begin{questions} % DEBUT DE L'EXAMEN
+        	
+        	\question QCM -- reportez sur votre copie la ou les réponses correctes \textit{en mentionnant bien la lettre de la question à chaque fois}.
+			\begin{parts}
+				\part[1]Le code RVB 255-255-255 correspond à la couleur:
+        			\begin{choices}
+		        			\choice Jaune.
+		        			\correctchoice Blanche.
+		        			\choice Rouge.
+		        			\choice Noire.
+        			\end{choices}
+        		\part[1]Coder une couleur sur 5 bits permet de différencier:
+	        		\begin{choices}
+	        			\choice 2 couleurs.
+	        			\choice 4 couleurs.
+	        			\choice 8 couleurs.
+	        			\choice 16 couleurs.
+	        			\correctchoice 32 couleurs.
+	        		\end{choices}
+        		\part[1]Le langage HTML sert à:
+	        		\begin{choices}
+	        			\correctchoice Structurer et présenter le contenu sur les pages Web.
+	        			\choice Protéger les sites web contre les hackers.
+	        			\correctchoice Décrire la structure de base d'un document sur Internet
+	        			\choice Créer et gérer des bases de données.
+	        			\choice Toutes les réponses ci-dessus sont vraies.
+	        		\end{choices}
+			\end{parts}
+			        	
+        	\question[2] Sur un navigateur internet que vous utilisez tout le temps pour regarder des vidéos, lire vos mails, aller sur des réseaux sociaux etc. vous décidez de supprimer un jour tous les cookies: quelles seront les conséquences (positives \textit{et} négatives)? Décrivez-en deux en explicitant notamment l'impact sur votre navigation et votre expérience utilisateur.
+			\begin{solution}
+        		Tout ou partie des éléments de réponse suivants étaient attendus:
+        		\begin{itemize}
+        			\item Ré-initialisation de toutes les connexions -- il faudra vous reconnecter manuellement à tous les sites pour pouvoir les utiliser (sur votre compte mail par exemple);
+        			\item Perte de préférences sur les sites -- langue, mode clair/sombre, volume sonore ou qualité de la vidéo par défaut sur un site de streaming, orgainsation de la page d'accueil sur un site d'informations etc...
+        			\item Perte des paniers d'achat sur les site de vente en ligne;
+        			\item Réduction du ciblage publicitaire -- les cookies ayant été supprimés, l'enregistrement de votre comportement en ligne aura au moins en partie été perdu et le ciblage des publicités aura moins d'informations vous concernant sur lesquelles se baser;
+        			\item Amélioration de la confidentialité: conséquence du précédent -- les sites visités en sauront moins sur votre comportement en ligne et votre navigation deviendra plus neutre, avec moins de messages ciblés intrusifs;
+        			\item Perturbation de l'expérience de navigation: les cookies peuvent être utilisés pour mémoriser des informations cruciales pour une navigation fluide, comme l'acceptation des conditions d'utilisation, les préférences de notification et la participation à des sondages. Après la suppression des cookies, ces informations seront perdues, et  vous devrez "repartir de zéro";
+        			\item Plus généralement: le nettoyage régulier de vos cookies est une bonne pratique qui vous permet de bien maitriser les informations vous concernant que vous partagez avec les sites que vous visitez.
+        		\end{itemize}
+        	\end{solution}
+        	
+        	\question[2] Nommez deux pratiques importantes que tout utilisateur d'ordinateur devrait suivre pour \textbf{\textit{prévenir}} l'infection par des logiciels malveillants.
+        	\begin{solution}
+        		Tout ou partie des éléments de réponse suivants étaient attendus:
+        		\begin{itemize}
+        			\item Mises à jour régulières des éléments de protection -- système d'exploitation (Windows, MacOS, Linux...) et logiciels antivirus.
+        			\item Utilisation régulière d'un logiciel antivirus pour identifier et éliminer de potentiels logiciels malveillants avant qu'ils soient actifs sur le système.
+        			\item Navigation prudente en ligne / prudence avec les pièces jointes des mails et les liens qu'ils contiennent: vérifier toujours que l'on sait "où l'on va", qu'on est sûrs de l'origine des éléments que l'on ouvre (on pourra les analyser avec un antivirus avant de les ouvrir le cas échéant).
+        			\item L'utilisation d'un pare-feu ("firewall") peut également avoir un rôle dans ce contexte puisque cela permet de contrôler systématiquement tout le trafic "entrant" (donc les connexions à votre système depuis l'extérieur).
+        			\item "Culture générale" -- plus généralement, être au courant de ce que peuvent faire les logiciels malveillants, de comment ils fonctionnent, de ce qui permet de les reconnaître peut vous permettre de réagir vite et tôt en cas de danger ce qui est évidemment mieux qu'une réaction tardive.
+        		\end{itemize}
+        	\end{solution}
+        		
+        	
+        	\question[2]Quel rôle les fournisseurs d'accès Internet (FAI) joueraient-ils dans un monde sans neutralité du net? Donnez deux exemples concrets de pouvoirs qu'ils auraient qu'ils n'ont pas aujourd'hui et, pour chacun, expliquez si vous pensez que c'est une bonne ou une mauvaise chose qu'ils en disposent.
+			\begin{solution}
+				Tout ou partie des éléments de réponse suivants étaient attendus:
+				\begin{itemize}
+					\item Pouvoir de prioriser le trafic des sites qui les rémunèrent -- impact négatif sur l'équité d'internet.
+					\item Pouvoir de tarifer les services en ligne -- ils pourraient mettre des "péages" obligatoires pour leurs clients souhaitant accéder à certains types de contenu (streaming par exemple) ce qui augmenterait leurs revenus mais pénaliserait à la fois les utilisateurs et les fournisseurs de contenu.
+					\item Pouvoir de bloquer ou filtrer les contenus -- rien ne les empêcherait de décider unilatéralement de bloquer ou restreindre l'accès à certains sites selon des critères qui leurs seraient propres (accords commerciaux, sans doute, mais potentiellement idéologie également).
+					\item Pouvoir de créer des "voies rapides" payantes -- ils pourraient artificiellement baisser la vitesse du trafic pour leurs clients, ne la maintenant maximale que pour ceux qui s'acquitteraient de frais supplémentaires (un peu sur le modèle de ce que font certains fabricants de voitures électriques avec l'autonomie de leurs batteries).
+				\end{itemize}
+			\end{solution}
+        	
+        	\question[2] De quelle manière les moteurs de recherche influencent-ils l'accès à l'information sur Interne? Discutez d'un aspect positif et d'un aspect négatif de cet impact.
+        	\begin{solution}
+        		Tout ou partie des éléments de réponse suivants étaient attendus:
+        		\begin{itemize}
+        			\item Éléments positifs:
+        			\begin{itemize}
+        				\item Accessibilité de l'information -- les moteurs de recherche permettent à toute personne connectée à internet à accéder à de vastes quantités de savoir qui leur serait autrement inaccessible.
+        				\item Organisation et pertinence -- les résultats sont présentés triés et facilement accessibles, ce qui permet aux utilisateurs d'accéder à l'information efficacement.
+        				\item Découverte -- grâce aux moteurs de recherche il est possible pour tout un chacun de découvrir et de se former à des domaines qu'on ne connaîtrait pas par ailleurs.
+        			\end{itemize}
+        			\item Éléments négatifs:
+        			\begin{itemize}
+        				\item Surcharge d'information -- quelqu'un peut facilement se "noyer" dans la quantité d'infor-mations reçue.
+        				\item Informations non vérifiées -- un moteur de recherche fonctionnant sur la base de mots clés, d'analyses de liens entrants / sortants et de popularité de sites, n'est pas du tout équipé pour vérifier / authentifier les informations. Il est donc tout à fait possible (et fréquent) pour un utilisateur de se voir présenter une information fausse en réponse à une recherche dans un moteur de recherche.
+        				\item Biais et manipulation -- les algorithmes prennent en fait en compte plus d'éléments que cela et notamment des analyses de nos comportements en ligne ainsi que des éléments de l'intérêt du moteur de recherche comme des accords commerciaux: ce qui nous est rendu visible n'est donc pas strictement le résultat d'une analyse objective des informations disponibles.
+        				\item Vie privée et suivi -- point implicitement inclus dans le précédent: "l'analyse de notre comportement" implique la collecte de données personnelles nous concernant ce qui pose problème d'un point de vue du respect de la vie privée.
+        			\end{itemize}
+        		\end{itemize}
+        	\end{solution}
+        	
+        	\question[2] Une de vos amies, résidant en France, a trouvé lors d'une recherche Google de vieux articles négatifs la concernant publiés sur un site américain. Ces articles décrivaient des faits qui étaient vrais il y a longtemps mais qui ne le sont plus actuellement. Elle craint que cette cela nuise à sa recherche d'emploi et souhaite qu'ils soient supprimés. Elle vous demande votre avis: que lui conseillez-vous? Quels sont ses droits en termes de suppression de ces informations selon la législation, notamment le RGPD?
+        	\begin{solution}
+        		Tout ou partie des éléments de réponse suivants étaient attendus:
+        		\begin{itemize}
+        			\item Le premier conseil est de voir si une solution peut être trouvée sans passer par des voies légales -- si l'amie contacte le site web et leur demande poliment de retirer le contenu, il se peut tout à fait qu'ils acceptent!
+        			\item Elle peut cependant aussi s'appuyer sur le droit à l'oubli inscrit dans le RGPD -- ça ne pourra pas s'appliquer au site web dans ce cas (puisqu'il est américain et que le RGPD est un règlement de l'Union Européenne) mais cela pourra tout au moins s'imposer aux moteurs de recherche qui devront (si la décision de justice est conforme aux espoirs de votre amie évidemment) désindexer le contenu pour les recherches effectuées dans l'UE, le rendant ainsi moins accessible.
+        		\end{itemize}
+        	\end{solution}
+        	
+        	\question[3] Considérez le code HTML suivant:
+        	\begin{lstlisting} % Verbatim numéroté au moyen du package listings
+
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Ma page HTML
+    </head>
+    <body>
+        <h1>Mes gouts</h1>
+        <h2>La lecture</h2>
+        <img src="livre.jpg">
+        <br /> <br /> <br />
+        Ce que j'aime lire:
+        <ul>
+            <li>Des livres</a></li>
+            <li><a www.lemonde.fr>Le journal</a></li>
+        <FinDeListe>
+        <h2>Le sport</h2>
+    </body>
+</html>
+        	\end{lstlisting}
+        		Ce code contient plusieurs erreurs: identifiez-en au moins \textbf{\textit{trois}} (en mentionnant le numéro de ligne où elles se trouvent) et expliquez comment il faut les corriger.
+        		\begin{solution}
+        			Plusieur erreurs ici:
+        			\begin{itemize}
+        				\item Ligne 4: la balise \texttt{<title>} n'est pas fermée (il manque \texttt{</title>});
+        				\item Ligne 13: une balse \texttt{a} est fermée (\texttt{</a>}) alors qu'elle n'a jamais été ouverte;
+        				\item Ligne 14: la balise de lien \texttt{a} est mal formée -- il manque le nom de l'attribut "lien" qui est \texttt{href}. La syntaxe correcte serait:
+        				\texttt{<a href="http://www.lemonde.fr">Le journal</a>}
+        				\item Ligne 15: la balise \texttt{<FinDeListe>} n'existe pas en HTML;
+        				\item Ligne 15: la balise de liste \texttt{ul} n'a pas été fermée -- il manque ici \texttt{</ul>}.
+        			\end{itemize}
+        			Ce code corrigé ressemblerait alors à:
+        			\begin{lstlisting}
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Ma page HTML</title>
+    </head>
+    <body>
+        <h1>Mes gouts</h1>
+        <h2>La lecture</h2>
+        <img src="livre.jpg">
+        <br><br><br>
+        Ce que j'aime lire :
+        <ul>
+            <li>Des livres</li>
+            <li><a href="http://www.lemonde.fr">Le journal</a></li>
+        </ul>
+        <h2>Le sport</h2>
+    </body>
+</html>
+				\end{lstlisting}
+        		\end{solution}
+        		
+			\question[3] Considérez le texte suivant:
+			
+			\textit{Dans un appareil photo numérique, la lumière passe à travers \uline{\ \ \ \ }\textbf{(A)}\uline{\ \ \ \ } et frappe le \uline{\ \ \ \ }\textbf{(B)}\uline{\ \ \ \ }, qui est composé de millions de \uline{\ \ \ \ }\textbf{(C)}\uline{\ \ \ \ } sensibles à la lumière; chacun de ces \uline{\ \ \ \ }\textbf{(C)}\uline{\ \ \ \ } convertit la lumière en un \uline{\ \ \ \ }\textbf{(D)}\uline{\ \ \ \ }, puis un signal numérique dans lequel l'image est découpée en \uline{\ \ \ \ }\textbf{(E)}\uline{\ \ \ \ }, avant d'être stockée dans la \uline{\ \ \ \ }\textbf{(F)}\uline{\ \ \ \ } de l'appareil pour une visualisation ultérieure."}
+			
+			Donnez les mots manquants dans ce texte -- de \textbf{(A)} à \textbf{(F)}.
+			
+			\begin{solution}
+				Les mots manquants étaient:
+				\begin{itemize}
+					\item[ A: ] l'objectif
+					\item[ B: ] capteur
+					\item[ C: ] photosites \textit{(qui apparaissait donc deux fois dans le texte)}
+					\item[ D: ] signal analogique
+					\item[ E: ] pixels
+					\item[ F: ] mémoire
+				\end{itemize}
+			\end{solution}
+			
+			\question On considère une image numérique de forme rectangulaire de 2000 pixels de largeur et 1000 pixels de hauteur, que l'on imprime sur une feuille de papier photo rectangulaire également de 10 pouces sur 5 pouces (environ 26 cm x 13 cm).
+			
+			\begin{parts}
+				\part[1] Quelle est la définition de cette image?
+				\begin{solution}
+					La définition d'une image est le nombre de pixels dont elle est constituée -- dans ce cas on a un rectangle de 2000 x 1000 pixels de côtés, donc $2.000 \times 1.000 = 2.000.000$ de pixels, autrement dit "2 mégapixels".
+				\end{solution}
+				\part[1] Sa résolution?
+				\begin{solution}
+					La résolution d'une image (imprimée ou affichée sur un écran) s'exprime en pixels par pouce ("ppp") et est calculée selon la formule:
+					
+					$ \text{résolution} = \frac{\text{nombre de pixels}}{\text{taille de l'impression en pouces}} $
+					
+					Dans notre cas on aura donc (en regardant la hauteur, mais le résultat serait évidemment identique en regardant la largeur):
+					
+					$ \text{résolution} = \frac{2.000}{10} = 200 \text{ ppp}$
+				\end{solution}
+				\part[1] Combien devrait mesurer le côté de la feuille pour atteindre une résolution de 400 ppp?	
+				\begin{solution}
+					Partant d'une résolution de 200 ppp on veut en atteindre une de 400, en modifiant la taille de l'impression (le nombre de pixels, soit la définition, ne peut jamais être augmenté -- il est fixé au moment de la prise de vue). Pour doubler une valeur en modifiant le dénominateur d'une fraction il faut bien sûr diviser ce dénominateur par deux. La largeur de la feuille devrait donc mesurer $10 / 2 = 5$ pouces et sa hauteur $5 / 2 = 2,5$ pouces (soit environ 13 x 7,5 cm).
+				\end{solution}			
+			\end{parts}
+  
+        \end{questions}
+    \end{spacing}
+\end{document}
