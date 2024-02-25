@@ -1,0 +1,1 @@
+def MaxNombre(n1, n2):    '''    Fonction dont les paramètres sont entiers ou réels.    Elle renvoie la plus grande de ces deux valeurs ou, en cas    d'égalité, la première valeur.    '''    if n1 < n2:        return n2    else:        return n1
