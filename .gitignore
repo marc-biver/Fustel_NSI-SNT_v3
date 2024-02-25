@@ -13,3 +13,6 @@
 **/*Src_Latex/*.out
 **/*Src_Latex/*.toc
 **/*Src_Latex/*.cut
+
+# Ajout des fichiers de travail de mon IDE - même si je ne suis pas bien sûr de ce qu'IDEA vient faire là-dedans
+**/.idea/
