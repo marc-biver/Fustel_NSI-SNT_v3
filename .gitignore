@@ -14,5 +14,15 @@
 **/*Src_Latex/*.toc
 **/*Src_Latex/*.cut
 
+# Même chose mais pour mon petit outil Python2PDF
+**/z.PDFageCodePython/*.gz
+**/z.PDFageCodePython/*.aux
+**/z.PDFageCodePython/*.log
+**/z.PDFageCodePython/*minted*/
+**/z.PDFageCodePython/*.pdf
+**/z.PDFageCodePython/*.out
+**/z.PDFageCodePython/*.toc
+**/z.PDFageCodePython/*.cut
+
 # Ajout des fichiers de travail de mon IDE - même si je ne suis pas bien sûr de ce qu'IDEA vient faire là-dedans
 **/.idea/
