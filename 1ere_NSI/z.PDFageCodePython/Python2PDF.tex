@@ -1,0 +1,16 @@
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+% Le truc au-dessus pour avoir l'option shell-escape qui permet de faire du minted.
+\documentclass[12pt]{article}
+
+% Affichage ou non des reponses aux questions & exercices
+\newif\ifDispRep
+\DispReptrue  % Show the text
+%\DispRepfalse % Hide the text
+
+% Incorporation tous éléments de préambule communs à tous mes cours
+% Sans chemin relatif parce que TexStudio lancé depuis un script qui prend en compte la variable d'environnement TEXINPUTS
+\usepackage{CoursLFC}
+
+\begin{document}
+	\MonPython{05.CorrigeActiviteAnalyseCSV.py}
+\end{document}
