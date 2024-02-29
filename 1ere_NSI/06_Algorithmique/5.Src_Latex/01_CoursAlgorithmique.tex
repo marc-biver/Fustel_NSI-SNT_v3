@@ -4,8 +4,8 @@
 
 % Affichage ou non des reponses aux questions & exercices
 \newif\ifDispRep
-\DispReptrue  % Show the text
-%\DispRepfalse % Hide the text
+%\DispReptrue  % Show the text
+\DispRepfalse % Hide the text
 
 % Version du document
 \newcommand{\versiondoc}{v0.1}
@@ -104,10 +104,10 @@
 		\item Complexité d'algorithmes;
 		\item Etude de certains algorithmes spécifiques:
 		\begin{itemize}
-			\item Algorithme de recherche dichotomique dans un tableau;
 			\item Algorithmes de tri - par sélection, par insertion;
-			\item Algorithmes des k plus proches voisins -- algorithme d'apprentissage, "machine learning";
-			\item Algorithmes gloutons.
+			\item Algorithme de recherche dichotomique dans un tableau;
+			\item Algorithmes gloutons;
+			\item Algorithmes des k plus proches voisins -- algorithme d'apprentissage, "machine learning".
 		\end{itemize}
 		\item Pratique: mise au point de programmes; programmation défensive.
 	\end{itemize}
@@ -289,7 +289,7 @@
 				\Ensure{$a + b$}
 				\Function{Somme}{a, b}
 				\State Resultat $\leftarrow$ a + b
-				\State\Return{$Resultat$}
+				\State Afficher {$Resultat$}
 				\EndFunction
 			\end{algorithmic}
 			\vspace{\baselineskip}
@@ -300,7 +300,7 @@
 				\Function{SommeEntiers}{N}
 				\State $Resultat$ $\leftarrow$ 0
 				\Comment{On  initialise le résultat à 0}
-				\For{$i$ allant de 1 à N}
+				\For{$i$ allant de 0 à N}
 				\State $Resultat$ $\leftarrow Resultat + i$
 				\EndFor
 				\State\Return{$Resultat$}
@@ -309,21 +309,17 @@
 			\vspace{\baselineskip}
 			\item
 			\begin{algorithmic}[1]
-				\Require{$N$ $\in \mathds{N}$ avec $N \geq 2$}
+				\Require{$N$ $\in \mathds{N}$ avec $N > 2$}
 				\Comment{On précise bien les valeurs acceptables en entrée}
-				\Ensure{aucune}
-				\Comment{On va afficher les résultats, pas les retourner}
+				\Ensure{Liste des N premiers termes de la Suite de Fibonacci}
 				\Function{Fibonacci}{N}
-				\State ValeurPrec $\leftarrow$ 0
-				\State ValeurCour $\leftarrow$ 1
-				\State Afficher ValeurPrec
-				\Comment{On affiche le 0 puis on rentre dans la boucle}
-				\For{$i$ allant de 2 à N}
-				\State Afficher ValeurCour
-				\State Suivant $\leftarrow$ $ValeurPrec + ValeurCour$
-				\State ValeurPrec $\leftarrow$ ValeurCour
-				\State ValeurCour $\leftarrow$ Suivant
+				\State Resultat $\leftarrow$ [0,1]
+				\Comment{On initialise avec les deux premiers termes}
+				\For{$i$ allant de 2 à N-1}
+				\Comment{N premiers termes, donc on s'arrête à N-1}
+				\State$Resultat[i] \leftarrow Resultat[i-1] + Resultat[i-2]$
 				\EndFor
+				\State\Return{Resultat}
 				\EndFunction
 			\end{algorithmic}
 			\vspace{\baselineskip}
@@ -352,23 +348,27 @@
 				\item Ligne 3: on vérifie la parité de la longueur puisque dans le cas des longueurs impaires on ignorera le caractère du milieu. Vous noterez qu'on dit ici "si Long est pair" sans expliquer comment on fait -- la difficulté de l'algorithme n'étant pas là, c'est tout à fait acceptable (on imagine qu'il y aura un algorithme pour une fonction "EstPair" explicité ailleurs).
 				\item Lignes 10 et 13: c'est une démarche qu'on a déjà utilisée ailleurs pendant notre cours, qui est très classique, et qu'il faut impérativement maîtriser: on part du principe que quelque chose est vrai --- ici "chaîne est un palindrome" --- et dès qu'on trouve une preuve du contraire (ici: un caractère est différent de son homologue de l'autre côté) on retourne "Faux", c'est-à-dire qu'on arrête immédiatement la fonction puisqu'on connaît son résultat. Si on arrive au bout de la boucle, c'est qu'on a pas trouvé de preuve que c'est faux -- donc c'est vrai et c'est ce qu'on retourne.
 			\end{itemize}
+			\vspace{\baselineskip}
+			\item La recherche dichotomique faisant l'objet d'un chapitre de ce cours, on y reviendra plus tard...
 		\end{alphenum}
 	\end{MaReponse}
 	
 	\begin{MonExo}[Traduction de pseudo-code en Python]
 		\begin{alphenum}
-			\item Choisissez l'un des des deux derniers algorithmes de la question précédente (éléments de la suite de Fibonacci ou vérification de palindrome) et traduisez-le en une fonction Python.
-			\item \textbf{Expliquez comment vous allez tester votre fonction.}
-			\item \textbf{$[$BONUS$]$} --- Traduisez en Python l'algorithme de recherche dichotomique.
+			\item Traduisez en une fonction Python l'algorithme de la suite de Fibonacci;
+			\item Traduisez en une fonction Python l'algorithme de vérification qu'un mot est un palindrome;
+			\item \textbf{Expliquez comment vous allez tester votre fonction. Comment choisissez-vous les cas que vous allez tester?}
 		\end{alphenum}
+		\vspace{\baselineskip}
+		Pensez bien à remplir correctement la documentation (ou docstring) de votre fonction. Que renvoie la fonction \texttt{help(nom\_de\_votre\_fonction)}?
 	\end{MonExo}
 	
 	\begin{MaReponse}
 		Pour la suite de Fibonacci, on pourra utiliser le code suivant:
 		\MonPython{004_Fibonacci.py}
-		Pour la tester, il suffira de la lancer avec différentes valeurs de N et de vérifier que le résultat est correct. Assez rapidement on constatera que si l'on passe une valeur de N qui n'est pas dans le champ des possibles (1, par exemple, ou -2) alors on rencontre une erreur -- nous reviendrons plus tard dans ce cours sur comment gérer cela.
-		
+		Pour la tester, il suffira de la lancer avec différentes valeurs de N et de vérifier que le résultat est correct. Assez rapidement on constatera que si l'on passe une valeur de N qui n'est pas dans le champ des possibles (1, par exemple, ou -2) alors on obtient un résultat faux -- nous reviendrons plus tard dans ce cours sur comment gérer cela.
 		\vspace{\baselineskip}
+		
 		Pour le palindrome, on pourra utiliser le code suivant:
 		\MonPython{005_Palindrome.py}
 		Pour la tester, il faudra réfléchir un peu plus à tous les cas de figures possibles:
@@ -378,19 +378,351 @@
 			\item Chaine de longueur impaire qui est un palindrome;
 			\item Chaine de longueur impaire qui n'en est pas un.
 		\end{itemize}
+		
+		Le choix des données à tester (les "jeux de tests") fait l'objet de la section suivante de ce cours.
+		
+		Vous aurez remarqué que la fonction help affiche à l'écran la docstring de la fonction que vous avez programmée -- utile, vous ne pensez pas?
 	\end{MaReponse}
 	
-		 \subsection{Tester un algorithme}
+	\subsection{Tester un algorithme}
 	
 	Cette étape est cruciale dans le développement d'un programme informatique car les erreurs dans les phases de rédaction de l'algorithme et de traduction en langage de programmation sont plus que fréquentes -- elles sont systématiques dès lors qu'un programme atteint un certain niveau de complexité.
 	
+	Un test permet de vérifier que l'algorithme fonctionne sur une donnée précise. Pour programmer efficacement il faut concevoir des \textit{jeux de tests} permettant de vérifier que l’algorithme renvoie, dans des cas particuliers bien choisis, ce que l’on attend de lui. Il est impossible d'écrire un ensemble de tests permettant d’exclure toutes les erreurs possibles, mais on peut cependant essayer d'en construire un en respectant déjà les règles suivantes:
+	
+	\begin{MonAmp}{Règles pour tester une fonction}
+			 Les \textbf{jeux de tests} (ensembles de données que l'on va tester) à préparer pour tester une fonction donnée doivent:
+			 \begin{itemize}
+			 	\item Si la spécification de l'algorithme mentionne plusieurs cas possibles, les tester tous (ex: chaines de caractères paires et impaires pour le palindrome);
+			 	\item Si l'algorithme doit renvoyer une valeur booléenne, construire des tests permettant d’obtenir les deux valeurs de vérité (toujours l'exemple du test de palindrome);
+			 	\item Si l'algorithme s'applique à une liste / un tableau, effectuer un test avec un tableau vide;
+			 	\item Si l'algorithme s'applique à un nombre, effectuer des tests avec des valeurs positives, négatives, et avec zéro.
+			 \end{itemize}
+			 \vspace{\baselineskip}
+			 
+			 Ces règles:
+			 \begin{itemize}
+			 	\item Ne sont pas exhaustives -- vous devez plus les voir comme des principes à appliquer;
+			 	\item \textbf{NE SONT PAS A CONNAITRE PAR CŒUR} -- les principes qui les sous-tendent, en revanche, doivent être bien compris et vous devez être capable, pour les fonctions que vous allez développer (en exercice, projet, ou contrôle), de proposer des jeux de tests qui les respectent.
+			 \end{itemize}
+	\end{MonAmp}
+	
 	\pagebreak
-	\section{Preuve et complexité d'algorithmes}
+	\section{Preuves d'algorithmes}
+	On vient de voir comment tester un algorithme -- démarche qui va nous permettre de nous rendre compte, sur des cas concrets, s'il se comporte de la manière que l'on souhaite. On ne peut en revanche jamais tester \textit{l'intégralité} des situations possibles, et il est parfois vital d'être certain, malgré cela, que l'algorithme se termine et produit le résultat attendu à tous les coups -- on peut penser par exemple à l'informatique embarquée dans le pilotage automatique de voitures ou de trains...
+	
+	Pour atteindre ce but on va (comme on le ferait en mathématiques) \textbf{\textit{démontrer}} qu'un algorithme est correct, et ce en deux étapes:
+	\begin{itemize}
+		\item La \textbf{\textit{terminaison}}: on montre que l'algorithme se termine.
+		\item La \textbf{\textit{correction partielle}}: on montre que l'algorithme produit bien le résultat attendu.
+	\end{itemize}
+	
+	\subsection{Terminaison: variant de boucle}
+	Dans ce cours on va limiter le champ de cette étude à la vérification que toute boucle \texttt{tant que} (ou boucle conditionnelle, ou boucle \texttt{while}) se termine bien et n'est pas infinie. En effet, dans le contexte du programme de 1\textsuperscript{ère}, c'est le seul cas où la terminaison ne serait pas garantie puisque, d'une part, les seules structures se répétant que nous envisageons sont les boucles\footnote{En terminale on s'intéressera à la récursivité qui induisent des répétitions potentiellement infinies sans l'utilisation de boucles.}, et que, d'autre part, les boucles \texttt{pour} (ou boucles itératives, ou boucles \texttt{for}) sont conçues pour se terminer au bout d'un nombre d'itérations donné, fixé, et connu à l'avance\footnote{même si on peut en théorie imaginer une boucle allant "de 1 à n" dans laquelle on augmente n... Mais c'est en dehors du périmètre de ce cours.}.
+	
+	Pour prouver qu’un algorithme s'arrête, il faut donc démontrer que pour chaque boucle \texttt{tant que}, la condition d'entrée \textbf{sera invalidée dans un temps fini} -- ou, dit autrement, après un nombre fini de passages dans cette boucle. La plupart du temps, cela revient à montrer qu'il existe un \textbf{variant} pour chacune de ces boucles.
+	
+	\begin{MonAmp}{Définition}
+		Un \textbf{variant de boucle} est une quantité entière positive qui décroît strictement à chaque itération de la boucle (une suite d’entiers naturels strictement décroissante est nécessairement finie).
+		\vspace{\baselineskip}
+		
+		Exemple, pour la boucle suivante, on peut aisément se convaincre que la quantité $5 - i$ est un variant de boucle selon la définition ci-dessus: elle commence à 5 puis décroît jusqu'à atteindre 0 -- on est donc bien certains que la boucle se terminera.
+		
+		\begin{algorithmic}[1]
+			\State i $\leftarrow$ 0
+			\While{i < 5}
+			\State i $\leftarrow$ i + 1
+			\EndWhile
+		\end{algorithmic}
+	\end{MonAmp}
+	
+		Attention! Pour qu'une quantité soit un variant de boucle il faut bien qu'elle décroisse, \textbf{\textit{mais aussi}} qu'elle soit \textbf{\textit{toujours}} positive -- en d'autres termes que la condition d'arrêt de la boucle ne soit pas étroite au point de permettre au variant de "dépasser" 0. Considérez la boucle suivante par exemple:
+	\begin{algorithmic}[1]
+		\State i $\leftarrow$ 0
+		\State\While{$i \neq 5$}
+		\State i $\leftarrow$ i + 2
+		\EndWhile
+	\end{algorithmic}
+	
+	On voir bien que dans ce cas $5-i$ décroît bien... mais devient assez rapidement négatif!
+	
+	\begin{MonExo}[Variant de boucle]
+		Considérez les deux algorithmes suivants:
+		\vspace{\baselineskip}
+		
+		\begin{tabular}{p{0.5\textwidth}p{0.5\textwidth}}
+			\begin{minipage}{\linewidth}
+				\begin{algorithmic}[1]
+					\State Afficher "entrez un entier positif"
+					\State lire $Nb$
+					\State i $\leftarrow$ 0
+					\While{$Nb > 0$}
+					\State $Nb \leftarrow Nb$ // $0$
+					\State i $\leftarrow$ i + 1
+					\EndWhile
+					\State Afficher i
+				\end{algorithmic}
+			\end{minipage}
+		&
+			\begin{minipage}{\linewidth}
+				\begin{algorithmic}[1]
+					\State Afficher "entrez un entier positif"
+			 		\State lire $Nb$
+			 		\State $k \leftarrow 1$
+			 		\State $i \leftarrow 0$
+			 		\While{$k < (Nb + 1)$}
+			 		\State $k \leftarrow k \times 10$
+			 		\State $i \leftarrow i + 1$
+			 		\EndWhile
+			 		\State Afficher i
+			 	\end{algorithmic}
+			 \end{minipage}
+		\\
+		\end{tabular}
+		\vspace{\baselineskip}
+		
+		\begin{alphenum}
+			\item Que sont censés faire ces algorithmes?
+			\item Utilisez la technique du variant pour justifier que le premier se termine.
+			\item Que se passerait-il si on remplaçait la condition "$Nb > 0$" par "$Nb \neq 0$"?
+			\item Utilisez la technique du variant pour justifier que le second se termine.
+			\item Que se passerait-il si on remplaçait "$k < (Nb + 1)$" par "$k \neq (Nb + 1)$"?
+		\end{alphenum}
+	\end{MonExo}
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item Les deux sont censés afficher le nombre de chiffres que comporte le nombre entré par l'utilisateur:
+			\begin{itemize}
+				\item Le premier effectue des divisions entières successives du nombre jusqu'à atteindre 0;
+				\item Le second procède "dans l'autre sens" en partant de 1 et en multipliant par 10 jusqu'à dépasser le nombre.
+			\end{itemize}
+			\item Le variant ici est le nombre $Nb$: en effet, pour tout nombre strictement positif, sa division entière par 10 lui est strictement inférieure -- $Nb // 10 < Nb$; donc $Nb$ est strictement décroissant.
+			\item Si l'on remplace "$Nb > 0$" par "$Nb \neq 0$" le variant demeure valide. En effet, à terme, les divisions entières successives par 10 atteignent exactement 0 (et ne peuvent en aucun cas devenir négatives).
+			\item Le variant ici est la quantité $Nb + 1 - k$ -- il est facile de se convaincre qu'à chaque itération de la boucle, k étant multiplié par 10, la quantité décroît strictement.
+			\item Si on remplaçait "$k < (Nb + 1)$" par "$k \neq (Nb + 1)$" en revanche, l'arrêt n'aurait plus lieu que pour les valeurs de Nb égales à 9, 99, 999, etc... -- pour toutes les autres, le variant passera en négatif sans "s'arrêter" à la valeur 0.
+		\end{alphenum}
+	\end{MaReponse}
+	
+	\subsection{Correction partielle: invariant de boucle}
+	On va s'intéresser ici (dans le cadre du programme de 1\textsuperscript{ère}) à démontrer la correction des boucles dont on conçoit les algorithmes et, pour ce faire, on va se poser des questions du type:
+	\begin{itemize}
+		\item Les variables sont-elles bien initialisées \textit{avant} le début de la boucle?
+		\item Le nombre de tours de la boucle est-il correct?
+		\item S'il y en a un, est-ce que l'indice est bien choisi?
+		\item Et, \textit{in fine}, les valeurs obtenues en sortie de boucle sont-elles les bonnes?
+	\end{itemize}
+	
+	Toutes ces questions vont être abordées au moyen de la notion d'\textit{invariant de boucle}.
+	
+	\begin{MonAmp}{Définition}
+		Un \textbf{invariant} est une propriété d'un algorithme qui reste vraie tout au long de son exécution.
+	\end{MonAmp}
+	
+	Un invariant de boucle est une proposition toujours vraie à chaque fois que l'on entre dans la boucle. La démarche que nous allons adopter se déroule en quatre étapes:
+	\begin{enumerate}
+		\item Choix de l'invariant: partir "de la fin", c'est-à-dire du résultat attendu et identifier quelle quantité est "construite" au fur et à mesure des itérations de la boucle pour construire ce résultat -- et ce sera votre invariant;
+		\item On montre que l’invariant est vérifié avant la boucle (initialisation);
+		\item On montre que si l'invariant est vérifié \textit{avant }un passage dans la boucle, alors il est préservé \textit{après }le passage dans la boucle;
+		\item On peut conclure sur la valeur finale à la sortie de la boucle.
+	\end{enumerate}
+	
+	Et ainsi, \textit{par récurrence}, on démontre la correction partielle.
+	
+	$\rhd$ Ca vous semble très abstrait? Vous avez notamment l'impression que le choix de l'invariant est \textit{très, très, très} flou? C'est normal! Le seul moyen d'expliquer ça clairement est de s'appuyer sur des exemples...
+	
+	Considérons la fonction suivante:
+	\begin{algorithmic}[1]
+		\Require{$a, b$ $\in \mathds{R}$ avec}
+		\Ensure{Le produit $a \times b$}
+		\Function{Produit}{a, b}
+		\State m $\leftarrow$ 0
+		\State p $\leftarrow$ 0
+		\While{$m < a$}
+		\State m $\leftarrow$ m + 1
+		\State p $\leftarrow$ p + b
+		\EndWhile
+		\State\Return{p}
+		\EndFunction
+	\end{algorithmic}
+	
+	On commence par noter qu'on a bien un variant de boucle... Lequel?\footnote{$a - m$ bien sûr!} La terminaison est donc prouvée.
+	
+	Etapes de la démarche:
+	\begin{enumerate}
+		\item Choix de l'invariant: le but est de renvoyer le produit p qui, à la fin, vaudra $a \times b$; il est construit dans cette boucle par ajouts successifs de $b$, $m$ fois. On peut donc avoir l'intuition que l'invariant est $p = m \times b$. Vérifions cela avec les deux étapes suivantes.
+		\item Avant la boucle on a $p$ et $m$ tous les deux à 0 -- donc l'invariant est vérifié.
+		\item Supposons qu'au début d'une itération de la boucle l'invariant est vérifié, avec m et p; à la fin de cette itération, les valeurs respectives de m et p seront de $m' = m + 1$ et $p' = p + b$.  On aura alors:
+		\[ p' = p + b = m \times b + b = (m + 1) \times b = m' \times b\]
+		Et donc l'invariant est bien vérifié à la fin de la boucle.
+		\item En fin de boucle on a $m = a$ et donc à la sortie de la boucle on a bien $p = a \times b$.
+	\end{enumerate}
+	
+	On a donc bien démontré la correction de la boucle.
+	
+	\begin{MonExo}[Calcul d'invariant de boucle]
+		Donner un invariant de boucle pour la fonction suivante qui calcule x à la puissance n:
+		\begin{algorithmic}[1]
+			\Require{$x, n \in \mathds{N}$}
+			\Ensure{$x^n$}
+			\Function{Puissance}{x, n}
+			\State r $\leftarrow$ 1
+			\For{i allant de 0 à n - 1}
+			\State $r \leftarrow r \times x$
+			\EndFor
+			\State\Return{r}
+			\EndFunction
+		\end{algorithmic}
+	\end{MonExo}
+	
+	\begin{MaReponse}
+		La démarche est extrêmement proche de celle qu'on a adoptée pour le produit dans l'exemple précédent:
+		\begin{enumerate}
+			\item On peut choisir comme invariant "$r = x^i$";
+			\item Au début de la boucle on a $r = 1$ et $i = 0$, donc l'invariant $r = x^i$ est bien vérifié, quel que soit x.
+			\item Si au début d'une itération de la boucle on a l'invariant vérifié, notons $r' = r \times x$ et $i' = i + 1$ les valeurs respectives de r et i à la fin de cette itération. On a:
+			\[ r' = r \times x = x^i \times x = x^{i+1} = x^{i'}\]
+			\item En fin de boucle on est passé $n$ fois dans la boucle (de 0 à (n-1)) donc on a bien $r = x^n$.
+		\end{enumerate}
+	\end{MaReponse}
+
+	\begin{MonExo}[Et un autre pour la route...]
+		Montrer que $r = a - b \times q$ est bien un invariant de boucle de la fonction suivante, qui réalise une division euclidienne:
+		\begin{algorithmic}[1]
+			\Require{$a, b \in \mathds{N}; b\neq 0$}
+			\Ensure{$q, r$ le quotient et le reste de la division euclidienne de a par b}
+			\Function{DivEuclid}{a, b}
+			\State r $\leftarrow$ a
+			\State q $\leftarrow$ 0
+			\While{$r \geq b$}
+			\State $r \leftarrow r - b$
+			\State $q \leftarrow q + 1$
+			\EndWhile
+			\State\Return{q, r}
+			\EndFunction
+		\end{algorithmic}
+	\end{MonExo}
+	
+	\begin{MaReponse}
+		La démarche est extrêmement proche de celle qu'on a adoptée pour le produit dans l'exemple précédent:
+		\begin{enumerate}
+			\item Le choix de la quantité identifiée comme invariant est donné par l'énoncé;
+			\item Au début de la boucle on a $r = a$ et $q = 0$, donc l'invariant $r = a - b \times q$ est bien vérifié, quel que soit b.
+			\item Si au début d'une itération de la boucle on a l'invariant vérifié, notons $r' = r - b$ et $q' = q + 1$ les valeurs respectives de r et q à la fin de cette itération. On a:
+			\[ r' = r - b = a - b \times q - b = a - b \times (q + 1) = a - b \times q'\]
+			\item En fin de boucle l'invariant est nécessairement encore vrai, par récurrence (le point 2 ci-dessous étant l'initialisation et le point 3 la preuve de la récurrence).
+		\end{enumerate}
+	\end{MaReponse}
+	
+	\pagebreak
+	\section{Complexité d'algorithmes}
+	Lorsque l'on commence à traiter d'importants volumes de données, que l'on commence à considérer des traitements complexes, ou tout simplement longs en nombre d'instructions exécutées se pose la question de la \textit{performance} du traitement. On évalue cette performance suivant deux axes:
+	\begin{itemize}
+		\item \textbf{Performance temporelle} (que nous allons aborder ici) -- il s'agit du temps d'exécution du programme.
+		\item \textbf{Performance spatiale }(qui n'est pas au programme) -- il s'agit de la mémoire nécessaire à l'exécution du programme (pour stocker notamment l'intégralité des variables qu'il manipule).
+	\end{itemize}
+	
+	On ne s'intéresse pas ici à la durée exacte d'exécution d'un programme -- celle-ci est trop dépendante de la machine sur laquelle on l'exécute, des autres traitements en cours le cas échéant, du langage de programmation... Ce à quoi on va s'intéresser c'est à la mesure du \textbf{nombre d'opérations élémentaires} que va effectuer un programme en fonction des données qu'il va recevoir en entrée. Par "opération élémentaire" on entend "étape" du programme (ligne de code, le plus souvent) dont, pour simplifier, on va considérer qu'elles prennent toutes la même temps à exécuter. Ainsi, en estimant grossièrement le nombre d'opérations élémentaires en fonction du volume de données en entrée on pourra commencer à se faire une idée de la performance d'un algorithme donné: c'est ce qu'on appelle un \textbf{calcul de complexité}.
+	
+	Le but principal d'un calcul de complexité est de pouvoir comparer l’efficacité entre différents algorithmes répondant à un même problème. En d'autres termes, de répondre à la question: "\textit{Quelle que soit la machine et le langage de programmation utilisé, l'algorithme A est-il plus performant que l'algorithme B pour de grands volumes de donénes?}"
+	
+	\begin{MonAmp}{Définition}
+		La \textbf{complexité d’un algorithme} est une mesure intrinsèque à l'algorithme qui est indépendante de toute implémentation. Elle est calculée en fonction d’un \textit{paramètre représentatif des entrées} (la taille) et à l'aide d'une \textit{mesure élémentaire} (nombre de comparaisons, nombre d’opérations arithmétiques, etc.).
+	\end{MonAmp}
+	
+	\begin{MonExo}[Comptage d'opérations élémentaires]
+		Pour chacun des deux algorithmes suivants, calculer le nombre d'opérations élémentaires effectué. Dépend-il des données en entrée?
+		
+		\begin{tabular}{p{0.5\textwidth}p{0.5\textwidth}}
+			\begin{minipage}{\linewidth}
+				\begin{algorithmic}[1]
+					\Function{Produit1}{n, b}
+					\State p $\leftarrow n \times b$
+					\State\Return{p}
+					\EndFunction
+				\end{algorithmic}
+			\end{minipage}
+			&
+			\begin{minipage}{\linewidth}
+				\begin{algorithmic}[1]
+					\Function{Produit2}{n, b}
+					\State m $\leftarrow$ 0
+					\State p $\leftarrow$ 0
+					\While{$m < n$}
+					\State m $\leftarrow$ m + 1
+					\State p $\leftarrow$ p + b
+					\EndWhile
+					\State\Return{p}
+					\EndFunction
+				\end{algorithmic}
+			\end{minipage}
+			\\
+		\end{tabular}
+	\end{MonExo}
+		
+	\begin{MaReponse}
+		Pour Produit1, c'est vite vu: 2 opérations (le produit et le "retourner") quelles que soient les données en entrée.
+		
+		Pour Produit2 c'est un peu plus compliqué:
+		\begin{itemize}
+			\item On a trois opérations effectuées quoi qu'il arrive (les deux affectations avant la boucle, et le "retourner").
+			\item Dans la boucle, on a deux opérations également: le calcul du nouveau m et le calcul du nouveau p.
+			\item On a également une opération "cachée" dans la boucle: la comparaison "$m < n$" qui doit être effectuée à chaque itération -- ce qui nous fait un total de trois opérations pour la boucle.
+			\item La boucle est effectuée $n$ fois -- de $m = 0$ à $m = n - 1$.
+			\item Le nombre total d'opérations élémentaires pour Produit2 est donc de: $3 \times n + 2$.
+		\end{itemize}
+		
+		Je vous laisse donc deviner lequel de ces deux algorithmes est le meilleur pour déterminer le produit de deux entiers n et b (imaginez le calcul de 10 milliards $\times 2$ par exemple).
+			
+	\end{MaReponse}
+
+		\begin{MonExo}[Comptage d'opérations élémentaires -- somme des premiers entiers]
+		Reprenons un algorithme qu'on avait écrit dans un exercice précédent et qui calculait la somme des n premiers entiers:
+		
+		\begin{algorithmic}
+			\Require{$n$ $\in \mathds{N}$}
+			\Ensure{la somme des N premiers entiers naturels}
+			\Function{SommeEntiers}{N}
+			\State $Resultat$ $\leftarrow$ 0
+			\For{$i$ allant de 1 à N}
+			\State $Resultat$ $\leftarrow Resultat + i$
+			\EndFor
+			\State\Return{$Resultat$}
+			\EndFunction
+		\end{algorithmic}
+		\vspace{\baselineskip}
+		Quel est son nombre d'opérations élémentaires?
+	\end{MonExo}
+	
+	\begin{MaReponse}
+		\begin{itemize}
+			\item On a deux opérations en-dehors de la boucle (que l'on va assez rapidement apprendre à ignorer -- il est évident qu'elles n'ont aucune influence sur la performance globale de l'algorithme).
+			\item On a une opération évidente dans la boucle: l'ajout de l'entier en cours au résultat.
+			\item On a en fait deux opérations cachées en plus: l'incrémentation de i, d'une part, et sa comparaison avec n d'autre part.
+		\end{itemize}
+		
+		On arrive donc à un total de $3 \times n + 2$ opérations élémentaires.\footnote{Pour prouver que les maths sont parfois utiles: on sait que $1 + 2 + ... + n = \frac{n(n + 1)}{2}$. Il est donc possible de faire le même calcul en exactement quatre opérations contre plus de 3 millions par exemple si on utilise l'algorithme de l'énoncé sur les un million premiers entiers...}
+	\end{MaReponse}
+	
+	On commence à voir que les algorithmes ont souvent un lien direct entre nombre d'opérations et une quantité qu'ils reçoivent en entrée. Dans les exemples précédents on a vu deux cas:
+	\begin{itemize}
+		\item Aucun lien entre les deux (le calcul direct de $n \times b$ par exemple dont le nombre d'opérations ne dépend ni de n ni de b): on parle de \textbf{complexité constante}.
+		\item Multiple d'une quantité en entrée -- l'exemple des n premiers entiers par exemple où la complexité est proche d'un multiple de n: on parle de \textbf{complexité linéaire}.
+	\end{itemize}
+	
+	Il existe d'autres relations de ce type, nous allons en voir quelques unes dans les chapitres à venir -- et leur importance est cruciale si l'on regarde le graphique ci-dessous de croissance des principales fonctions utilisées dans les calculs de complexité:
+	
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width=0.8\textwidth]{002_Complexite.png}
+	\end{figure}
+	
+	
+			
+	\pagebreak
+	\section{Algorithmes de tri}
+	
 
 \end{document}
 
 
 %Eléments manquants:
-%Section pseudo-code:
-%- Le pseudo code des deux tris et la discussion de la comparaison dans l'exercice 2
-%- Le code de la recherche dichotomique dans l'exercice 3
