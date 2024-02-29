@@ -217,7 +217,7 @@
 	\begin{alphenum}
 		\item Le pseudo-code est une façon de décrire un algorithme pour qu'il soit compréhensible "entre humains".
 		\item Le pseudo-code est indépendant du langage de programmation -- un algorithme convenablement écrit devrait en théorie pouvoir être implémenté aussi aisément en Python qu'en C ou qu'en JavaScript\footnote{C'est évidemment un peu simpliste d'écrire ceci ainsi, mais en théorie le principe est vrai: lorsque vous rédigez un algorithme en pseudo-code, vous devriez ne pas avoir de langage de programmation spécifique en tête.}. A titre d'exemple, voici un "Hello World" en deux langages de programmation distincts, mais partant du même pseudo-code:
-		\begin{figure}[ht]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.5\textwidth]{001_AlgoHelloWorld.png}
 		\end{figure}
@@ -711,13 +711,32 @@
 	
 	Il existe d'autres relations de ce type, nous allons en voir quelques unes dans les chapitres à venir -- et leur importance est cruciale si l'on regarde le graphique ci-dessous de croissance des principales fonctions utilisées dans les calculs de complexité:
 	
-	\begin{figure}[ht]
+	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\textwidth]{002_Complexite.png}
 	\end{figure}
 	
+	Le lien entre la complexité et les performances temporelles d'un algorithme devraient sembler évidents à la lecture de ce graphique, mais pour s'en convaincre davantage encore, il suffit de considérer les tables ci-dessous (\textit{source: cours NSI Charles Poulmaire}). L'unité utilisée ("FLOPS") signifie "Floating-point operations per second" ou opération sur nombre flottant par seconde -- c'est donc bien une unité de mesure de la performance d'un ordinateur qui se rapporte directement à la complexité qui, elle, est un mesurée comme une estimation des opérations élémentaires.
 	
-			
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\textwidth]{003_Performance.png}
+	\end{figure}
+	
+	Les unités de temps utilisées ici  -- qui permettent également de mieux se rendre compte de la vitesse à laquelle évoluent les ordinateurs -- sont:
+	\begin{description}
+		\item[$\infty$] Infini -- temps que par convention on considère comme infini car irréalisable dans la réalité.
+		\item[a] Année
+		\item[j] Jour
+		\item[min] Minute
+		\item[s] Seconde
+		\item [ms] Milliseconde -- $10^{-3}$ secondes -- un millième de seconde
+		\item[$\mu$s] Microseconde -- $10^{-6}$ secondes -- un millième de seconde
+		\item[ns] Nanoseconde -- $10^{-9}$ secondes -- un milliardième de seconde
+		\item[ps] Picoseconde -- $10^{-12}$ secondes -- un mille milliardième de seconde
+		\item[fs] Femtoseconde -- $10^{-15}$ secondes -- un million de milliardième de seconde
+		\item[as] Attoseconde -- $10^{-18}$ secondes -- un milliard de milliardième de seconde
+	\end{description}
 	\pagebreak
 	\section{Algorithmes de tri}
 	
