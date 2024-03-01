@@ -1,0 +1,5 @@
+Déroulement séance:
+- Explication principe filtre chromatique au tableau;
+- Démonstration sur une image 2 x 2 pixels en utilisant 01.DemoTraitementImages.py (qui contient aussi divers exemples de filtres possibles);
+- Présentation des images dans 02.LFCPix.zip pour montrer le champ des possibles;
+- Activité Capytale v2: créée au format script / console, avec les instructions 00.Instructions.html. => Ils commencent par copier le code dans 01 puis tester différents filtres (en commençant par le négatif, le plus simple / plus différent des niveaux de gris).
