@@ -8,7 +8,7 @@
 \DispRepfalse % Hide the text
 
 % Version du document
-\newcommand{\versiondoc}{v0.1}
+\newcommand{\versiondoc}{v0.2}
 
 % Incorporation tous éléments de préambule communs à tous mes cours
 % Sans chemin relatif parce que TexStudio lancé depuis un script qui prend en compte la variable d'environnement TEXINPUTS
@@ -119,7 +119,14 @@
 	 	\item Plusieurs exercices sur papier qu'on fera en classe et dont il sera très important que vous gardiez une trace;
 	 	\item En parallèle et en complément, quelques applications / exercices sur machine.
 	 \end{itemize}
+	
+	\begin{monhlt}
+	\subsection{Comment réviser / préparer les contrôles?}
 	 
+	 \lipsum[1]
+	\end{monhlt} 
+	 
+	 % MCOXXXXXXXXXX
 	 \pagebreak
 	 
 	 \section{Introduction à la conception d'algorithmes}
@@ -156,13 +163,23 @@
 		\end{alphenum}
 	\end{MaReponse}
 	
-	\begin{MonAmp}{Définition}
+	Donc, pour reprendre:
+	\begin{MaDef}{algorithme}
+		Un algorithme est une \textbf{suite finie d'instructions} permettant de \textbf{résoudre un problème}. Il est structuré en trois parties:
+		\begin{alphenum}
+			\item L'entrée des données;
+			\item Le traitement des données;
+			\item La sortie des données 
+		\end{alphenum}
+	\end{MaDef}
+	
+	\begin{MaDef}{l'algorithmique}
 		L'algorithmique est:
 		\begin{itemize}
 			\item La conception (et la production) d'algorithmes;
 			\item Leur étude -- leur analyse, la mesure de leur fiabilité (est-ce qu'il répond vraiment au problème posé?) et de leur efficacité (est-ce qu'il le fait en un temps acceptable?).
 		\end{itemize}
-	\end{MonAmp}
+	\end{MaDef}
 	
 	Nous allons dans ce cours nous intéresser à ces deux composantes, en commençant, dans ce chapitre, par la première dont les étapes peuvent se résumer ainsi:
 	\begin{enumerate}
@@ -209,6 +226,15 @@
 		Vous remarquerez l'inclusion d'exemples dans la docstring -- il ne faut surtout pas hésiter à y recourir, c'est ce qu'il y a de plus parlant pour quelqu'un qui découvre votre code!
 	\end{MaReponse}
 	
+	\begin{MonRet}
+		De cette section il faut que vous reteniez:
+		\begin{itemize}
+			\item La démarche qui va de l'énoncé d'un problème à la programmation de sa résolution en passant par l'algorithme;
+			\item La nécessité de \textbf{spécifier} un algorithme -- le \textit{nommer}, définir sa \textit{précondition} et sa \textit{postcondition}.
+			\item La nécessité de transcrire systématiquement cette spécification dans la docstring de la fonction qui en résulte.
+		\end{itemize}
+	\end{MonRet}
+	
 	\subsection{Ecrire un algorithme: pseudo-code}
 
 	Si l'on se réfère aux étapes listées plus haut, on en est maintenant au moment où l'on sait \textit{ce que va réaliser} notre programme, \textit{ce qu'il va prendre en entrée}, et \textit{ce qu'il va retourner en sortie}. Il s'agit à présent d'expliciter le \textit{\textbf{comment}} -- quelles sont les étapes qui vont être effectuées pour résoudre le problème? Quel traitement va-t-on appliquer aux données en entrée pour produire les données en sortie?
@@ -226,7 +252,7 @@
 	\end{alphenum}
 	
 	Ce dernier point implique qu'il y ait quand même une ossature de règles minimales dans un contexte donné -- comme pour ce cours par exemple:
-	\begin{MonAmp}{Règles pseudo-code 1\textsuperscript{ère} NSI}
+	\begin{MaRgl}{pseudo-code en 1\textsuperscript{ère} NSI}
 		\begin{alphenum}
 			\item On spécifie explicitement en début d'algorithme les entrées attendues et les sorties prévues;
 			\item On utilise une flèche vers la gauche ("$\leftarrow$" ou "$\lhd$") pour affecter des variables;
@@ -235,7 +261,7 @@
 			\item On n'hésite pas à inclure des commentaires pour expliquer les étapes -- et dans ce cas, on les préfixe d'une flèche vers la droite ("$\rightarrow$" ou "$\rhd$")
 			\item ... et c'est tout!
 		\end{alphenum}
-	\end{MonAmp}	 
+	\end{MaRgl}
 	
 	Pour illustrer ces principes, voici le pseudo-code d'une fonction (qu'on a déjà vue dans un chapitre précédent, d'ailleurs) prenant une liste de réels positifs en entrée et qui en renvoie le maximum:
 	
@@ -384,13 +410,27 @@
 		Vous aurez remarqué que la fonction help affiche à l'écran la docstring de la fonction que vous avez programmée -- utile, vous ne pensez pas?
 	\end{MaReponse}
 	
+	\begin{MonRet}
+		De cette section il faut que vous reteniez:
+		\begin{itemize}
+			\item Les éléments qu'il faut systématiquement inclure dans la rédaction du pseudo-code d'une fonction:
+			\begin{itemize}
+				\item Ses entrées -- et conditions qui s'y appliquent;
+				\item Ses sorties;
+				\item Le traitement des données.
+			\end{itemize}
+			\item Les \textit{principes} de rédaction de pseudo-code -- et par-dessus tout \textbf{le fait que le pseudo-code ne peut pas souffrir d'ambiguïté}. Le plus simple pour atteindre cet objectif est de commencer par se conformer aux règles énoncées ici;
+			\item Ne pas perdre de vue que la traduction d'un algorithme en code Python est un exercice en soi: la \textit{logique} de la démarche appartient à l'algorithme, mais son \textit{implémentation} relève du bon usage de la syntaxe du langage.
+		\end{itemize}
+	\end{MonRet}
+	
 	\subsection{Tester un algorithme}
 	
 	Cette étape est cruciale dans le développement d'un programme informatique car les erreurs dans les phases de rédaction de l'algorithme et de traduction en langage de programmation sont plus que fréquentes -- elles sont systématiques dès lors qu'un programme atteint un certain niveau de complexité.
 	
 	Un test permet de vérifier que l'algorithme fonctionne sur une donnée précise. Pour programmer efficacement il faut concevoir des \textit{jeux de tests} permettant de vérifier que l’algorithme renvoie, dans des cas particuliers bien choisis, ce que l’on attend de lui. Il est impossible d'écrire un ensemble de tests permettant d’exclure toutes les erreurs possibles, mais on peut cependant essayer d'en construire un en respectant déjà les règles suivantes:
 	
-	\begin{MonAmp}{Règles pour tester une fonction}
+	\begin{MaRgl}{tester une fonction}
 			 Les \textbf{jeux de tests} (ensembles de données que l'on va tester) à préparer pour tester une fonction donnée doivent:
 			 \begin{itemize}
 			 	\item Si la spécification de l'algorithme mentionne plusieurs cas possibles, les tester tous (ex: chaines de caractères paires et impaires pour le palindrome);
@@ -400,12 +440,12 @@
 			 \end{itemize}
 			 \vspace{\baselineskip}
 			 
-			 Ces règles:
-			 \begin{itemize}
-			 	\item Ne sont pas exhaustives -- vous devez plus les voir comme des principes à appliquer;
-			 	\item \textbf{NE SONT PAS A CONNAITRE PAR CŒUR} -- les principes qui les sous-tendent, en revanche, doivent être bien compris et vous devez être capable, pour les fonctions que vous allez développer (en exercice, projet, ou contrôle), de proposer des jeux de tests qui les respectent.
-			 \end{itemize}
-	\end{MonAmp}
+			Attention: ces règles ne sont pas exhaustives -- vous devez plus les voir comme des principes à appliquer et à adapter à chaque fonction que vous développez.
+	\end{MaRgl}
+	
+	\begin{MonRet}
+		 	\textbf{Apprendre par cœur les règles énoncées ici n'aurait aucun sens.} Ce qu'il faut comprendre ce sont les principes qui les sous-tendent et être capable, pour les fonctions que vous allez développer (en exercice, projet, ou contrôle), de proposer des jeux de tests qui les respectent.
+	\end{MonRet}
 	
 	\pagebreak
 	\section{Preuves d'algorithmes}
@@ -422,7 +462,7 @@
 	
 	Pour prouver qu’un algorithme s'arrête, il faut donc démontrer que pour chaque boucle \texttt{tant que}, la condition d'entrée \textbf{sera invalidée dans un temps fini} -- ou, dit autrement, après un nombre fini de passages dans cette boucle. La plupart du temps, cela revient à montrer qu'il existe un \textbf{variant} pour chacune de ces boucles.
 	
-	\begin{MonAmp}{Définition}
+	\begin{MaDef}{variant de boucle}
 		Un \textbf{variant de boucle} est une quantité entière positive qui décroît strictement à chaque itération de la boucle (une suite d’entiers naturels strictement décroissante est nécessairement finie).
 		\vspace{\baselineskip}
 		
@@ -434,7 +474,7 @@
 			\State i $\leftarrow$ i + 1
 			\EndWhile
 		\end{algorithmic}
-	\end{MonAmp}
+	\end{MaDef}
 	
 		Attention! Pour qu'une quantité soit un variant de boucle il faut bien qu'elle décroisse, \textbf{\textit{mais aussi}} qu'elle soit \textbf{\textit{toujours}} positive -- en d'autres termes que la condition d'arrêt de la boucle ne soit pas étroite au point de permettre au variant de "dépasser" 0. Considérez la boucle suivante par exemple:
 	\begin{algorithmic}[1]
@@ -457,7 +497,7 @@
 					\State lire $Nb$
 					\State i $\leftarrow$ 0
 					\While{$Nb > 0$}
-					\State $Nb \leftarrow Nb$ // $0$
+					\State $Nb \leftarrow Nb$ // $10$
 					\State i $\leftarrow$ i + 1
 					\EndWhile
 					\State Afficher i
@@ -503,6 +543,10 @@
 		\end{alphenum}
 	\end{MaReponse}
 	
+	\begin{MonRet}
+		De cette section il faut évidemment avoir compris ce qu'est un variant de boucle, mais il faut surtout être capable de résoudre des exercices tel que celui ci-dessus: \textbf{identifier} le variant de boucle, \textbf{prouver} qu'il décroît strictement, en \textbf{déduire} en appliquant la condition de la boucle qu'elle se termine.
+	\end{MonRet}
+	
 	\subsection{Correction partielle: invariant de boucle}
 	On va s'intéresser ici (dans le cadre du programme de 1\textsuperscript{ère}) à démontrer la correction des boucles dont on conçoit les algorithmes et, pour ce faire, on va se poser des questions du type:
 	\begin{itemize}
@@ -514,9 +558,9 @@
 	
 	Toutes ces questions vont être abordées au moyen de la notion d'\textit{invariant de boucle}.
 	
-	\begin{MonAmp}{Définition}
+	\begin{MaDef}{invariant}
 		Un \textbf{invariant} est une propriété d'un algorithme qui reste vraie tout au long de son exécution.
-	\end{MonAmp}
+	\end{MaDef}
 	
 	Un invariant de boucle est une proposition toujours vraie à chaque fois que l'on entre dans la boucle. La démarche que nous allons adopter se déroule en quatre étapes:
 	\begin{enumerate}
@@ -559,7 +603,7 @@
 	
 	On a donc bien démontré la correction de la boucle.
 	
-	\begin{MonExo}[Calcul d'invariant de boucle]
+	\begin{MonExo}[Détermination d'un invariant de boucle]
 		Donner un invariant de boucle pour la fonction suivante qui calcule x à la puissance n:
 		\begin{algorithmic}[1]
 			\Require{$x, n \in \mathds{N}$}
@@ -613,6 +657,14 @@
 		\end{enumerate}
 	\end{MaReponse}
 	
+	\begin{MonRet}
+		Ce qu'il faut retenir de cette section est l'équivalent de ce qui était nécessaire pour la précédente:
+		\begin{itemize}
+			\item Comprendre la notion d'invariant de boucle;
+			\item Être capable de résoudre des exercices comme ceux ci-dessus: \textbf{identifier} un invariant de boucle, \textbf{montrer} qu'il est vrai \textbf{avant la boucle}, \textbf{prouver par récurrence} qu'il l'est à toutes les itérations de la boucle, et en \textbf{déduire la correction partielle }de la boucle.
+		\end{itemize}
+	\end{MonRet}
+	
 	\pagebreak
 	\section{Complexité d'algorithmes}
 	Lorsque l'on commence à traiter d'importants volumes de données, que l'on commence à considérer des traitements complexes, ou tout simplement longs en nombre d'instructions exécutées se pose la question de la \textit{performance} du traitement. On évalue cette performance suivant deux axes:
@@ -625,9 +677,9 @@
 	
 	Le but principal d'un calcul de complexité est de pouvoir comparer l’efficacité entre différents algorithmes répondant à un même problème. En d'autres termes, de répondre à la question: "\textit{Quelle que soit la machine et le langage de programmation utilisé, l'algorithme A est-il plus performant que l'algorithme B pour de grands volumes de donénes?}"
 	
-	\begin{MonAmp}{Définition}
+	\begin{MaDef}{complexité d'un algorithme}
 		La \textbf{complexité d’un algorithme} est une mesure intrinsèque à l'algorithme qui est indépendante de toute implémentation. Elle est calculée en fonction d’un \textit{paramètre représentatif des entrées} (la taille) et à l'aide d'une \textit{mesure élémentaire} (nombre de comparaisons, nombre d’opérations arithmétiques, etc.).
-	\end{MonAmp}
+	\end{MaDef}
 	
 	\begin{MonExo}[Comptage d'opérations élémentaires]
 		Pour chacun des deux algorithmes suivants, calculer le nombre d'opérations élémentaires effectué. Dépend-il des données en entrée?
@@ -709,18 +761,18 @@
 		\item Multiple d'une quantité en entrée -- l'exemple des n premiers entiers par exemple où la complexité est proche d'un multiple de n: on parle de \textbf{complexité linéaire}.
 	\end{itemize}
 	
-	Il existe d'autres relations de ce type, nous allons en voir quelques unes dans les chapitres à venir -- et leur importance est cruciale si l'on regarde le graphique ci-dessous de croissance des principales fonctions utilisées dans les calculs de complexité:
+	Il existe d'autres relations de ce type, nous allons en voir quelques unes dans les chapitres à venir -- et leur importance est cruciale si l'on regarde ce graphique de croissance des principales fonctions utilisées dans les calculs de complexité.
 	
-	\begin{figure}[H]
+	\begin{figure}[ht]
 		\centering
 		\includegraphics[width=0.8\textwidth]{002_Complexite.png}
 	\end{figure}
 	
-	Le lien entre la complexité et les performances temporelles d'un algorithme devraient sembler évidents à la lecture de ce graphique, mais pour s'en convaincre davantage encore, il suffit de considérer les tables ci-dessous (\textit{source: cours NSI Charles Poulmaire}). L'unité utilisée ("FLOPS") signifie "Floating-point operations per second" ou opération sur nombre flottant par seconde -- c'est donc bien une unité de mesure de la performance d'un ordinateur qui se rapporte directement à la complexité qui, elle, est un mesurée comme une estimation des opérations élémentaires.
+	Le lien entre la complexité et les performances temporelles d'un algorithme devraient sembler évidents à la lecture de ce graphique, mais pour s'en convaincre davantage encore, il suffit de considérer ces tables (\textit{source: cours NSI Charles Poulmaire}). L'unité utilisée ("FLOPS") signifie "Floating-point operations per second" ou opération sur nombre flottant par seconde -- c'est donc bien une unité de mesure de la performance d'un ordinateur qui se rapporte directement à la complexité qui, elle, est un mesurée comme une estimation des opérations élémentaires.
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.8\textwidth]{003_Performance.png}
+		\includegraphics[width=\textwidth]{003_Performance.png}
 	\end{figure}
 	
 	Les unités de temps utilisées ici  -- qui permettent également de mieux se rendre compte de la vitesse à laquelle évoluent les ordinateurs -- sont:
@@ -737,11 +789,28 @@
 		\item[fs] Femtoseconde -- $10^{-15}$ secondes -- un million de milliardième de seconde
 		\item[as] Attoseconde -- $10^{-18}$ secondes -- un milliard de milliardième de seconde
 	\end{description}
+	
+	Et puisque l'on parle d'unités, je précise également les unités listées dans les libellés de ces trois tableaux qui décrivent la puissance de calcul des ordinateurs considérés:
+	\begin{description}
+		\item[téraFLOPS] $10^{12}$ opérations par seconde, soit mille milliards.
+		\item[pétaFLOPS] $10^{15}$ opérations par seconde, soit un million de milliards (mille fois plus puissant que le premier).
+		\item[exaFLOPS] $10^{18}$ opérations par seconde, soit un milliard milliards (mille fois plus puissant que le précédent, un million de fois plus que le premier).
+	\end{description}
+	
+	\begin{MonRet}
+		Nous reviendrons dans les sections qui suivent sur les notions développées ici, mais ce qu'il faut retenir \textit{a minima} est:
+		\begin{itemize}
+			\item Notions de complexité spatiale et temporelle;
+			\item Comptage des opérations élémentaires -- être capable de résoudre des exercices comme ceux qui précèdent;
+			\item Compréhension de l'importance du type dépendance entre le volume de données en entrée et le nombre d'opérations élémentaires à effectuer.
+		\end{itemize}
+	\end{MonRet}
+
 	\pagebreak
 	\section{Algorithmes de tri}
-	
-
+		
 \end{document}
 
 
 %Eléments manquants:
+% Section dans le premier chapitre sur comment réviser.
