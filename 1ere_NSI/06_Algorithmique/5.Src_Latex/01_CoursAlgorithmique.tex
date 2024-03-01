@@ -4,8 +4,8 @@
 
 % Affichage ou non des reponses aux questions & exercices
 \newif\ifDispRep
-%\DispReptrue  % Show the text
-\DispRepfalse % Hide the text
+\DispReptrue  % Show the text
+%\DispRepfalse % Hide the text
 
 % Version du document
 \newcommand{\versiondoc}{v0.2}
@@ -206,12 +206,13 @@
 	
 	Cette étape de spécification est fondamentale -- c'est en quelque sorte la "carte d'identité" de notre algorithme, ce qui va permettre à quelqu'un qui ne le connait pas de le comprendre sans avoir besoin de lire son code. On va donc la transcrire dans notre code Python en tête de la fonction lui correspondant -- et c'est exactement ce que je vous demande de faire dans vos projets.
 	
-	\begin{MonAmp}{Méthode}
-		La transcription de la spécification d'un algorithme en tête de la fonction Python lui correspondant s'appelle "\textit{\textbf{le docstring}}" ou "\textit{\textbf{la documentation}}" de la fonction. Il est inscrit entre deux séries de trois apostrophes -- par exemple:
-		\MonPython{001_Docstring.py}
-	\end{MonAmp}
 	
-		\begin{MonExo}[Rédaction d'une spécification de fonction]
+	\begin{MaRgl}{Docstring}
+		La transcription de la spécification d'un algorithme en tête de la fonction Python lui correspondant s'appelle "\textit{\textbf{la docstring}}" ou "\textit{\textbf{la documentation}}" de la fonction. Il est inscrit entre deux séries de trois apostrophes -- par exemple:
+		\MonPython{001_Docstring.py}
+	\end{MaRgl}
+	
+	\begin{MonExo}[Rédaction d'une spécification de fonction]
 		Considérez la fonction suivante:
 		\MonPython{002_MedianeNoDocstring.py}
 		
@@ -289,20 +290,6 @@
 			\item Un algorithme qui calcule la somme des N premiers entiers naturels.
 			\item Un algorithme qui génère les N premiers termes de la séquence de Fibonacci. (rappel: c'est une suite de nombres dont les deux premiers sont 0 et 1 et dont chaque élément est la somme des deux précédents -- donc: 0, 1, 1, 2, 3, 5, 8, 13, etc...).
 			\item Un algorithme qui vérifie si une chaîne de caractères est un palindrome (se lit de la même manière dans les deux sens).
-			\item \textbf{$[$BONUS$]$} --- Supposez que vous avez une liste Lst de nombres réels  ordonnée (c'est-à-dire où $Lst[0] \leq Lst[1] \leq (...) \leq Lst[n]$) et que vous cherchez à savoir si elle contient un nombre N en particulier (la conclusion sera donc booléenne - Vrai ou Faux). Rédigez puis comparez deux algorithmes:
-			\begin{itemize}
-				\item Un qui fait une recherche "normale", en commençant à un bout et en parcourant toute la liste;
-				\item Un  autre qui effectue une recherche dite "dichotomique":
-				\begin{itemize}
-					\item Il regarde le milieu de la liste: 
-					\begin{itemize}
-						\item S'il est supérieur à N il élimine la partie supérieure de la liste;
-						\item S'il est inférieur à N il élimine la partie inférieure de la liste;
-					\end{itemize}
-					\item Il recommence l'opération jusqu'à soit trouver N soit aboutir à une impossibilité.
-				\end{itemize}
-			\end{itemize}
-			Que peut-on dire des efficacités relatives de ces deux algorithmes?
 		\end{alphenum}
 	\end{MonExo}
 	
@@ -374,8 +361,6 @@
 				\item Ligne 3: on vérifie la parité de la longueur puisque dans le cas des longueurs impaires on ignorera le caractère du milieu. Vous noterez qu'on dit ici "si Long est pair" sans expliquer comment on fait -- la difficulté de l'algorithme n'étant pas là, c'est tout à fait acceptable (on imagine qu'il y aura un algorithme pour une fonction "EstPair" explicité ailleurs).
 				\item Lignes 10 et 13: c'est une démarche qu'on a déjà utilisée ailleurs pendant notre cours, qui est très classique, et qu'il faut impérativement maîtriser: on part du principe que quelque chose est vrai --- ici "chaîne est un palindrome" --- et dès qu'on trouve une preuve du contraire (ici: un caractère est différent de son homologue de l'autre côté) on retourne "Faux", c'est-à-dire qu'on arrête immédiatement la fonction puisqu'on connaît son résultat. Si on arrive au bout de la boucle, c'est qu'on a pas trouvé de preuve que c'est faux -- donc c'est vrai et c'est ce qu'on retourne.
 			\end{itemize}
-			\vspace{\baselineskip}
-			\item La recherche dichotomique faisant l'objet d'un chapitre de ce cours, on y reviendra plus tard...
 		\end{alphenum}
 	\end{MaReponse}
 	
