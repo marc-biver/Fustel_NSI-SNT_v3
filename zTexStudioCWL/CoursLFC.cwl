@@ -36,12 +36,15 @@
 \MaQuestion{content}#n
 \MaQuest{content}#n
 \MonPython{filename}#n
+\MaQuest{content}#n
 
 # Environments
 \begin{monhlt}#\env
-\begin{MaReponse}#\env
 \begin{alphenum}#\env
 \begin{MonAmp}{title}#\env
+\begin{MaRgl}{title}#\env
+\begin{MaDef}{title}#\env
+\begin{MonRet}#\env
 \begin{MonExo}{title}#\env
 \begin{MonQz}{title}#\env
 
