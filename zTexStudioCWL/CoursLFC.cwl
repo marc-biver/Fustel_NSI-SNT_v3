@@ -47,6 +47,7 @@
 \begin{MonRet}#\env
 \begin{MonExo}{title}#\env
 \begin{MonQz}{title}#\env
+\begin{MaReponse}#\env
 
 # Algorithmic redefinitions
 \algorithmicfor#m
