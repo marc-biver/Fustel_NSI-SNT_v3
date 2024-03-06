@@ -1,0 +1,1 @@
+def TrouveMax(liste):    # On initialise le maximum à 0    Max = 0    # On compte le nombre d'éléments de la liste    NbElts = len(liste)        # On parcourt la liste    for i in range(NbElts):        if liste[i] > Max:            # On remplace par une nouvelle valeur de max            Max = liste[i]    # On a terminé, on retourne le max trouvé    return Max

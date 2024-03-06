@@ -1,0 +1,1 @@
+def SommeEltLst(liste):    '''    Fonction qui prend en entrée une liste de nombres et qui renvoie la    somme des nombres qui la constituent.    '''    res = 0    for i in range(len(liste)):        res += liste[i]    return res

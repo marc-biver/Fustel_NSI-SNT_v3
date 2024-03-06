@@ -1,0 +1,1 @@
+def RechercheMax(Lst):    '''    Fonction qui prend en entrée une liste de nombres positifs    et renvoie la valeur du plus grand d'entre eux.    '''    res = 0    for i in range(len(lst)):        if lst[i] > res:            res = lst[i]    return res

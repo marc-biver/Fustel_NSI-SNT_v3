@@ -1,0 +1,1 @@
+def tous_xxx(liste):    '''    Fonction qui .................    '''    i = 0    while i < len(liste) and liste[i] % 2 == 0:        i += 1    return i == len(liste)

@@ -1,0 +1,1 @@
+def Puissance(x, n):    '''    Fonction qui prend en entrée deux entiers naturels et renvoie le premier    élevé à la puissance du second.    '''    r = 1    for i in range(n):        r = r * x    return r

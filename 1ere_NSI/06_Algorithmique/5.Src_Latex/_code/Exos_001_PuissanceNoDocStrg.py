@@ -1,0 +1,1 @@
+def Puissance(x, n):    r = 1    for i in range(n):        r = r * x    return r

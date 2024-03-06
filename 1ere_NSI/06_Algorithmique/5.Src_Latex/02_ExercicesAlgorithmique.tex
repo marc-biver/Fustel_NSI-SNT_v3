@@ -1,0 +1,216 @@
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+% Le truc au-dessus pour avoir l'option shell-escape qui permet de faire du minted.
+\documentclass[12pt]{article}
+
+% Affichage ou non des reponses aux questions & exercices
+\newif\ifDispRep
+\DispReptrue  % Show the text
+%\DispRepfalse % Hide the text
+
+% Version du document
+\newcommand{\versiondoc}{v0.1}
+
+% Incorporation tous éléments de préambule communs à tous mes cours
+% Sans chemin relatif parce que TexStudio lancé depuis un script qui prend en compte la variable d'environnement TEXINPUTS
+\usepackage{CoursLFC}
+
+% Eléments de l'en-tête et de la page de garde spécifiques à ce doc
+\newcommand{\classe}{1\textsuperscript{ère} NSI}
+\newcommand{\themecours}{Exercices d'Entraînement}
+\newcommand{\datedoc}{février 2024}
+
+% Page de garde mise en page
+\title
+	{\vspace{2cm}
+		{\Large
+		\textit
+			{
+				\classe\hspace{0.1cm}
+				\textemdash\
+				\hspace{0.1cm}
+				\themecours
+			}
+			
+		\vspace{1cm}
+		\huge{Algorithmique} }
+		 
+		\vspace{1cm}
+	}
+\author{\etablissement}
+\date{
+	\auteur,
+	\datedoc,
+	\footnotesize{\textit{\versiondoc}} 
+	\vspace{3cm}
+	}
+
+% Header & Footer
+\lfoot{\etabshort}
+\cfoot{\thepage}
+\rfoot{\classe, \anneescol}
+\renewcommand{\footrulewidth}{0.2pt}
+\lhead{}
+\chead{}
+\rhead{}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+	
+	\maketitle
+	% pas de footer sur la première page
+	\thispagestyle{empty}
+	\vspace{\baselineskip}
+	\begin{MaReponse}
+		\centering
+		\vspace{\baselineskip}
+		\textbf{Version incluant les réponses aux exercices.}
+		\vspace{\baselineskip}
+	\end{MaReponse}
+	
+	%\tableofcontents
+	
+	\pagebreak
+	
+	
+	% Début du contenu du document
+	%\section{Variants \& Invariants de boucles}
+	\begin{MonExo}[Docstring \& Tests]
+		Soit la fonction de calcul de puissance suivante (dont on a étudié l'algorithme en cours):
+		\MonPython{Exos_001_PuissanceNoDocStrg.py}
+		
+		\begin{alphenum}
+			\item Rédiger la docstring d'une telle fonction;
+			\item Déterminer un jeu de tests pour cette fonction -- en d'autres termes, compléter le tableau suivant qui liste les couples (x, n) qu'il conviendra d'utiliser pour convenablement tester cette fonction.
+		\end{alphenum}
+		
+		\centering
+		\begin{tabular}{|c|c|c|}
+			\hline
+			\textbf{x} & \textbf{n} & \textbf{Résultat attendu}\\
+			\hline
+			2 & 2 & 4\\
+			\hline
+			...... & ...... & ......\\
+			\hline
+		\end{tabular}
+	\end{MonExo}
+	
+	\begin{MaReponse}
+		\MonPython{Exos_002_PuissanceDocStrg.py}
+		Il n'y a pour le jeu de tests pas "une" bonne réponse, mais ce qu'on va chercher à faire c'est effectuer au moins deux tests de valeurs "normales" dont un avec une grande valeur (en plus, donc, du (2,2) de l'énoncé), ainsi que des tests avec les valeurs aux limites -- en l'occurrence 0 et 1 -- associées à des valeurs choisies au hasard. On pourra donc proposer quelque chose comme:
+		
+		\centering
+		\begin{tabular}{|c|c|m{4cm}|}
+			\hline
+			\textbf{x} & \textbf{n} & \textbf{Résultat attendu}\\
+			\hline
+			2 & 2 & 4\\
+			\hline
+			27 & 7 & 10.460.353.203\\
+			\hline
+			21 & 0 & 1 (tout nombre élevé à la puissance 0 vaut 1)\\
+			\hline
+			35 & 1 & 35 \\
+			\hline
+			1 & 12 & 1 \\
+			\hline
+			0 & 99 & 0\\
+			\hline
+			0 & 0 & 1 (tout nombre élevé à la puissance 0 vaut 1 -- même 0)\\
+			\hline
+		\end{tabular}
+	\end{MaReponse}
+
+
+	\begin{MonExo}[Variant \& invariant de boucle]
+		Soit la fonction suivante:
+		\MonPython{Exos_003_SommeEltsListe.py}
+		\begin{alphenum}
+			\item Donner un variant de boucle pour cette fonction et montrer qu'elle se termine systématiquement;
+			\begin{MonAmp}{Rappel}
+				On rappelle qu'un variant de boucle est une quantité entière positive qui décroît strictement à mesure qu'on passe dans la boucle, ce qui permet de justifier que la boucle, tôt ou tard, se terminera.
+			\end{MonAmp}
+			\item Donner un invariant de boucle pour cette fonction et montrer qu'elle est correcte.
+			\begin{MonAmp}{Rappel}
+				On rappelle qu'un invariant de boucle est une quantité ou une propriété qui est vraie avant et après chaque itération de la boucle -- et en particulier \textit{avant} que l'on rentre dans la boucle, et \textit{après} sa dernière itération. Il permet de justifier que le résultat voulu sera atteint. On procède pour cette technique en quatre étapes:
+				\begin{enumerate}
+					\item On choisit l'invariant:
+					\begin{itemize}
+						\item Comprendre clairement le but de la boucle -- qu'est-elle censée accomplir? Quel est le résultat attendu?
+						\item Partir "de la fin", c'est-à-dire du résultat attendu et identifier quelle quantité est "construite" au fur et à mesure des itérations de la boucle pour constituer ce résultat.
+						\item Ceci devrait vous mettre sur la voie de votre invariant -- une propriété (somme d'éléments déjà traités, ordre d'éléments dans une liste...) qui ne change pas malgré les itérations de la boucle.
+					\end{itemize}
+					\item On montre que l’invariant est vérifié avant la boucle (initialisation);
+					\item On montre que si l'invariant est vérifié \textit{avant }un passage dans la boucle, alors il est préservé \textit{après }le passage dans la boucle;
+					\item On peut conclure sur la valeur finale à la sortie de la boucle.
+				\end{enumerate}
+			\end{MonAmp}
+		\end{alphenum}
+	\end{MonExo}
+	
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item Variant de boucle -- on est dans le cas ultra-classique du parcours d'une liste par indice, le variant est donc la quantité $len(liste) - i - 1$: il est en effet positif au départ (au pire nul si la liste est vide), et il décroît strictement à chaque itération de la boucle puisque $len(liste)$ reste constant et que $i$ est incrémenté de 1 à chaque fois. Il va donc atteindre 0, ce qui terminera la boucle.
+			\item Décomposons la démarche:
+			\begin{enumerate}
+				\item Choix de l'invariant: le but de la boucle est le calcul de la somme des éléments de la liste, et c'est la variable \texttt{res} qui est construite pour atteindre ce résultat: à chaque étape elle contient la somme des éléments d'indice de 0 à \texttt{i} de la liste. On peut donc dire que l'invariant de boucle est: "la variable \texttt{res} contient la somme des éléments d'indice de 0 à \texttt{i} de la liste";
+				\item Avant la première itération de la boucle, \texttt{i} vaut 0 et \texttt{res} aussi -- donc on peut dire que l'invariant est vérifié;
+				\item Si res contient les i premiers éléments de la liste et que l'on passe dans la boucle une fois supplémentaire, \texttt{i} et \texttt{res} deviennent respectivement: $i' = i + 1$ et $res' = res + liste[i'] = res + liste[i+1]$ -- et donc l'invariant est bien vérifié à la fin de l'itération de la boucle.
+				\item A la fin de la boucle i vaut $(n-1)$ donc l'invariant s'exprime "la variable \texttt{res} contient la somme des éléments d'indice de 0 à \texttt{(n-1)} de la liste" -- soit tous les éléments de la liste, et donc la fonction est correcte.
+			\end{enumerate}
+		\end{alphenum}
+	\end{MaReponse}
+
+	\begin{MonExo}[Variant \& invariant de boucle --- suite...]
+		Soit la fonction suivante:
+		\MonPython{Exos_004_RechercheDiviseur.py}
+		\begin{alphenum}
+			\item Donner un variant de boucle pour cette fonction et montrer qu'elle se termine systématiquement;
+			\item Donner un invariant de boucle pour cette fonction et montrer qu'elle est correcte.
+			\begin{MonAmp}{Indice}
+				On rappelle qu'un invariant de boucle n'est pas nécessairement une formule mathématique -- il peut aussi être une propriété que l'on pourrait exprimer par une phrase du genre (où bien entendu il faut remplir les trous): "Quel que soit l'entier k tel que 2 $\leq$ k $\leq$ \uline{\ \ \ \ }, k n'est pas\uline{\ \ \ \ }".
+			\end{MonAmp}
+			\item (question bonus 1) Cette boucle "\texttt{while}" semble assez artificielle -- on dirait presque qu'elle n'est là que pour vous forcer à travailler sur la notion de variant de boucle... Quelle est la boucle "\texttt{for}" équivalente qu'on utiliserait plus logiquement dans un tel cas?
+			\item (question bonus 2) Cette fonction n'est pas franchement optimale... Comment remplacer la condition "\texttt{while i < nb:}" pour lui faire faire nettement moins de tests tout en gardant le bon résultat?
+		\end{alphenum}
+	\end{MonExo}
+	
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item Variant de boucle -- situation assez simple: la quantité $nb - i$ débute à la valeur $nb - 2$ qui est nécessairement positive puisqu'il est spécifié que nb est strictement supérieur à 1; cette quantité décroît strictement à chaque itération de la boucle puisque $nb$ reste constant et que $i$ est incrémenté de 1 à chaque fois. Il va donc atteindre 0, ce qui terminera la boucle.
+			\item Décomposons la démarche:
+			\begin{enumerate}
+				\item Choix de l'invariant: le but de la boucle est de trouver le diviseur le plus petit diviseur possible de nb, donc à chaque étape de la boucle, aucun nombre plus petit que celui que l'on est en train de considérer n'est diviseur de nb. On peut donc exprimer l'invariant: "quel que soit l'entier k tel que 2 $\leq$ k $\leq$ (i-1), k n'est pas un diviseur de nb";
+				\item Avant la première itération de la boucle, \texttt{i} vaut 2, donc il n'existe aucun entier k tel que 2 $\leq$ k $\leq$ (i-1) -- donc on peut dire que l'invariant est vérifié;
+				\item Si l'invariant est vérifié pour une valeur de i, alors pour la valeur suivante $i' = i + 1$, deux cas sont possibles:
+				\begin{itemize}
+					\item Soit i est un diviseur de nb et la fonction le renvoie et donc se termine (donc la question de l'invariant ne se pose plus);
+					\item Soit i n'est pas un diviseur de nb -- et la boucle se poursuit et l'invariant est vérifié: "quel que soit l'entier k tel que 2 $\leq$ k $\leq$ (i'-1), k n'est pas un diviseur de nb" (puisque $i'-1 = i$).
+				\end{itemize}
+				\item A la fin de la boucle, dans l'hypothèse où on n'est pas sorti de la fonction, i vaut $nb$, donc l'invariant s'exprime "quel que soit l'entier k tel que 2 $\leq$ k $\leq$ (nb-1), k n'est pas un diviseur de nb" -- et donc nb est par définition un nombre premier.
+			\end{enumerate}
+			\item On fait varier i de 2 à nb-1 donc la boucle correspondante s'écrirait "\texttt{for i in range(2, nb)}".
+			\item Il est évident que le plus grand diviseur d'un nombre (autre que lui-même) est sa moitié s'il est pair, ou son tiers s'il est impair mais un multiple de trois, etc. En tout état de cause, aucun nombre ne pourra avoir de diviseur strictement supérieur à sa moitié (ou la partie entière de sa moitié dans le cas d'un nombre impair). En écrivant la condition "\texttt{while i <= (nb // 2)}" on économiserait presque la moitié des opérations effectuées par la boucle tout en maintenant le résultat correct...
+		\end{alphenum}
+	\end{MaReponse}
+	
+	\begin{MonExo}[Variant \& invariant de boucle --- encore un!]
+		Soit la fonction suivante:
+		\MonPython{Exos_005_RechercheMax.py}
+		Donner un invariant de boucle pour cette fonction et montrer qu'elle est correcte.
+	\end{MonExo}
+	
+	\begin{MaReponse}
+		\begin{enumerate}
+			\item Choix de l'invariant: le but de la boucle est de trouver le maximum de la liste, donc avant chaque étape de la boucle, la variable \texttt{res} contient le maximum des éléments d'indice de 0 à \texttt{i-1} de la liste;
+			\item Avant la première itération de la boucle, \texttt{i} vaut 0, donc la liste d'éléments dont l'indice est compris entre 0 et (i-1) est vide -- donc on peut dire que l'invariant est vérifié;
+			\item Si l'invariant est vérifié pour une valeur de i, alors pour la valeur suivante $i' = i + 1$, deux cas sont possibles:
+			\begin{itemize}
+				\item Soit lst[i] $\leq$ res et donc, par définition, l'invariant reste vérifié (le maximum n'a pas changé);
+				\item Soit lst[i] > res, res prend alors la valeur lst[i] qui est le nouveau maximum des éléments d'indice compris entre 0 et (i'-1) (donc i), et donc l'invariant est vérifié aussi.
+			\end{itemize}
+			\item A la fin de la dernière itération de la boucle, i vaut len(lst), donc res contient le maximum des éléments d'indice de 0 à \texttt{len(lst)-1} de la liste -- donc de toute la liste, et donc la boucle est correcte.
+		\end{enumerate}
+	\end{MaReponse}
+		
+\end{document}
