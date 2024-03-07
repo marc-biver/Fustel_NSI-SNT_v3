@@ -4,11 +4,11 @@
 
 % Affichage ou non des reponses aux questions & exercices
 \newif\ifDispRep
-\DispReptrue  % Show the text
-%\DispRepfalse % Hide the text
+%\DispReptrue  % Show the text
+\DispRepfalse % Hide the text
 
 % Version du document
-\newcommand{\versiondoc}{v0.1}
+\newcommand{\versiondoc}{v0.2}
 
 % Incorporation tous éléments de préambule communs à tous mes cours
 % Sans chemin relatif parce que TexStudio lancé depuis un script qui prend en compte la variable d'environnement TEXINPUTS
@@ -212,5 +212,91 @@
 			\item A la fin de la dernière itération de la boucle, i vaut len(lst), donc res contient le maximum des éléments d'indice de 0 à \texttt{len(lst)-1} de la liste -- donc de toute la liste, et donc la boucle est correcte.
 		\end{enumerate}
 	\end{MaReponse}
+	
+	\begin{MonExo}[Complexité -- inversion de liste]
+		Soit la fonction suivante:
+		\MonPython{Exos_010_InvertLst.py}
+		\begin{alphenum}
+			\item Montrer, en utilisant un invariant de boucle, qu'elle fait bien ce que sa docstring spécifie.
+			\item Compter son nombre d'opérations élémentaires, et en déduire sa complexité (préciser sa dénomination et sa notation en "$\mathcal{O}$").
+		\end{alphenum}
+	\end{MonExo}
+	
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item L'invariant de boucle est la propriété, pour une valeur de i et après la réalisation de la boucle: "res est une liste contenant les i+1 derniers éléments de lst, dans l'ordre inverse". Initialisation: i=0, res contient uniquement lst[len(lst) - 1], soit le dernier élément de lst, donc l'invariant est vérifié. Si c'est vérifié pour i, lorsqu'on passe à i' = i + 1, on ajoute à la fin de res l'élément de lst d'indice (len(lst) - i' - 1) qui est le (i' + 1)\textsuperscript{ème} en partant de la fin, et on a donc rallongé res de 1 (sa longueur est donc maintenant i'+1) -- l'invariant est donc bien vérifié à i'. La boucle se termine lorsque i =  après len(lst) itérations, quand i est égal à len(lst) - 1, et donc à ce moment l'invariant s'exprime "res est une liste contenant les (len(lst)) derniers éléments de lst, dans l'ordre inverse" -- donc tous les éléments, et donc la boucle est correcte.
+			\item Si l'on compte strictement les opérations on a:
+			\begin{itemize}
+				\item Deux opérations en dehors de la boucle (\texttt{res = []} et \texttt{return res});
+				\item Une opération à l'intérieur de chaque itération de la boucle (le append sur la lsite res);
+				\item Deux opérations à chaque itération de la boucle -- l'incrémentation de i et sa comparaison avec len(lst).
+			\end{itemize}
+			Si on note n la longueur de lst, la boucle est réalisée n fois et donc le nombre d'opérations est: $3 \times n + 2$ -- et donc on en déduit que la complexité est en $\mathcal{O}(n)$, c'est-à-dire linéaire.
+		\end{alphenum}
+	\end{MaReponse}
+
+		\begin{MonExo}[Complexité -- note pondérée]
+		Soit la fonction suivante:
+		\MonPython{Exos_011_NotePonderee.py}
+		Déterminer sa complexité.
+	\end{MonExo}
+	
+	\begin{MaReponse}
+		Aucun piège ici -- certes, on utilise len(lst\_notes) dans la fonction, mais pas dans le cadre d'une boucle. On n'exécute donc ici que deux opérations: le calcul de res et le return. On est donc dans une complexité constante, soit $\mathcal{O}(1)$.
+	\end{MaReponse}
+	
+	\begin{MonExo}[Complexité -- somme de produits ou produit de sommes?]
+		Soit les deux fonctions suivantes:
+		\MonPython{Exos_007_ProdSomme.py}
+		\MonPython{Exos_006_SommeProd.py}
+		\begin{alphenum}
+			\item Démontrer (simplement) que si j'applique ces deux fonctions aux mêmes paramètres n1 et n2 leur retour sera identique -- qu'en d'autres termes elles font le même calcul.
+			\item Quelles sont les nombres d'opérations élémentaires qu'effectuent chacune de ces deux fonctions (exprimés en fonction de n1 et n2)? Laquelle des deux, du coup, vous semble la meilleure pour atteindre le résultat?
+		\end{alphenum}
 		
+	\end{MonExo}
+	
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item On voit de manière évidente que si l'on développe le produit de ProdSomme on tombera sur la somme de SommeProd:
+			\begin{align*}
+			\text{ProdSomme renvoie: } & [1 + 2 + (...) + (n_1 - 1)] \times [1 + 2 + (...) + (n_2 - 1)] \\
+			\text{SommeProd renvoie: } & 1 \times 1 + 1 \times 2 + (...) + (n_1 - 1) \times (n_2 - 1)
+			\end{align*}
+			\item
+			\begin{itemize}
+				\item ProdSomme effectue successivement deux boucles de longueurs respectives n1 et n2 -- donc le nombre d'opérations élémentaires qu'elle va effectuer est de l'ordre de $n1 + n2$\footnote{Notez qu'ici on parle bien d'ordre de grandeur et qu'on néglige les opérations unitaires (comme le \texttt{res = 0} ou \texttt{return res}) qui ne changeront rien à la performance de la fonction quand on commencera à utiliser de grandes valeurs de n1 et n2.\label{Neglig}}.
+				\item SommeProd, lui, effectue deux boucles \textit{imbriquées}: la boucle \textit{intérieure} (\texttt{for j in range(n2)}) va effectuer n2 itérations tandis que la boucle \textit{extérieure} (\texttt{for i in range(n1)}) va en effectuer n1 -- donc le nombre d'opérations élémentaires qu'elle va effectuer est de l'ordre de $n1 \times n2$\footref{Neglig}.
+			\end{itemize}
+			Il est donc évident que, pour des valeurs importantes de n1 et n2, ProdSomme sera \textit{beaucoup moins complexe} (et donc beaucoup plus performante) que SommeProd -- et ce pour le même résultat. Si on choisit par exemple n1 = 1.000.000 (un million) et n2 = 2.000.000 alors ProdSomme effectuera environ $n1 + n2 = 3.000.000$ d'opérations, tandis que SommeProd en effectuera environ $n1 \times n2 = 2.000.000.000.000$ (deux mille milliards) -- soit plus de 650.000 fois plus!
+		\end{alphenum}
+	\end{MaReponse}
+
+		\begin{MonExo}[Tri à bulles - bidouillons-le un peu...]
+		On rappelle le code Python du tri à bulles dans sa version la plus basique:
+		\MonPython{007_TriBulles.py}
+		\begin{alphenum}
+			\item A quoi sert l'indice "i" dans cette fonction?
+			\item Que se passe-t-il si on remplace la ligne 7 par \texttt{for j in range(n-1, -1, -1)}? Cette syntaxe  -- qui n'est rien de plus qu'une utilisation de la syntaxe \texttt{range} habituelle mais dans le contexte d'une suite décroissante) permet de réaliser une boucle allant de n-2 (le premier paramètre) à 0 (arrêt juste avant d'atteindre le deuxième paramètre) par pas de -1 (le troisième paramètre). L'indice va donc décrire la suite (n-2), (n-3), ..., 1, 0 au lieu de 0, 1, ..., (n-3), (n-2).
+			\item Que se passe-t-il si on remplace la ligne 8 par \texttt{if liste[j] < liste[j+1]:}?
+			\item La boucle interne ne fait-elle pas des opérations inutiles? Comment la modifier pour la rendre plus efficace?
+		\end{alphenum}
+		
+	\end{MonExo}
+	
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item Uniquement à compter le nombre de fois que l'on fait tourner la boucle interne! La variable i, comme on peut le constater, n'est utilisée nulle part hormis dans le \texttt{for} de la boucle.
+			\item Eh bien... Rien du tout sur le résultat: on continue à échanger les éléments si celui de droite (d'indice supérieur) est inférieur à celui de gauche, donc on met à terme la liste dans le même ordre que précédemment. En revanche, on s'y prend dans l'autre sens, ce qui modifie la démarche: au lieu de faire "remonter" le plus grand élément du début à la fin de la liste, on va faire ici "descendre" le plus petit de la fin au début. Concrètement, si on passe en entrée la liste qu'on a utilisée en cours (\texttt{[2, 5, 3, 1]} ) on passera par les étapes suivantes:
+			\begin{enumerate}
+				\item \texttt{[2, 5, 3, 1]}
+				\item \texttt{[1, 2, 5, 3]}
+				\item \texttt{[1, 2, 3, 5]}
+			\end{enumerate}
+			\item Là, en revanche, on inverse le sens de tri -- on fait une permutation si l'élément de droite (d'indice supérieur) est \textbf{supérieur} à celui de gauche: donc on obtiendra à la fin la liste triée par ordre décroissant au lieu de croissant.
+			\item A la fin de la première itération de la boucle externe (donc quand la boucle interne a fini son travail une première fois), on a ramené le plus grand élément de la liste à la fin de celle-ci; à la fin de la deuxième itération, le deuxième plus grand est en avant-dernière position; (...); à la fin de la i\textsuperscript{ième} itération, le i\textsuperscript{ième} plus grand est en i\textsuperscript{ième} position en partant de la fin, et tous ceux qui le suivent sont positionnés en ordre croissant\footnote{Si vous ne me croyez pas, démontrez-le en utilisant un invariant de boucle -- c'est exactement à cela qu'ils servent!!}. Donc quand on passe à la (i+1)\textsuperscript{ième} itération de la boucle, on a déjà les i éléments "de droite" (de plus grands indices) de la liste qui sont déjà triés et qu'il ne sert plus à rien, de trier de nouveau --  on peut donc modifier la boucle interne pour qu'elle ne regarde plus ces éléments, et donc soit plus optimale, en la faisant aller non plus de 0 à n-2 mais de 0 à n-i-2. Le résultat sera le suivant:
+			\MonPython{Exos_012_TriBullesOptim.py}
+		\end{alphenum}
+	\end{MaReponse}
+	
 \end{document}

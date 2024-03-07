@@ -1,0 +1,1 @@
+def ProdSomme(n1, n2):    '''    Fonction qui prend en entrée deux entiers n1 et n2 et renvoie    le produit des sommes de tous les i et j pour i < n1 et j < n2.    '''    res1 = 0    res2 = 0    for i in range(n1):        res1 += i    for j in range(n2):        res2 += j    res = res1 * res2    return res

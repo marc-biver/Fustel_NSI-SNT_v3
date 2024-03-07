@@ -64,14 +64,6 @@
 		{\noindent
 		\resumecours
 		}
-	
-	\vspace{\baselineskip}
-	\begin{MaReponse}
-		\centering
-		\vspace{\baselineskip}
-		\textbf{Document de cours incluant les réponses aux exercices.}
-		\vspace{\baselineskip}
-	\end{MaReponse}
 		
 	\pagebreak	
 	\tableofcontents
@@ -128,20 +120,13 @@
 	 	\item En parallèle et en complément, quelques applications / exercices sur machine.
 	 \end{itemize}
 	
+	\begin{monhlt}
 	\subsection{Comment réviser / préparer les contrôles?}
-	
-	Comme pour les autre chapitres de cours de NSI, les deux choses les plus importantes que vous devez acquérir pour être en mesure de bien réussir les contrôles sont:
-	\begin{itemize}
-		\item Connaître et comprendre les notions présentées dans le cours (et en particulier les définitions);
-		\item Être capable de faire tous les exercices présents dans ce cours et également dans le cahier d'exercices qui l'accompagne.
-	\end{itemize}
 	 
-	 Plus spécifiquement, chaque section de ce cours se termine par un encart (sur fond vert) intitulé "À Savoir \faExchange \ À Réviser" dans lequel je vous explique plus en détails ce qu'il y a à retenir de la section en question.
+	 \lipsum[1]
+	\end{monhlt} 
 	 
-	 En tout état de cause mon conseil principal pour les révisions est de prendre la version de ce cours et du cahier d'exercices qui ne contient \textit{\textbf{pas}} les solutions, vous exercer à faire les exercices qui sont dedans, puis vérifier les réponses dans la version qui contient les solutions.
-	 
-	 Bon courage!
-	 
+	 % MCOXXXXXXXXXX
 	 \pagebreak
 	 
 	 \section{Introduction à la conception d'algorithmes}
@@ -564,12 +549,7 @@
 	
 	Un invariant de boucle est une proposition toujours vraie à chaque fois que l'on entre dans la boucle. La démarche que nous allons adopter se déroule en quatre étapes:
 	\begin{enumerate}
-		\item On choisit l'invariant:
-		\begin{itemize}
-			\item Comprendre clairement le but de la boucle -- qu'est-elle censée accomplir? Quel est le résultat attendu?
-			\item Partir "de la fin", c'est-à-dire du résultat attendu et identifier quelle quantité est "construite" au fur et à mesure des itérations de la boucle pour constituer ce résultat.
-			\item Ceci devrait vous mettre sur la voie de votre invariant -- une propriété (somme d'éléments déjà traités, ordre d'éléments dans une liste...) qui ne change pas malgré les itérations de la boucle.
-			\end{itemize}
+		\item Choix de l'invariant: partir "de la fin", c'est-à-dire du résultat attendu et identifier quelle quantité est "construite" au fur et à mesure des itérations de la boucle pour construire ce résultat -- et ce sera votre invariant;
 		\item On montre que l’invariant est vérifié avant la boucle (initialisation);
 		\item On montre que si l'invariant est vérifié \textit{avant }un passage dans la boucle, alors il est préservé \textit{après }le passage dans la boucle;
 		\item On peut conclure sur la valeur finale à la sortie de la boucle.
@@ -581,7 +561,7 @@
 	
 	Considérons la fonction suivante:
 	\begin{algorithmic}[1]
-		\Require{$a, b$ $\in \mathds{N}$ avec}
+		\Require{$a, b$ $\in \mathds{R}$ avec}
 		\Ensure{Le produit $a \times b$}
 		\Function{Produit}{a, b}
 		\State m $\leftarrow$ 0
@@ -634,42 +614,7 @@
 		\end{enumerate}
 	\end{MaReponse}
 
-	Un invariant de boucle peut être une formule mathématique (une égalité, une inégalité) mais pas nécessairement -- il peut également être une \textit{propriété} qui reste vraie tout au long de la boucle. 
-	
-	\begin{MonExo}[Un autre invariant d'un type un peu différent]
-		Considérez le code suivant:
-		\MonPython{006_ListeNbPairs.py}
-		
-		\begin{alphenum}
-			\item La docstring semble effacée et le nom de la fonction incomplet -- que fait cette fonction selon vous?
-			\item Quel est le variant de boucle?
-			\item Quel est la propriété (portant sur les nombres de la liste et faisant intervenir l'indice \texttt{i}) qui constitue l'invariant de boucle de cette fonction?
-		\end{alphenum}
-	\end{MonExo}
-	
-	\begin{MaReponse}
-		\begin{alphenum}
-			\item On se convainc assez facilement que la fonction cherche à vérifier si tous les nombres de la liste passée en entrée sont pairs. Mais si on n'en est pas convaincu, on peut le prouver -- c'est tout l'intérêt des invariants de boucle!
-			\item Le variant de boucle est à l'évidence $len(liste) - i$ -- je vous laisse le démontrer. A noter que la condition \texttt{liste[i] \% 2 == 0} ne change rien à la preuve de terminaison puisque tout ce qu'elle pourra changer sera que la boucle se termine \textit{avant} que le variant n'atteigne 0.
-			\item Démarche pour l'invariant de boucle:
-			\begin{enumerate}
-				\item Choix de l'invariant: le but est de une évaluation de si tous les nombres de la liste sont pairs. L'invariant va donc nécessairement avoir quelque chose à voir avec une liste de nombre pairs (sinon il ne permettra pas de prouver la correction partielle de la boucle et donc ne servira à rien). En creusant un peu on arrive à constater qu'à tout moment, en théorie, tous les nombres qui ont été passés en revue par la boucle sont pairs (car sinon on sort de la boucle). On peut donc exprimer l'invariant comme étant la propriété P(i) suivante: "Pour tout indice k de 0 à i-1, liste[k] \% 2 == 0".
-				\item Il est vrai avant la première itération de la boucle -- puisqu'on n'a vérifié aucun nombre à cette étape, la propriété est vraie.
-				\item S'il est vrai avant d'incrémenter i, la condition de la boucle donne deux résultats possibles:
-				\begin{itemize}
-					\item Si cette condition est vraie, alors P(i) reste vrai pour la prochaine valeur de i.
-					\item Si la condition n'est pas vraie, la boucle s'arrête et on ne touche plus à i.
-				\end{itemize}
-				\item De la même manière, lorsque la boucle se termine, c'est pour une de deux raisons:
-				\begin{itemize}
-					\item C'est soit parce que i est égal à len(liste), et dans ce cas tous les éléments sont pairs -- puisqu'on a bien considéré tous les éléments de la liste, de 0 à \texttt{len(liste) - 1} -- et P(i) est vrai, ce qui signifie que la fonction retourne True,
-					\item Ou parce qu'on a trouvé un élément impair et dans ce cas la boucle s'arrête et P(i) indique que tous les éléments avant cet indice sont pairs, mais pas l'élément à l'indice i, donc la fonction retourne False.
-				\end{itemize}
-			\end{enumerate}
-		\end{alphenum}
-	\end{MaReponse}
-	
-	\begin{MonExo}[Et un dernier pour la route...]
+	\begin{MonExo}[Et un autre pour la route...]
 		Montrer que $r = a - b \times q$ est bien un invariant de boucle de la fonction suivante, qui réalise une division euclidienne:
 		\begin{algorithmic}[1]
 			\Require{$a, b \in \mathds{N}; b\neq 0$}
@@ -696,14 +641,13 @@
 			\item En fin de boucle l'invariant est nécessairement encore vrai, par récurrence (le point 2 ci-dessous étant l'initialisation et le point 3 la preuve de la récurrence).
 		\end{enumerate}
 	\end{MaReponse}
-		
+	
 	\begin{MonRet}
 		Ce qu'il faut retenir de cette section est l'équivalent de ce qui était nécessaire pour la précédente:
 		\begin{itemize}
 			\item Comprendre la notion d'invariant de boucle;
 			\item Être capable de résoudre des exercices comme ceux ci-dessus: \textbf{identifier} un invariant de boucle, \textbf{montrer} qu'il est vrai \textbf{avant la boucle}, \textbf{prouver par récurrence} qu'il l'est à toutes les itérations de la boucle, et en \textbf{déduire la correction partielle }de la boucle.
 		\end{itemize}
-		Note: je vous fournirai prochainement un cahier d'exercices corrigés pour vous entrainer sur les invariants, les variants --- et plus généralement sur tout le contenu de ce chapitre.
 	\end{MonRet}
 	
 	\pagebreak

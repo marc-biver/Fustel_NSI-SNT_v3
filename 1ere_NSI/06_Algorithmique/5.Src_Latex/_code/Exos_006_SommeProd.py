@@ -1,0 +1,1 @@
+def SommeProd(n1, n2):    '''    Fonction qui prend en entrée deux entiers n1 et n2 et renvoie    la somme de tous les produits i.j pour i < n1 et j < n2.    '''    res = 0    for i in range(n1):        for j in range(n2):            res += i * j            #On rappelle que "a += b" est équivalent à "a = a + b"    return res
