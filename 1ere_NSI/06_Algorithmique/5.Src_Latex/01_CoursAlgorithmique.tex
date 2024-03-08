@@ -4,8 +4,8 @@
 
 % Affichage ou non des reponses aux questions & exercices
 \newif\ifDispRep
-\DispReptrue  % Show the text
-%\DispRepfalse % Hide the text
+%\DispReptrue  % Show the text
+\DispRepfalse % Hide the text
 
 % Version du document
 \newcommand{\versiondoc}{v0.2}
@@ -64,6 +64,14 @@
 		{\noindent
 		\resumecours
 		}
+	
+	\vspace{\baselineskip}
+	\begin{MaReponse}
+		\centering
+		\vspace{\baselineskip}
+		\textbf{Document de cours incluant les réponses aux exercices.}
+		\vspace{\baselineskip}
+	\end{MaReponse}
 		
 	\pagebreak	
 	\tableofcontents
@@ -120,13 +128,20 @@
 	 	\item En parallèle et en complément, quelques applications / exercices sur machine.
 	 \end{itemize}
 	
-	\begin{monhlt}
 	\subsection{Comment réviser / préparer les contrôles?}
+	
+	Comme pour les autre chapitres de cours de NSI, les deux choses les plus importantes que vous devez acquérir pour être en mesure de bien réussir les contrôles sont:
+	\begin{itemize}
+		\item Connaître et comprendre les notions présentées dans le cours (et en particulier les définitions);
+		\item Être capable de faire tous les exercices présents dans ce cours et également dans le cahier d'exercices qui l'accompagne.
+	\end{itemize}
 	 
-	 \lipsum[1]
-	\end{monhlt} 
+	 Plus spécifiquement, chaque section de ce cours se termine par un encart (sur fond vert) intitulé "À Savoir \faExchange \ À Réviser" dans lequel je vous explique plus en détails ce qu'il y a à retenir de la section en question.
 	 
-	 % MCOXXXXXXXXXX
+	 En tout état de cause mon conseil principal pour les révisions est de prendre la version de ce cours et du cahier d'exercices qui ne contient \textit{\textbf{pas}} les solutions, vous exercer à faire les exercices qui sont dedans, puis vérifier les réponses dans la version qui contient les solutions.
+	 
+	 Bon courage!
+	 
 	 \pagebreak
 	 
 	 \section{Introduction à la conception d'algorithmes}
@@ -549,7 +564,12 @@
 	
 	Un invariant de boucle est une proposition toujours vraie à chaque fois que l'on entre dans la boucle. La démarche que nous allons adopter se déroule en quatre étapes:
 	\begin{enumerate}
-		\item Choix de l'invariant: partir "de la fin", c'est-à-dire du résultat attendu et identifier quelle quantité est "construite" au fur et à mesure des itérations de la boucle pour construire ce résultat -- et ce sera votre invariant;
+		\item On choisit l'invariant:
+		\begin{itemize}
+			\item Comprendre clairement le but de la boucle -- qu'est-elle censée accomplir? Quel est le résultat attendu?
+			\item Partir "de la fin", c'est-à-dire du résultat attendu et identifier quelle quantité est "construite" au fur et à mesure des itérations de la boucle pour constituer ce résultat.
+			\item Ceci devrait vous mettre sur la voie de votre invariant -- une propriété (somme d'éléments déjà traités, ordre d'éléments dans une liste...) qui ne change pas malgré les itérations de la boucle.
+			\end{itemize}
 		\item On montre que l’invariant est vérifié avant la boucle (initialisation);
 		\item On montre que si l'invariant est vérifié \textit{avant }un passage dans la boucle, alors il est préservé \textit{après }le passage dans la boucle;
 		\item On peut conclure sur la valeur finale à la sortie de la boucle.
@@ -561,7 +581,7 @@
 	
 	Considérons la fonction suivante:
 	\begin{algorithmic}[1]
-		\Require{$a, b$ $\in \mathds{R}$ avec}
+		\Require{$a, b$ $\in \mathds{N}$ avec}
 		\Ensure{Le produit $a \times b$}
 		\Function{Produit}{a, b}
 		\State m $\leftarrow$ 0
@@ -614,7 +634,42 @@
 		\end{enumerate}
 	\end{MaReponse}
 
-	\begin{MonExo}[Et un autre pour la route...]
+	Un invariant de boucle peut être une formule mathématique (une égalité, une inégalité) mais pas nécessairement -- il peut également être une \textit{propriété} qui reste vraie tout au long de la boucle. 
+	
+	\begin{MonExo}[Un autre invariant d'un type un peu différent]
+		Considérez le code suivant:
+		\MonPython{006_ListeNbPairs.py}
+		
+		\begin{alphenum}
+			\item La docstring semble effacée et le nom de la fonction incomplet -- que fait cette fonction selon vous?
+			\item Quel est le variant de boucle?
+			\item Quel est la propriété (portant sur les nombres de la liste et faisant intervenir l'indice \texttt{i}) qui constitue l'invariant de boucle de cette fonction?
+		\end{alphenum}
+	\end{MonExo}
+	
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item On se convainc assez facilement que la fonction cherche à vérifier si tous les nombres de la liste passée en entrée sont pairs. Mais si on n'en est pas convaincu, on peut le prouver -- c'est tout l'intérêt des invariants de boucle!
+			\item Le variant de boucle est à l'évidence $len(liste) - i$ -- je vous laisse le démontrer. A noter que la condition \texttt{liste[i] \% 2 == 0} ne change rien à la preuve de terminaison puisque tout ce qu'elle pourra changer sera que la boucle se termine \textit{avant} que le variant n'atteigne 0.
+			\item Démarche pour l'invariant de boucle:
+			\begin{enumerate}
+				\item Choix de l'invariant: le but est de une évaluation de si tous les nombres de la liste sont pairs. L'invariant va donc nécessairement avoir quelque chose à voir avec une liste de nombre pairs (sinon il ne permettra pas de prouver la correction partielle de la boucle et donc ne servira à rien). En creusant un peu on arrive à constater qu'à tout moment, en théorie, tous les nombres qui ont été passés en revue par la boucle sont pairs (car sinon on sort de la boucle). On peut donc exprimer l'invariant comme étant la propriété P(i) suivante: "Pour tout indice k de 0 à i-1, liste[k] \% 2 == 0".
+				\item Il est vrai avant la première itération de la boucle -- puisqu'on n'a vérifié aucun nombre à cette étape, la propriété est vraie.
+				\item S'il est vrai avant d'incrémenter i, la condition de la boucle donne deux résultats possibles:
+				\begin{itemize}
+					\item Si cette condition est vraie, alors P(i) reste vrai pour la prochaine valeur de i.
+					\item Si la condition n'est pas vraie, la boucle s'arrête et on ne touche plus à i.
+				\end{itemize}
+				\item De la même manière, lorsque la boucle se termine, c'est pour une de deux raisons:
+				\begin{itemize}
+					\item C'est soit parce que i est égal à len(liste), et dans ce cas tous les éléments sont pairs -- puisqu'on a bien considéré tous les éléments de la liste, de 0 à \texttt{len(liste) - 1} -- et P(i) est vrai, ce qui signifie que la fonction retourne True,
+					\item Ou parce qu'on a trouvé un élément impair et dans ce cas la boucle s'arrête et P(i) indique que tous les éléments avant cet indice sont pairs, mais pas l'élément à l'indice i, donc la fonction retourne False.
+				\end{itemize}
+			\end{enumerate}
+		\end{alphenum}
+	\end{MaReponse}
+	
+	\begin{MonExo}[Et un dernier pour la route...]
 		Montrer que $r = a - b \times q$ est bien un invariant de boucle de la fonction suivante, qui réalise une division euclidienne:
 		\begin{algorithmic}[1]
 			\Require{$a, b \in \mathds{N}; b\neq 0$}
@@ -641,17 +696,19 @@
 			\item En fin de boucle l'invariant est nécessairement encore vrai, par récurrence (le point 2 ci-dessous étant l'initialisation et le point 3 la preuve de la récurrence).
 		\end{enumerate}
 	\end{MaReponse}
-	
+		
 	\begin{MonRet}
 		Ce qu'il faut retenir de cette section est l'équivalent de ce qui était nécessaire pour la précédente:
 		\begin{itemize}
 			\item Comprendre la notion d'invariant de boucle;
 			\item Être capable de résoudre des exercices comme ceux ci-dessus: \textbf{identifier} un invariant de boucle, \textbf{montrer} qu'il est vrai \textbf{avant la boucle}, \textbf{prouver par récurrence} qu'il l'est à toutes les itérations de la boucle, et en \textbf{déduire la correction partielle }de la boucle.
 		\end{itemize}
+		Note: je vous fournirai prochainement un cahier d'exercices corrigés pour vous entrainer sur les invariants, les variants --- et plus généralement sur tout le contenu de ce chapitre.
 	\end{MonRet}
 	
 	\pagebreak
 	\section{Complexité d'algorithmes}
+	\subsection{Cadre théorique}
 	Lorsque l'on commence à traiter d'importants volumes de données, que l'on commence à considérer des traitements complexes, ou tout simplement longs en nombre d'instructions exécutées se pose la question de la \textit{performance} du traitement. On évalue cette performance suivant deux axes:
 	\begin{itemize}
 		\item \textbf{Performance temporelle} (que nous allons aborder ici) -- il s'agit du temps d'exécution du programme.
@@ -666,6 +723,8 @@
 		La \textbf{complexité d’un algorithme} est une mesure intrinsèque à l'algorithme qui est indépendante de toute implémentation. Elle est calculée en fonction d’un \textit{paramètre représentatif des entrées} (la taille) et à l'aide d'une \textit{mesure élémentaire} (nombre de comparaisons, nombre d’opérations arithmétiques, etc.).
 	\end{MaDef}
 	
+	\subsection{Exercices d'application}
+	Le plus simple pour comprendre ces notions est de démarrer par quelques exemples concrets -- on en déduira à la section suivantes des règles et une méthode d'évaluation de la complexité.
 	\begin{MonExo}[Comptage d'opérations élémentaires]
 		Pour chacun des deux algorithmes suivants, calculer le nombre d'opérations élémentaires effectué. Dépend-il des données en entrée?
 		
@@ -704,15 +763,15 @@
 			\item On a trois opérations effectuées quoi qu'il arrive (les deux affectations avant la boucle, et le "retourner").
 			\item Dans la boucle, on a deux opérations également: le calcul du nouveau m et le calcul du nouveau p.
 			\item On a également une opération "cachée" dans la boucle: la comparaison "$m < n$" qui doit être effectuée à chaque itération -- ce qui nous fait un total de trois opérations pour la boucle.
-			\item La boucle est effectuée $n$ fois -- de $m = 0$ à $m = n - 1$.
-			\item Le nombre total d'opérations élémentaires pour Produit2 est donc de: $3 \times n + 2$.
+			\item La boucle est effectuée $n$ fois --- de $m = 0$ à $m = n - 1$.
+			\item Le nombre total d'opérations élémentaires pour Produit2 est donc de: $3 \times n + 2$ (il dépend donc de la valeur de n uniquement -- pas de celle de b).
 		\end{itemize}
 		
-		Je vous laisse donc deviner lequel de ces deux algorithmes est le meilleur pour déterminer le produit de deux entiers n et b (imaginez le calcul de 10 milliards $\times 2$ par exemple).
+		Je vous laisse deviner lequel de ces deux algorithmes est le meilleur pour déterminer le produit de deux entiers n et b (imaginez le calcul de 10 milliards $\times 2$ par exemple).
 			
 	\end{MaReponse}
 
-		\begin{MonExo}[Comptage d'opérations élémentaires -- somme des premiers entiers]
+		\begin{MonExo}[Complexité -- somme des premiers entiers]
 		Reprenons un algorithme qu'on avait écrit dans un exercice précédent et qui calculait la somme des n premiers entiers:
 		
 		\begin{algorithmic}
@@ -727,7 +786,7 @@
 			\EndFunction
 		\end{algorithmic}
 		\vspace{\baselineskip}
-		Quel est son nombre d'opérations élémentaires?
+		Quelle est sa complexité?\footnote{Derrière cette question s'en cachent en fait deux: 1/ combien d'opérations élémentaires effectue l'algorithme? 2/ de quelle quantité ("paramètre représentatif des entrées") dépend ce nombre et selon quelle formule mathématique?}
 	\end{MonExo}
 	
 	\begin{MaReponse}
@@ -737,16 +796,102 @@
 			\item On a en fait deux opérations cachées en plus: l'incrémentation de i, d'une part, et sa comparaison avec n d'autre part.
 		\end{itemize}
 		
-		On arrive donc à un total de $3 \times n + 2$ opérations élémentaires.\footnote{Pour prouver que les maths sont parfois utiles: on sait que $1 + 2 + ... + n = \frac{n(n + 1)}{2}$. Il est donc possible de faire le même calcul en exactement quatre opérations contre plus de 3 millions par exemple si on utilise l'algorithme de l'énoncé sur les un million premiers entiers...}
+		On arrive donc à un total de $3 \times n + 2$ opérations élémentaires -- on peut donc dire que la complexité de l'algorithme \textbf{dépend de n}.\footnote{Pour prouver que les maths sont parfois utiles: on sait que $1 + 2 + ... + n = \frac{n(n + 1)}{2}$. Il est donc possible de faire le même calcul en exactement quatre opérations contre plus de 3 millions par exemple si on utilise l'algorithme de l'énoncé sur les un million premiers entiers...}
 	\end{MaReponse}
 	
-	On commence à voir que les algorithmes ont souvent un lien direct entre nombre d'opérations et une quantité qu'ils reçoivent en entrée. Dans les exemples précédents on a vu deux cas:
-	\begin{itemize}
-		\item Aucun lien entre les deux (le calcul direct de $n \times b$ par exemple dont le nombre d'opérations ne dépend ni de n ni de b): on parle de \textbf{complexité constante}.
-		\item Multiple d'une quantité en entrée -- l'exemple des n premiers entiers par exemple où la complexité est proche d'un multiple de n: on parle de \textbf{complexité linéaire}.
-	\end{itemize}
+	\begin{MonExo}[Complexité -- boucles imbriquées]
+		Envisageons à présent la fonction suivante, qui contient deux boucles imbriquées, et pour laquelle la complexité sera un peu plus compliquée à estimer:
+		\MonPython{Exos_008_CheckDupliq.py}
+		\begin{alphenum}
+			\item Quelle est sa complexité?
+			\item (question bonus) Ne pensez-vous pas que cet algorithme effectue des opérations inutiles? Lesquelles? Comment l'améliorer?
+		\end{alphenum}
+	\end{MonExo}
 	
-	Il existe d'autres relations de ce type, nous allons en voir quelques unes dans les chapitres à venir -- et leur importance est cruciale si l'on regarde ce graphique de croissance des principales fonctions utilisées dans les calculs de complexité.
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item Commençons par nous assurer que nous avons bien compris le fonctionnement de l'algorithme derrière cette fonction, en imaginant qu'on lui passe en entrée une liste de 5 lettres \texttt{['A', 'J', 'T', 'J', 'K']}:
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.5\textwidth]{004_ChercheDupliq.png}
+			\end{figure}
+			On a ici \textbf{\textit{deux boucles imbriquées}}:
+			\begin{itemize}
+				\item La boucle \textit{extérieure} (\texttt{for i in range(len(liste))}) est représentée sur le schéma par les flèches épaisses et verticales. Pour chaque valeur à l'intérieur de cette boucle, on exécute...
+				\item ... la boucle \textit{intérieure} (\texttt{for j in range(len(liste))}) qui est représentée sur le schéma par les flèches fines et diagonales.
+			\end{itemize}
+			On se convainc facilement que dans ce cas les comparaisons représentées en bleu (A-J, A-T, A-J, A-K) seront effectuées en premier sans trouver de doublon, puis ce seront les comparaisons en rouge, (J-A, J-T, J-J) et la fonction s'arrêtera sur la dernière puisqu'on aura trouvé un doublon, et elle renverra True.
+			
+			Le nombre d'opérations élémentaires dépend donc à l'évidence de deux choses:
+			\begin{itemize}
+				\item La longueur \textbf{(qu'on va appeler "n")} de la liste en entrée;
+				\item La présence et la localisation du premier doublon -- si la liste avait été ['J', 'J', 'A', 'T', 'K'] le traitement aurait immédiatement trouvé un doublon et donc n'aurait effectué qu'une comparaison, tandis que si la liste n'avait pas contenu de doublons l'intégralité des deux boucles aurait été parcourue.
+			\end{itemize}
+			Comme on va l'expliquer ci-dessous on va considérer la situation "au pire", c'est à dire celle où la complexité est la plus élevée, donc celle où la liste en entrée ne contient pas de doublon.
+			
+			Comme c'est décrit ci-dessus, la boucle \textit{intérieure} est exécutée intégralement pour chaque valeur de la boucle \textit{extérieure} -- pour déterminer le nombre total d'opérations élémentaires il nous suffit donc de calculer les nombre d'opérations de chacune de ces boucles et de les multiplier entre eux.
+			\begin{itemize}
+				\item La boucle extérieure est simple: elle effectue "n" incrémentations de j;
+				\item La boucle intérieure effectue une incrémentation de i ainsi que deux comparaisons ("\texttt{i != j}" et "\texttt{liste[i] == liste[j]}"), et ce n fois.
+			\end{itemize}
+			
+			On en conclut donc que, "au pire", la complexité de la fonction sera de $n \times (3 \times n) = 3n^2$.)
+			
+			\item Dans l'exemple, on peut constater que la comparaison entre A et le premier J est effectuée deux fois -- une fois quand la boucle extérieure est positionnée sur le A, et une autre fois quand elle l'est sur le J. C'est évidemment inutile, il suffirait de faire des comparaisons, dans la boucle intérieure, uniquement sur les éléments de la liste situés \textit{après} celui de la boucle extérieure, donc d'indice démarrant à (i+1):
+			\MonPython{Exos_009_CheckDupliq_Optim.py}
+			(et on notera au passage que grâce au démarrage de j à l'indice i+1 on s'évite également à chaque passage la comparaison \texttt{i != j} que l'on avait dans la version précédente de l'algorithme)
+		\end{alphenum}
+		
+	\end{MaReponse}
+	
+	\subsection{Principes d'estimation de la complexité}
+	
+	Sur la base de ce que l'on vient de voir dans les exercices, on peut poser les principes de calcul de la complexité suivants:
+	\begin{MaRgl}{Calcul de complexité}
+		\begin{itemize}
+			\item On commence par "compter" le nombre d'opérations élémentaires -- et en déduire le paramètre représentatif des entrées dont la complexité dépend (le plus souvent ce sera la longueur d'une liste ou d'une chaîne, la valeur d'un nombre...).
+			\item On se place dans un contexte "au pire": lorsque plusieurs cas sont possibles on simplifie en considérant que le maximum possible d'opérations va être effectué.
+			\item On se limite à l'\textit{ordre de grandeur} de la complexité -- en d'autres termes on ignore tous les termes du calcul que l'on vient de faire à l'exception de sa plus importante dépendance au paramètre des entrées: on ignore les valeurs constantes quand il y a une dépendance à n, les puissances de n inférieures à la plus grandes, les facteurs multiplicateurs constants... Exemples:
+			\begin{itemize}
+				\item Si notre calcul a donné $3n + 1$ on dira que l'ordre de grandeur de la complexité dépend de $n$, et on parlera d'une "complexité linéaire".
+				\item Si notre calcul a donné $7n^2 + 3n + 1$ on dira que l'ordre de grandeur de la complexité dépend de $n^2$, et on parlera d'une "complexité quadratique".
+				\item Cas particulier: si notre calcul a donné $5$ opérations, on dira que la complexité est constante (ne dépend pas des entrées).
+			\end{itemize}
+			\item Cette complexité est décrite en utilisant la notation "$\mathcal{O}$" (appelée "grand O") -- ainsi, pour les trois cas précédents on notera les complexités, respectivement, $\mathcal{O}(n)$ (complexité linéaire), $\mathcal{O}(n^2)$ (complexité quadratique), et $\mathcal{O}(1)$ (complexité constante).
+		\end{itemize}
+	\end{MaRgl}
+	
+	\begin{MonExo}[Nommons les complexités précédentes]
+		En appliquant ces règles:
+		\begin{alphenum}
+			\item Comment peut-on nommer et noter les complexités des fonctions des exercices précédents -- \texttt{Produit1}, \texttt{Produit2}, \texttt{SommeEntiers}, et \texttt{Verif\_Doublons}?
+			\item Est-ce que la complexité de la version optimisée de \texttt{Verif\_Doublons} (qu'on a appelée \texttt{Verif\_Doublons\_Optim}) serait différente de celle de \texttt{Verif\_Doublons}?
+		\end{alphenum}
+	\end{MonExo}
+	
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item
+			\begin{itemize}
+				\item \texttt{Produit1} a une complexité constante ($\mathcal{O}(1)$);
+				\item \texttt{Produit2} a une complexité linéaire ($\mathcal{O}(n)$);
+				\item \texttt{SommeEntiers} a une complexité linéaire ($\mathcal{O}(n)$);
+				\item \texttt{Verif\_Doublons} a une complexité quadratique ($\mathcal{O}(n^2)$).
+			\end{itemize}
+			\item Encore une fois le principe ici est d'identifier une \textit{dépendance} à n, pas un calcul exact. La boucle extérieure ne pose pas de problème -- on va passer n fois dedans. Ce qui va changer c'est le nombre de passages dans la boucle intérieure: le premier coup on y passera n fois, puis (n-1), puis (n-2) puis (...) puis, pour i = n-2, on n'y passera qu'une fois (comparaison entre l'avant-dernier et le dernier élément de la liste). Le schéma suivant représente en bleu les comparaisons effectuées lors du premier passage dans la boucle extérieur, et en rouge celles de l'avant-dernier passage:
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.5\textwidth]{005_ChercheDupliq_Optim.png}
+			\end{figure}
+			Le nombre d'opérations effectué par cette fonction au pire sera donc (en ne regardant que celles qui dépendent de n) la somme suivante: n + (n-1) + (...) + 2 + 1. Ca vous rappelle quelque chose...? $1 + 2 + ... + n = \frac{n(n + 1)}{2} = \frac{1}{2} \times n^2 + \frac{1}{2} \times n$. Or on a dit que pour l'estimation de la complexité on ignore les facteur multiplicateurs constants -- donc la complexité est la même que dans la version non-optimisée, quadratique: $\mathcal{O}(n^2)$.
+			
+			Ca peut paraitre étrange mais c'est en fait logique: la complexité n'est pas un calcul précis d'une durée de traitement, mais une estimation de la quantité dont dépend l'évolution du temps de traitement -- et on comprend bien qu'une dépendance à $n^2$ ou à $\frac{1}{2} \times n^2$ revient au même: si n double, le temps de traitement quadruplera dans les deux cas.
+		\end{alphenum}
+		
+	\end{MaReponse}
+
+	\subsection{Et dans la vraie vie...?}
+	On vient de voir les complexités constantes, linéaires, et quadratiques --- il en existe en fait de nombreuses autres, mais qui ne sont pas au programme de 1\textsuperscript{ère}. Leur importance vaut le coup d'être mentionnée -- et elle est évidente si l'on regarde ce graphique de croissance des principales fonctions utilisées dans les calculs de complexité.
 	
 	\begin{figure}[ht]
 		\centering
@@ -782,20 +927,128 @@
 		\item[exaFLOPS] $10^{18}$ opérations par seconde, soit un milliard milliards (mille fois plus puissant que le précédent, un million de fois plus que le premier).
 	\end{description}
 	
+	\subsection{Complexité - à retenir}
 	\begin{MonRet}
-		Nous reviendrons dans les sections qui suivent sur les notions développées ici, mais ce qu'il faut retenir \textit{a minima} est:
+		Nous reviendrons dans les sections qui suivent sur les notions développées ici en les appliquant à certains algorithmes connus, mais ce qu'il faut retenir \textit{a minima} est:
 		\begin{itemize}
 			\item Notions de complexité spatiale et temporelle;
-			\item Comptage des opérations élémentaires -- être capable de résoudre des exercices comme ceux qui précèdent;
-			\item Compréhension de l'importance du type dépendance entre le volume de données en entrée et le nombre d'opérations élémentaires à effectuer.
+			\item Compréhension de l'importance du type dépendance entre le volume de données en entrée et le nombre d'opérations élémentaires à effectuer;
+			\item Comptage des opérations élémentaires et estimation de la complexité -- être capable de résoudre des exercices comme ceux qui précèdent;
+			\item En particulier être capable d'appliquer ces notions aux complexités constante ($\mathcal{O}(1)$), linéaire ($\mathcal{O}(n)$), et quadratique $\mathcal{O}(n^2)$.
 		\end{itemize}
 	\end{MonRet}
 
 	\pagebreak
 	\section{Algorithmes de tri}
+	\subsection{Pourquoi trier?}
+	Imaginez que vous êtes dans une bibliothèque qui contient tous les livres qui étaient disponibles en France en 2019 -- ça fait quand même 810.130 livres différents\footnote{Source: \href{https://www.culture.gouv.fr/content/download/268286/3121285?v=1}{Document "Chiffres-clés du secteur du livre 2018-2019"}, Ministère de la Culture.}.
+	\begin{wrapfigure}{l}{0.4\textwidth}
+		\includegraphics[scale=0.2]{006_Biblio.jpg}
+	\end{wrapfigure}
+	
+	Ca ne paraît peut-être pas énorme, mais si on imagine qu'ils sont tous des livres de poche plus ou moins standard d'avec une tranche d'une épaisseur d'environ 1,9 cm, si on les range bout à bout sur une étagère, l'étagère devra mesurer plus de 15 kilomètres de long.... Alors si après ça je vous demande d'aller me chercher le livre \uline{Le Petit Prince} par Antoine de Saint-Exupéry, vous allez être \textit{très} mécontents si je précise que les livres sont rangés dans le désordre, et regretter qu'ils ne soient pas rangés par auteur puis par titre, par exemple.... 
+	
+	En informatique, c'est la même chose -- et on en a déjà un petit peu parlé dans le chapitre précédent, sur le traitement des données en table: si j'ai un tableau qui contient des milliers ou des millions d'informations (par exemple une liste de tous les clients d'Amazon, ou de tous les articles jamais publiés dans le journal Le Monde), il pourra être très lent d'en retrouver un si ils ne sont pas triés, mais à l'inverse ça pourra être relativement rapide s'ils le sont.
+	
+	Le problème se pose donc de \textit{comment} trier de grandes quantités de données -- et nous allons voir qu'il y a plusieurs solutions différentes. En 1\textsuperscript{ère}, nous allons aborder 3 algorithmes de tri différents:
+	\begin{alphenum}
+		\item Le tri par permutaion;
+		\item Le tri par sélection;
+		\item Le tri par insertion.
+	\end{alphenum}
+	
+	\subsection{Le tri par permutation ou "tri à bulles"}
+	Considérez l'algorithme suivant:
+	\begin{algorithmic}[1]
+		\Require{$liste$ d'éléments ordonnables -- des nombres par exemple}
+		\Ensure{?????}
+		\Function{Tri1}{liste}
+		\State N $\leftarrow$ longueur(liste)
+		\For{$i$ allant de 1 à N-1}
+		\If{$liste[i] > liste[i+1]$}
+		\State Échanger Liste[i] et liste[i+1]
+		\EndIf
+		\EndFor
+		\State\Return{$liste$}
+		\EndFunction
+	\end{algorithmic}
+	
+	\MaQuest{Que ferait cet algorithme sur la liste [2, 5, 3, 1]?}
+	\begin{MaReponse}
+		On a dans ce cas N = 4 et on peut décrire les états successifs de i et de liste en parcourant la boucle:
+		\begin{center}
+			\begin{tabular}{|c|c|c|c|}
+				\hline
+				\textbf{i}&\textbf{liste[j]}&\textbf{liste[j+1]}&\textbf{liste}\\
+				\hline
+				0 (avant la boucle)&N/A&N/A&[2, 5, 3, 1]\\
+				\hline
+				1&2&5&[2, 5, 3, 1]\\
+				\hline
+				2&5&3&[2, 3, 5, 1]\\
+				\hline
+				3&5&1&[2, 3, 1, 5]\\
+				\hline
+			\end{tabular}
+		\end{center}
+	\end{MaReponse}
+		
+	\MaQuest{Du coup que fait l'algorithme ci-dessus? Par quoi faudrait-il remplacer "?????" pour décrire ce qu'il renvoie?}
+	\begin{MaReponse}
+		On voit que cet algorithme, par permutations successives, fait systématiquement "remonter" l'élément le plus grand de la liste jusqu'à la dernière position du tableau. On pourrait donc décrire la sortie comme étant "liste, avec son plus grand élément placé en dernière position".
+	\end{MaReponse}
+	
+	\MaQuest{Est-ce que cela donne des idées pour enrichir cet algorithme pour qu'il fasse un tri complet de la liste qu'il prend en entrée?}
+	\begin{MaReponse}
+		On constate qu'une exécution de cet algorithme permet de ramener le plus grand élément de la liste, où qu'il se trouve, en dernière position. Il n'est pas compliqué de se convaincre qu'en exécutant cet algorithme une fois encore sur le même tableau permettrait de ramener l'élément le deuxième plus grand de la liste en avant dernière position --- et par extension, N exécutions de l'algorithme permettrait d'aboutir à un tableau complètement trié!
+		
+		Si on applique ce principe au tableau précédent, on aurait, à l'issue de chaque exécution successive de l'algorithme:
+		\begin{enumerate}
+			\item \texttt{[2, 5, 3, 1]}
+			\item \texttt{[2, 3, 1, 5]}
+			\item \texttt{[2, 1, 3, 5]}
+			\item \texttt{[1, 2, 3, 5]}
+		\end{enumerate}
+	\end{MaReponse}
+	
+	Appliquons cette conclusion à notre algorithme, traduisons-le en Python et considérons le résultat:
+	\MonPython{007_TriBulles.py}
+	
+	\MaQuest{Quel est la complexité de cet algorithme?}
+	
+	\begin{MaReponse}
+		La réponse en l'occurrence est assez immédiate: on a deux boucles imbriquées, chacune s'exécutant un nombre de fois directement dépendant de n --- donc on a affaire à une complexité en $\mathcal{O}(n^2)$, autrement dit quadratique.
+	\end{MaReponse}
+	
+	\MaQuest{Allez -- une dernière question avant de conclure le chapitre: pourquoi à votre avis appelle-t-on ce tri par permutations "tri à bulles"?}
+	
+	\begin{MaReponse}
+		\begin{tabular}{p{0.3\textwidth}p{0.6\textwidth}}
+			\begin{minipage}{\linewidth}
+				\begin{figure}[H]
+					\centering
+					\includegraphics[width=0.5\textwidth]{007_Champagne.jpg}
+				\end{figure}
+			\end{minipage}
+			&
+			\begin{minipage}{\linewidth}
+				C'est tout simplement l'image des bulles dans une boisson gazeuse comme du champagne qui, l'une après l'autre, remontent à la surface, à l'instar des valeurs les plus grandes de la liste qui "remontent" vers la fin.
+			\end{minipage}
+		\end{tabular}			
+	\end{MaReponse}
+	
+	\begin{MonRet}
+		Du tri par permutations il faut que vous reteniez:
+		\begin{itemize}
+			\item Le principe de base -- vous devez être capables d'en expliquer l'algorithme s'il vous est donné;
+			\item Le calcul de complexité;
+			\item Le fonctionnement -- tel qu'on l'a décrit ici, qui doit vous permettre de résoudre des exercices comme ceux qui sont inclus dans le cahier d'exercices d'entraînement.
+		\end{itemize}
+	\end{MonRet}
+	
+	\subsection{Le tri par sélection}
 		
 \end{document}
 
 
 %Eléments manquants:
-% Section dans le premier chapitre sur comment réviser.
