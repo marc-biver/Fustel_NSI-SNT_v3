@@ -1,0 +1,1 @@
+def TriSel(tab):    '''    Fonction qui effectue le tri par sélection de la table passée en entrée.    '''    n = len(tab)    for p in range(n-1):        pmin = p        for j in range(p + 1, n):            if tab[j] < tab[pmin]:                pmin = j        tab[pmin], tab[p] = tab[p], tab[pmin]    return tab

@@ -8,7 +8,7 @@
 \DispRepfalse % Hide the text
 
 % Version du document
-\newcommand{\versiondoc}{v0.2}
+\newcommand{\versiondoc}{v0.3}
 
 % Incorporation tous éléments de préambule communs à tous mes cours
 % Sans chemin relatif parce que TexStudio lancé depuis un script qui prend en compte la variable d'environnement TEXINPUTS
@@ -41,7 +41,7 @@
 	\auteur,
 	\datedoc,
 	\footnotesize{\textit{\versiondoc}} 
-	\vspace{6cm}
+	\vspace{2cm}
 	}
 
 % Header & Footer
@@ -65,7 +65,7 @@
 		\resumecours
 		}
 	
-	\vspace{\baselineskip}
+	\vspace{2cm}
 	\begin{MaReponse}
 		\centering
 		\vspace{\baselineskip}
@@ -934,7 +934,7 @@
 			\item Notions de complexité spatiale et temporelle;
 			\item Compréhension de l'importance du type dépendance entre le volume de données en entrée et le nombre d'opérations élémentaires à effectuer;
 			\item Comptage des opérations élémentaires et estimation de la complexité -- être capable de résoudre des exercices comme ceux qui précèdent;
-			\item En particulier être capable d'appliquer ces notions aux complexités constante ($\mathcal{O}(1)$), linéaire ($\mathcal{O}(n)$), et quadratique $\mathcal{O}(n^2)$.
+			\item En particulier être capable d'appliquer ces notions aux complexités constante ($\mathcal{O}(1)$), linéaire ($\mathcal{O}(n)$), et quadratique (\texttt{$\mathcal{O}(n^2)$}).
 		\end{itemize}
 	\end{MonRet}
 
@@ -943,6 +943,7 @@
 	\subsection{Pourquoi trier?}
 	Imaginez que vous êtes dans une bibliothèque qui contient tous les livres qui étaient disponibles en France en 2019 -- ça fait quand même 810.130 livres différents\footnote{Source: \href{https://www.culture.gouv.fr/content/download/268286/3121285?v=1}{Document "Chiffres-clés du secteur du livre 2018-2019"}, Ministère de la Culture.}.
 	\begin{wrapfigure}{l}{0.4\textwidth}
+		\vspace{10pt} % Juste pour aligner un peu mieux l'image avec le paragraphe parce que je suis maniaque.
 		\includegraphics[scale=0.2]{006_Biblio.jpg}
 	\end{wrapfigure}
 	
@@ -952,7 +953,7 @@
 	
 	Le problème se pose donc de \textit{comment} trier de grandes quantités de données -- et nous allons voir qu'il y a plusieurs solutions différentes. En 1\textsuperscript{ère}, nous allons aborder 3 algorithmes de tri différents:
 	\begin{alphenum}
-		\item Le tri par permutaion;
+		\item Le tri par permutation;
 		\item Le tri par sélection;
 		\item Le tri par insertion.
 	\end{alphenum}
@@ -1014,6 +1015,14 @@
 	Appliquons cette conclusion à notre algorithme, traduisons-le en Python et considérons le résultat:
 	\MonPython{007_TriBulles.py}
 	
+	\begin{MonAmp}{Explication video}
+		\href{https://www.youtube.com/shorts/y2AghjB4Wxs?feature=share}{Youtube short} présentant le tri par sélection. Les variables de cette vidéo et celles du code ci-dessus sont les mêmes:
+		\begin{itemize}
+			\item \texttt{i} \quad \faExchange \quad \texttt{i}
+			\item \texttt{j} \quad \faExchange \quad \texttt{j}
+		\end{itemize}
+	\end{MonAmp}
+	
 	\MaQuest{Quel est la complexité de cet algorithme?}
 	
 	\begin{MaReponse}
@@ -1036,18 +1045,347 @@
 			\end{minipage}
 		\end{tabular}			
 	\end{MaReponse}
+		
+	\subsection{Le tri par sélection}
+	\subsubsection*{Présentation générale}
+	Le tri par sélection s'inspire de la manière dont on trie des copies par ordre alphabétique des élèves:
+	\begin{itemize}
+		\item Au début, on tient toutes les copies dans la main gauche;
+		\item On choisit la copie dont le nom est le premier dans l'ordre alphabétique, et on la place face retournée sur la table devant soi;
+		\item On choisit ensuite parmi les copies restantes celle qui a le nom qui est le premier dans l'ordre alphabétique et on la place face retournée sur la précédente;
+		\item On réitère ce procédé jusqu'à ce qu'on n'ait plus de copies dans la main gauche.
+	\end{itemize}
 	
-	\begin{MonRet}
-		Du tri par permutations il faut que vous reteniez:
+	On se convainc donc facilement du fait que les copies présentes sur la table à tout instant sont triées.
+	
+	Le tri par sélection fonctionne de manière similaire au détail près qu'il n'utilise pas deux "lieux" (la main et la table) -- que l'on ne fait qu'échanger les éléments à l'intérieur de la table. A chaque étape du tri, on a:
+	\begin{itemize}
+		\item Le tableau est séparé en deux parties une partie triée "à gauche" (indices les plus petits) et une partie non triée "à droite".
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.45\textwidth]{008_TriSel1.png}
+		\end{figure}
+		\item On choisit le plus petit élément de la partie non triée et on le place au début de la partie non triée de telle sorte que la partie triée soit augmentée d'un élément et la partie non triée soit diminuée d'un élément.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.9\textwidth]{009_TriSel2.png}
+		\end{figure}
+		\item On poursuit ainsi jusqu'à avoir parcouru toute la table.
+	\end{itemize}
+	
+	Voyons l'application de cet algorithme de bout en bout à un exemple concret, la liste \texttt{[9,5,1,3,5,2,4]}:
+	
+	\begin{center}
+		\begin{tabular}{c c}
+			\multicolumn{2}{c}{\includegraphics[width=0.5\textwidth]{010_TriSelEx1.png}} \\
+			\multicolumn{2}{c}{\parbox{0.5\textwidth}{\centering A: table dans son état initial}} \\
+			\includegraphics[width=0.5\textwidth]{011_TriSelEx2.png} & \includegraphics[width=0.5\textwidth]{012_TriSelEx3.png} \\
+			\begin{minipage}{0.5\textwidth}
+				B: On déplace le minimum (1) en première position. 
+			\end{minipage} & 
+			\begin{minipage}{0.5\textwidth}
+				C: On déplace le minimum suivant (2) en deuxième position.
+			\end{minipage} \\
+			\includegraphics[width=0.5\textwidth]{013_TriSelEx4.png} & \includegraphics[width=0.5\textwidth]{014_TriSelEx5.png} \\
+			\begin{minipage}{0.5\textwidth}
+				D: On déplace le minimum suivant (3) en troisième position.
+			\end{minipage} & 
+			\begin{minipage}{0.5\textwidth}
+				E: On déplace le minimum suivant (4) en quatrième position.
+			\end{minipage} \\
+			\includegraphics[width=0.5\textwidth]{015_TriSelEx6.png} & \includegraphics[width=0.5\textwidth]{016_TriSelEx7.png} \\
+			\begin{minipage}{0.5\textwidth}
+				F: On échange le minimum suivant (5) avec lui-même puisqu'il est déjà en place.
+			\end{minipage} & 
+			\begin{minipage}{0.5\textwidth}
+				G: On échange le minimum suivant (5) avec lui-même puisqu'il est déjà en place.
+			\end{minipage} \\
+			\multicolumn{2}{c}{\includegraphics[width=0.5\textwidth]{017_TriSelEx8.png}} \\
+			\multicolumn{2}{c}{\parbox{0.5\textwidth}{\centering H: table dans son état final}} \\
+		\end{tabular}
+	\end{center}
+	
+	\subsubsection*{Algorithme}
+	\MaQuest{Sur la base de la description ci-dessus comment s'écrit cet algorithme en pseudo-code?}
+	\begin{MaReponse}
+		Exprimé en pseudo-code cet algorithme s'écrit ainsi:
+		
+		\begin{algorithmic}[1]
+			\Require{$tab$, une liste}
+			\Ensure{$tab$, triée}
+			\Function{TriSelection}{tab}
+			\State n $\leftarrow$ longueur(tab)
+			\For{$p$ allant de 1 à (n-1)}
+			\State pmin $\leftarrow$ p
+			\For{$j$ allant de (p+1) à n}
+			\If{$tab[j] < tab[pmin]$}
+			\Comment{On a trouvé un nouveau min}
+			\State $pmin$ $\leftarrow j$
+			\EndIf
+			\EndFor
+			\State Échanger tab[pmin] et tab[p]
+			\EndFor
+			\State\Return{$tab$}
+			\EndFunction
+		\end{algorithmic}
+		
+		Le compteur p correspond à l'indice du premier élément de la partie non triée (position à laquelle il faut déplacer le plus petit élément de la partie non triée) et la variable pmin correspond à l’indice du plus petit élément de la partie non triée. On a ainsi le schéma suivant:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.45\textwidth]{018_TriSel3.png}
+		\end{figure}
+	\end{MaReponse}
+	
+	\begin{MonAmp}{Explication video}
+		\href{https://www.youtube.com/shorts/HRwi5gwlB0U?feature=share}{Youtube short} présentant le tri par sélection. Les correspondances entre les variables de cette vidéo et celles du pseudo-code ci-dessus sont:
 		\begin{itemize}
-			\item Le principe de base -- vous devez être capables d'en expliquer l'algorithme s'il vous est donné;
-			\item Le calcul de complexité;
-			\item Le fonctionnement -- tel qu'on l'a décrit ici, qui doit vous permettre de résoudre des exercices comme ceux qui sont inclus dans le cahier d'exercices d'entraînement.
+			\item \texttt{i} \quad \faExchange \quad \texttt{p}
+			\item \texttt{j} \quad \faExchange \quad \texttt{j}
+			\item \texttt{min} \quad \faExchange \quad \texttt{pmin}
+		\end{itemize}
+	\end{MonAmp}
+	
+	\subsubsection*{Preuve \& Complexité}
+	\textbf{\uline{Terminaison}}: l'algorithme est composé de boucles pour dont la fin dépend, dans les deux cas, de \texttt{n}, longueur du tableau en entrée, qui ne varie pas: on connaît donc le nombre de répétitions, et donc l'algorithme se termine.
+	
+	\textbf{\uline{Correction partielle}}: l'algorithme préserve l'invariant de boucle suivant: "si $p \geq 1$, \texttt{tab} est trié entre les indices 1 et $p - 1$ , et tous les éléments restants sont supérieurs ou égaux à \texttt{tab[p-1]}".
+	
+	\textbf{\uline{Complexité}}: Dans la boucle interne (\texttt{pour j allant de (p+1) à n}), on effectue $n - p$ comparaisons. $p$ variant de 1 à (n-1) on en effectue donc successivement: $n-1$ (pour $p = 1$), puis $n-2$ (pour $p = 2$), puis (...), puis 2 (pour $p = n-2$), et enfin une seule (pour $p = n-1$). La complexité de l'algorithme s'exprime donc:
+	\[
+	1 + 2 + \text{(...)} + (n-2) + (n-1) = \frac{n(n-1)}{2} = \frac{1}{2}n^2 - \frac{1}{2}n
+	\]
+	On peut donc en conclure que la complexité de cet algorithme est quadratique, en $\mathcal{O}(n^2)$.
+	
+	\begin{MonExo}{Codage du tri par sélection}
+		Vous fondant sur le pseudo-code ci-dessus, coder une fonction \texttt{TriSel(tab)} qui effectue le tri par sélection d'une liste passée en argument.
+	\end{MonExo}
+	\begin{MaReponse}
+		\MonPython{008_TrSel.py}
+	\end{MaReponse}
+	
+	\subsection{Tri par insertion}
+	\subsubsection*{Présentation générale}
+	Le tri par insertion s'inspire de la manière dont la plupart des gens trient les cartes à jouer qu'ils ont en main (pour rendre l'explication lisible on va imaginer ici que toutes les cartes sont de la même couleur -- il s'agit donc ici juste de les trier par ordre croissant):
+	\begin{itemize}
+		\item Au début, on tient toutes ses cartes dans le désordre;
+		\item On regarde la deuxième en partant de la gauche: et si elle est de valeur supérieure ou égale à la première on la laisse en place; dans le cas contraire on la ramène en première position;
+		\item On poursuit ainsi: on regarde à chaque fois la carte suivante, on la laisse en place si elle est supérieure à celle qui est juste à sa gauche, on la place au bon endroit dans la partie gauche de la main dans le cas contraire;
+		\item On réitère ce procédé jusqu'à avoir placé la carte la plus à droite.
+	\end{itemize}
+	
+	On se convainc donc facilement du fait que les cartes présentes à gauche de la main à tout instant sont triées.
+	
+	Le tri par insertion fonctionne de manière similaire. A chaque étape du tri, on a:
+	\begin{itemize}
+		\item Le tableau est séparé en deux parties: une partie triée que l'on suppose à gauche et une partie non triée que l’on suppose à droite;
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.45\textwidth]{019_TriIns1.png}
+		\end{figure}
+		\item On insère le premier élément de la partie non triée à sa place dans la partie triée en décalant vers la droite tous les éléments de la partie triée qui lui sont supérieurs afin que la partie triée soit augmentée d'un élément et la partie non triée soit diminuée d’un élément.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.9\textwidth]{020_TriIns2.png}
+		\end{figure}
+		\item On poursuit ainsi jusqu'à avoir parcouru toute la table.
+	\end{itemize}
+	
+	Voyons l'application de cet algorithme de bout en bout à un exemple concret, la même liste que celle que l'on a utilisée pour le tri par sélection,  \texttt{[9,5,1,3,5,2,4]}:
+	
+	\begin{center}
+		\begin{tabular}{c c}
+			\multicolumn{2}{c}{\includegraphics[width=0.5\textwidth]{021_TriSelIns1.png}} \\
+			\multicolumn{2}{c}{\parbox{0.5\textwidth}{\centering A: table dans son état initial}} \\
+			\includegraphics[width=0.5\textwidth]{022_TriSelIns2.png} & \includegraphics[width=0.5\textwidth]{023_TriSelIns3.png} \\
+			\begin{minipage}{0.5\textwidth}
+				B: On regarde le deuxième élément (5), on "l'insère" à sa place -- en l'occurrence au début de la liste; on effectue donc un échange.
+			\end{minipage} & 
+			\begin{minipage}{0.5\textwidth}
+				C: On insère l'élément suivant (1), toujours en début de liste -- il faut donc décaler les deux éléments déjà triés "vers la droite" (donc augmenter la valeur de leurs indices).
+			\end{minipage} \\
+			\includegraphics[width=0.5\textwidth]{024_TriSelIns4.png} & \includegraphics[width=0.5\textwidth]{025_TriSelIns5.png} \\
+			\begin{minipage}{0.5\textwidth}
+				D: On insère l'élément suivant (3) en deuxième position -- et on décale les éléments triés qui suivent.
+			\end{minipage} & 
+			\begin{minipage}{0.5\textwidth}
+				E: Même chose avec le 5...
+			\end{minipage} \\
+			\includegraphics[width=0.5\textwidth]{026_TriSelIns6.png} & \includegraphics[width=0.5\textwidth]{027_TriSelIns7.png} \\
+			\begin{minipage}{0.5\textwidth}
+				F: On insère à présent le 2, et ce sont quatre éléments qu'il faut décaler vers la droite.
+			\end{minipage} & 
+			\begin{minipage}{0.5\textwidth}
+				G: On termine avec le 4.
+			\end{minipage} \\
+			\multicolumn{2}{c}{\includegraphics[width=0.5\textwidth]{028_TriSelIns8.png}} \\
+			\multicolumn{2}{c}{\parbox{0.5\textwidth}{\centering H: table dans son état final}} \\
+		\end{tabular}
+	\end{center}
+	
+	\subsubsection*{Algorithme}
+	\MaQuest{Sur la base de la description ci-dessus comment s'écrit cet algorithme en pseudo-code? (Attention! Pour ne pas "perdre" de valeur, vous allez devoir utiliser une variable temporaire pendant que vous faites le décalage d'indices qui précède l'insertion)}
+	\begin{MaReponse}
+		Exprimé en pseudo-code cet algorithme s'écrit ainsi:
+		
+		\begin{algorithmic}[1]
+			\Require{$tab$, une liste}
+			\Ensure{$tab$, triée}
+			\Function{TriInsertion}{tab}
+			\State n $\leftarrow$ longueur(tab)
+			\For{$i$ allant de 2 à n}
+			\State temp $\leftarrow$ tab[i]
+			\State p $\leftarrow$ i
+			\While{$p > 1$ et tab[p-1] > temp}
+			
+			\Comment{On remonte le tableau jusqu'à trouver la place de tab[i]}
+			\State tab[p] $\leftarrow$ tab[p-1]
+			\State p $\leftarrow$ p-1
+			\EndWhile
+			\State tab[p] $\leftarrow$ temp
+			\Comment{On a trouvé la place de tab[i]}
+			\EndFor
+			\State\Return{$tab$}
+			\EndFunction
+		\end{algorithmic}
+		
+		Le compteur i correspond à l'indice du premier élément de la partie non triée et la variable p correspond à l'indice de la position où il faut insérer \texttt{tab[i]} dans la partie triée. On a ainsi le schéma suivant:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.45\textwidth]{029_TriIns3.png}
+		\end{figure}
+	\end{MaReponse}
+	
+	\begin{MonAmp}{Explication video}
+		\href{https://www.youtube.com/shorts/ZZ-Oz1IFfPg?feature=share}{Youtube short} présentant le tri par insertion. La vidéo utilise des indices décalés par rapport à ce qui est présenté ici donc ne vous attardez pas trop sur les variables en tant que telles (vous risqueriez de vous y perdre), mais regardez le procédé dépeint dans la vidéo qui, lui, est le bon. Pour être complet cependant, les correspondances entre les variables de cette vidéo et celles du pseudo-code ci-dessus sont:
+		\begin{itemize}
+			\item \texttt{key} \quad \faExchange \quad \texttt{temp} (ou \texttt{tab[i]})
+			\item \texttt{j} \quad \faExchange \quad \texttt{p-1}
+		\end{itemize}
+	\end{MonAmp}
+	
+	\subsubsection*{Preuve \& Complexité}
+	\textbf{\uline{Terminaison}}: 
+	\begin{itemize}
+		\item La boucle \texttt{pour} sera de toute manière réalisée $(n-1)$ fois, et $n$ ne varie pas -- donc elle se terminera.
+		\item La boucle \texttt{tant que} doit être vérifiée au moyen d'un variant de boucle -- $p$ en l'occurrence: $p$ est initialisé à $i$ --- donc est strictement positif --- et décroît strictement. Donc la boucle se termine également.
+	\end{itemize}
+	
+	\textbf{\uline{Correction partielle}}: l'algorithme préserve l'invariant de boucle suivant: "si $i \geq 2$, \texttt{tab} est trié entre les indices 1 et $i - 1$ , et tous les éléments restants restent à trier".
+	
+	\textbf{\uline{Complexité}}: Dans le pire des cas (si la liste est triée au départ par ordre décroissant), la boucle interne (\texttt{tant que}) effectue $2i$ comparaisons (donc 4, puis 6, puis (...), puis $(2n - 2)$, puis enfin 2n). La complexité de l'algorithme s'exprime donc:
+	\begin{align*}
+	4 + 6 + \text{(...)} + (2n-2) + 2n &= 2 \times (2 + 3 + \text{(...)} + (n-1) + n) \\
+	&= 2 \times \frac{(n-1)\times (n+2)}{2} \\
+	&= n^2 + n - 2
+	\end{align*}
+	On peut donc en conclure que la complexité de cet algorithme est quadratique, en $\mathcal{O}(n^2)$.
+	
+	\begin{MonExo}{Codage du tri par sélection}
+		Vous fondant sur le pseudo-code ci-dessus, coder une fonction \texttt{TriIns(tab)} qui effectue le tri par insertion d'une liste passée en argument.
+	\end{MonExo}
+	\begin{MaReponse}
+		\MonPython{009_TriIns.py}
+	\end{MaReponse}
+	
+	\subsection{Comparaisons entre ces algorithmes...}
+	\subsubsection*{Complexité "au mieux"}
+	On a dit plus haut dans ce cours que les calculs de complexité se font dans des configurations "au pire" -- donc dans les cas où, à taille de données en entrée équivalente, les données sont telles que l'algorithme effectuera un maximum d'opérations. Mais si, comme ils semble que ce soit le cas ici, on a des algorithmes apparemment équivalents, est-ce qu'on ne pourrait pas regarder ce qu'il se passe "au mieux" pour les départager?
+	
+	Considérons de nouveau le tri par insertion et imaginons que les données en entrée sont déjà triées. En ce cas, on voit bien que la condition \texttt{tab[p-1] > temp} n'est \textit{jamais} satisfaite, et que donc seule la boucle externe, la boucle \texttt{pour} influence la complexité. Or celle-ci est effectuée $(n-1)$ fois, donc on se retrouvera avec une complexité linéaire, en $\mathcal{O}(n)$.
+	
+	Cette considération a-t-elle un intérêt? Imaginez que vous mettiez bout à bout deux listes, toutes deux déjà triées, une (appelée "t") très longue, et une (appelée "s") très courte, comme dans le schéma ci-dessous:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\textwidth]{030_AuMieux.png}
+	\end{figure}
+	On se convainc aisément que dans ce cas la vaste majorité des itérations se fera sans passage dans la boucle internet et que seules les quelques dernières donneront lieu à un réel tri, ce qui réduira considérablement le temps de traitement par rapport à un tri par sélection où toutes les comparaisons seront effectuées quoi qu'il arrive.
+	
+	\textit{Deux remarques au sujet de ce qui précède:
+	\begin{enumerate}
+		\item Vous noterez que dans cet exemple le fait de mettre la liste courte \textbf{après} la liste longue est fondamental -- c'est typiquement le genre de question d'optimisation qu'il faut régulièrement se poser;
+		\item En pratique cette situation ne se poserait pas en ces termes -- je vous la présente ici simplement pour illustrer une différence de performances entre ces deux algorithmes de tri.
+	\end{enumerate}}
+	
+	\subsubsection*{Stabilité d'un tri}
+	Un autre critère de comparaison entre différents algorithmes de tri est leur stabilité -- on entend par là dans quel ordre se retrouveront les éléments égaux entre eux une fois la table triée. Il y a deux possibilités:
+	\begin{itemize}
+		\item Tri stable: les éléments conservent quoiqu'il arrive le même ordre qu'ils avaient dans la table initiale;
+		\item Tri instable: les éléments peuvent changer d'ordre par rapport à la table initiale.
+	\end{itemize}
+	L'importance de ce critère peut se comprendre lorsque l'on considère des tris suivant plusieurs axes. Imaginons qu'on a une liste d'albums de musique qui est déjà triée par noms d'album et qu'on veut ensuite lui appliquer un tri par nom d'artiste: un tri stable fera que les albums d'un même artiste resteront en ordre alphabétique, tandis qu'un tri instable ne le garantira pas.
+	
+	Imaginons à présent qu'on considère une liste de bouteilles triée par marque, représentée ainsi:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{031_BtlInit.png}
+	\end{figure}
+	
+	On souhaite la trier par contenance de bouteilles. Un tri instable donnera par exemple:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{032_BtlInstable.png}
+	\end{figure}
+	
+	Tandis qu'un tri stable donnera (unique solution possible):
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{033_BtlStable.png}
+	\end{figure}
+	
+	\textit{(observez les bouteilles de contenance 1 et 4 dans cet exemple)}
+
+	\subsubsection*{Avantages et inconvénients}
+	
+	\begin{small}	
+		\begin{tabular}{|c|p{4cm}|p{4cm}|p{4cm}|}
+			\hline
+			&Tri à bulles&Tri par sélection&Tri par insertion\\
+			\hline
+			Avantages&
+			\begin{minipage}[t]{\linewidth}
+				\begin{zeromgitem}
+					\item Simple à comprendre
+					\item Facile à implémenter
+				\end{zeromgitem}
+			\end{minipage} &
+			\begin{minipage}[t]{\linewidth}
+				\begin{zeromgitem}
+					\item Performant sur de petites listes
+					\item Espace mémoire constant
+				\end{zeromgitem}
+			\end{minipage} &
+			\begin{minipage}[t]{\linewidth}
+				\begin{zeromgitem}
+					\item Stable
+					\item Bonne performance sur des listes déjà partiellement triées
+				\end{zeromgitem}
+			\end{minipage} \\
+			\hline
+		\end{tabular}
+	\end{small}
+	
+	\subsection{Tris fournis par Python}
+	Bon, soyons honnêtes... Les tris que l'on a étudiés ici ont pour but principal de vous initier à l'étude de l'algorithmique -- en pratique ils ne sont pas très performants et il en existe d'autres de bien mieux (notamment certains que l'on étudiera en Terminale pour ceux d'entre vous qui conserveront la spécialité NSI).
+	
+	Parmi les fonctions de tri beaucoup plus performantes il en est deux qui vous sont directement fournies par Python: la fonction \texttt{sorted()} qui fournit une copie triée de votre tableau; et la méthode \texttt{t.sort()} qui elle effectue une tri \textit{en place} d'un tableau \texttt{t} (c'est-à-dire qu'elle modifie le tableau lui même pour le trier). Ces deux fonctions effectuent un tri stable.
+	
+	Illustration de leur fonctionnement:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\textwidth]{034_SortSorted.png}
+	\end{figure}
+	
+	\subsection{Algorithmes de tri -- à retenir}
+		\begin{MonRet}
+		De ces algorithmes de tri il faut que vous reteniez:
+		\begin{itemize}
+			\item Les principes de base -- vous devez être capables de les expliquer si on vous en donne le pseudo-code ou le code;
+			\item La complexisté et le calcul de son ordre de grandeur ($\mathcal{O}()$);
+			\item Le fonctionnement -- tel qu'on l'a décrit ici, qui doit vous permettre de résoudre des exercices comme ceux qui sont inclus dans le cahier d'exercices d'entraînement;
+			\item Sommairement, les avantages et inconvénients de chacun d'entre eux.
 		\end{itemize}
 	\end{MonRet}
 	
-	\subsection{Le tri par sélection}
-		
 \end{document}
 
 

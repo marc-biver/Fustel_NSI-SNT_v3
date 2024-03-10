@@ -1,0 +1,1 @@
+def TriIns(tab):    '''    Fonction qui effectue le tri par insertion de la liste passée en entrée.    '''    n = len(tab)    for i in range(1, n):        p = i        temp = tab[i]        while p > 0 and tab[p-1] > temp:            tab[p] = tab[p-1]            p -= 1        tab[p] = temp    return tab
