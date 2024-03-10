@@ -41,6 +41,7 @@
 # Environments
 \begin{monhlt}#\env
 \begin{alphenum}#\env
+\begin{zeromgitem}#\env
 \begin{MonAmp}{title}#\env
 \begin{MaRgl}{title}#\env
 \begin{MaDef}{title}#\env

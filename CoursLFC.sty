@@ -9,7 +9,7 @@
 \newcommand{\etabshort}{Lycée Fustel de Coulanges}
 \newcommand{\etablissement}{\etabshort, Massy}
 \newcommand{\auteur}{Marc Biver}
-\newcommand{\resumecours}{\textit{Ce document reprend les notions abordées en cours et pratiquées en TP / TD; il inclut la totalité de ce qui a été diffusé en classe sur ce thème. Si vous avez des questions à son propos n'hésitez pas à me contacter par le biais de la messagerie de l'ENT.
+\newcommand{\resumecours}{\textit{Ce document reprend les notions abordées en cours et pratiquées en TP / TD; il inclut la totalité de ce qui a été diffusé en classe sur ce thème. Ses deux principales sources  d'inspiration sont, d'une part, le cours mis en ligne par Charles Poulmaire et Pascal Remy\footnote{Accessible \href{https://cours-nsi.forge.apps.education.fr/premiere}{ici}.} et, d'autre part, le manuel de NSI en 1\textsuperscript{ère} édité chez Ellipses\footnote{\uline{Numérique et sciences informatiques, Spécialité NSI 1re: 30 leçons avec exercices corrigés}, par Thibaut Balabonski, Sylvain Conchon, Jean-Christophe Filliâtre,  et Kim Nguyen.}. Si vous avez des questions à son propos n'hésitez pas à me contacter par le biais de la messagerie de l'ENT.
 }}
 \newcommand{\anneescol}{2023-24}
 
@@ -68,6 +68,7 @@
 \RequirePackage{algorithmicx} % pour faire du pseudo-code
 \RequirePackage{algpseudocode} % pour faire du pseudo-code
 \RequirePackage{textcomp} % pour le point médian
+\RequirePackage[bottom]{footmisc} % Pour que la note de bas de page en page de couv soit bien tout en bas.
 
 % Traduction des commandes pour le package algorithmic
 \renewcommand{\algorithmicfor}{\textbf{pour}}
@@ -169,6 +170,14 @@
 \newenvironment{alphenum}
 {\begin{enumerate}[label=\alph*.]}
 	{\end{enumerate}}
+	
+% Listes avec zéro marge à gauche pour les mettre dans des tables
+\newenvironment{zeromgitem}{
+	\begin{itemize}[leftmargin=*,label={*}] % Sets the left margin to zero (or aligned with the surrounding text)
+	}{
+	\end{itemize}
+}
+
 
 % Format pour mes conseils, alertes, etc.
 \newtcolorbox{MonAmp}[1]{
