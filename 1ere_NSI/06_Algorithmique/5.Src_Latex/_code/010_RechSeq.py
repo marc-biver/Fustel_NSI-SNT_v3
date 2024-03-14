@@ -1,0 +1,1 @@
+def RechSeq(tab, elt):    '''    Fonction qui effectue une recherche séquentielle de l'élément elt dans la liste tab.    '''    n = len(tab)    for i in range(n):        if tab[i] == elt:            return i    return -1

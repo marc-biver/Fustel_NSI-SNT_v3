@@ -1015,13 +1015,13 @@
 	Appliquons cette conclusion à notre algorithme, traduisons-le en Python et considérons le résultat:
 	\MonPython{007_TriBulles.py}
 	
-	\begin{MonAmp}{Explication video}
-		\href{https://www.youtube.com/shorts/y2AghjB4Wxs?feature=share}{Youtube short} présentant le tri par sélection. Les variables de cette vidéo et celles du code ci-dessus sont les mêmes:
+	\begin{MaVid}
+		\href{https://www.youtube.com/shorts/y2AghjB4Wxs?feature=share}{Youtube short} présentant le tri à bulles. Les variables de cette vidéo et celles du code ci-dessus sont les mêmes:
 		\begin{itemize}
 			\item \texttt{i} \quad \faExchange \quad \texttt{i}
 			\item \texttt{j} \quad \faExchange \quad \texttt{j}
 		\end{itemize}
-	\end{MonAmp}
+	\end{MaVid}
 	
 	\MaQuest{Quel est la complexité de cet algorithme?}
 	
@@ -1136,14 +1136,14 @@
 		\end{figure}
 	\end{MaReponse}
 	
-	\begin{MonAmp}{Explication video}
+	\begin{MaVid}
 		\href{https://www.youtube.com/shorts/HRwi5gwlB0U?feature=share}{Youtube short} présentant le tri par sélection. Les correspondances entre les variables de cette vidéo et celles du pseudo-code ci-dessus sont:
 		\begin{itemize}
 			\item \texttt{i} \quad \faExchange \quad \texttt{p}
 			\item \texttt{j} \quad \faExchange \quad \texttt{j}
 			\item \texttt{min} \quad \faExchange \quad \texttt{pmin}
 		\end{itemize}
-	\end{MonAmp}
+	\end{MaVid}
 	
 	\subsubsection*{Preuve \& Complexité}
 	\textbf{\uline{Terminaison}}: l'algorithme est composé de boucles pour dont la fin dépend, dans les deux cas, de \texttt{n}, longueur du tableau en entrée, qui ne varie pas: on connaît donc le nombre de répétitions, et donc l'algorithme se termine.
@@ -1156,14 +1156,14 @@
 	\]
 	On peut donc en conclure que la complexité de cet algorithme est quadratique, en $\mathcal{O}(n^2)$.
 	
-	\begin{MonExo}{Codage du tri par sélection}
+	\begin{MonExo}[Codage du tri par sélection]
 		Vous fondant sur le pseudo-code ci-dessus, coder une fonction \texttt{TriSel(tab)} qui effectue le tri par sélection d'une liste passée en argument.
 	\end{MonExo}
 	\begin{MaReponse}
 		\MonPython{008_TrSel.py}
 	\end{MaReponse}
 	
-	\subsection{Tri par insertion}
+	\subsection{Le tri par insertion}
 	\subsubsection*{Présentation générale}
 	Le tri par insertion s'inspire de la manière dont la plupart des gens trient les cartes à jouer qu'ils ont en main (pour rendre l'explication lisible on va imaginer ici que toutes les cartes sont de la même couleur -- il s'agit donc ici juste de les trier par ordre croissant):
 	\begin{itemize}
@@ -1255,13 +1255,13 @@
 		\end{figure}
 	\end{MaReponse}
 	
-	\begin{MonAmp}{Explication video}
+	\begin{MaVid}
 		\href{https://www.youtube.com/shorts/ZZ-Oz1IFfPg?feature=share}{Youtube short} présentant le tri par insertion. La vidéo utilise des indices décalés par rapport à ce qui est présenté ici donc ne vous attardez pas trop sur les variables en tant que telles (vous risqueriez de vous y perdre), mais regardez le procédé dépeint dans la vidéo qui, lui, est le bon. Pour être complet cependant, les correspondances entre les variables de cette vidéo et celles du pseudo-code ci-dessus sont:
 		\begin{itemize}
 			\item \texttt{key} \quad \faExchange \quad \texttt{temp} (ou \texttt{tab[i]})
 			\item \texttt{j} \quad \faExchange \quad \texttt{p-1}
 		\end{itemize}
-	\end{MonAmp}
+	\end{MaVid}
 	
 	\subsubsection*{Preuve \& Complexité}
 	\textbf{\uline{Terminaison}}: 
@@ -1280,7 +1280,7 @@
 	\end{align*}
 	On peut donc en conclure que la complexité de cet algorithme est quadratique, en $\mathcal{O}(n^2)$.
 	
-	\begin{MonExo}{Codage du tri par sélection}
+	\begin{MonExo}[Codage du tri par insertion]
 		Vous fondant sur le pseudo-code ci-dessus, coder une fonction \texttt{TriIns(tab)} qui effectue le tri par insertion d'une liste passée en argument.
 	\end{MonExo}
 	\begin{MaReponse}
@@ -1333,6 +1333,22 @@
 	\end{figure}
 	
 	\textit{(observez les bouteilles de contenance 1 et 4 dans cet exemple)}
+	
+	Pourquoi est-ce important? Imaginons que vous avez la liste de tous les élèves de 1\textsuperscript{ère} générale de tous les lycées de France pour la rentrée 2023 --- un peu plus de 550.000 élèves d'après le fichier qu'on avait manipulé en TD au chapitre précédent. Cette liste a été triée deux fois: une première fois selon l'ordre alphabétique des noms des élèves, puis une seconde selon l'ordre alphabétique des noms de lycées. Si l'on vous demande de dans quels lycées il y a des élèves dont le nom de famille est "Biver", votre recherche sera \textit{très} différente selon la stabilité du second tri:
+	\begin{itemize}
+		\item Si le second tri est stable, alors vous savez que les noms des élèves à l'intérieur des établissements sont restés en ordre alphabétique (puisque la liste était initialemen triée par noms d'élèves): il vous suffit donc de passer d'établissement en établissement, et de regarder à "BIV" si vous trouvez des élèves.
+		\item Dans le cas contraire en revanche, vous n'avez aucun moyen de savoir comment sont triés les élèves à l'intérieur des établissements $\implies$ vous n'avez d'autre choix que de parcourir la totalité des 550.000 lignes du fichier à la recherche du nom Biver...
+	\end{itemize}
+	
+	\begin{center}
+		\begin{tabular}{c c c}
+			\textbf{Tri initial} & \textbf{Tri stable} & \textbf{Tri instable} \\
+			\includegraphics[width=0.33\textwidth]{035_TriInit.png} & \includegraphics[width=0.33\textwidth]{036_TriStable.png}  &
+			\includegraphics[width=0.33\textwidth]{037_TriInstable.png}
+		\end{tabular}
+	\end{center}
+	
+	Ceci était un début de lien avec la section suivante de ce chapitre -- la \textit{recherche dans les tableaux}; nous y reviendrons donc.
 
 	\subsubsection*{Avantages et inconvénients}
 	
@@ -1344,27 +1360,26 @@
 			Avantages&
 			\begin{minipage}[t]{\linewidth}
 				\begin{zeromgitem}
-					\item Simple à comprendre
-					\item Facile à implémenter
+					\item Simple à comprendre \& implémenter
+					\item Stable
 				\end{zeromgitem}
 			\end{minipage} &
 			\begin{minipage}[t]{\linewidth}
 				\begin{zeromgitem}
 					\item Performant sur de petites listes
-					\item Espace mémoire constant
 				\end{zeromgitem}
 			\end{minipage} &
 			\begin{minipage}[t]{\linewidth}
 				\begin{zeromgitem}
 					\item Stable
-					\item Bonne performance sur des listes déjà partiellement triées
+					\item Performant sur des listes déjà triées en partie
 				\end{zeromgitem}
 			\end{minipage} \\
 			\hline
 		\end{tabular}
 	\end{small}
 	
-	\subsection{Tris fournis par Python}
+	\subsection{Les tris fournis par Python}
 	Bon, soyons honnêtes... Les tris que l'on a étudiés ici ont pour but principal de vous initier à l'étude de l'algorithmique -- en pratique ils ne sont pas très performants et il en existe d'autres de bien mieux (notamment certains que l'on étudiera en Terminale pour ceux d'entre vous qui conserveront la spécialité NSI).
 	
 	Parmi les fonctions de tri beaucoup plus performantes il en est deux qui vous sont directement fournies par Python: la fonction \texttt{sorted()} qui fournit une copie triée de votre tableau; et la méthode \texttt{t.sort()} qui elle effectue une tri \textit{en place} d'un tableau \texttt{t} (c'est-à-dire qu'elle modifie le tableau lui même pour le trier). Ces deux fonctions effectuent un tri stable.
@@ -1386,7 +1401,316 @@
 		\end{itemize}
 	\end{MonRet}
 	
-\end{document}
+	\pagebreak
+	\section{Algorithmes de recherche}
+	Il est fréquent en informatique de devoir effectuer une recherche dans un grand nombre de données -- pensez connexion à une plate-forme sur internet, production d'une facture (de téléphone, d'internet), affichage d'éléments répondant à certains critères sur des sites marchands (tous les livres d'un certain auteur sur un site comme la librairie en ligne \textit{decitre} par exemple), etc... Dans tous ces cas il s'agit d'isoler un petit nombre d'éléments (voire un élément unique comme dans le cas d'une connexion par exemple) qui se trouvent parmi un nombre extrêmement grand d'éléments similaires -- il va de soi que la vitesse à laquelle ces recherches vont se faire va être cruciale.
+	
+	\subsection{Cas général: recherche séquentielle}
+	Dans le cas où le tableau dans lequel on cherche l'information n'est pas trié il n'y a pas de raccourci possible et on n'a d'autre choix que de faire une recherche systématique ou \textit{recherche séquentielle} (en anglais: \textit{linear search}), qui consiste simplement à parcourir la liste jusqu'à trouver l'élément que l'on cherche.
+	
+	\begin{MaVid}
+		Non que ce soit franchement nécessaire vu la simplicité de l'algorithme, mais voici un \href{https://youtu.be/D7sMvXltMiU}{Youtube short} présentant la recherche séquentielle.
+	\end{MaVid}
+	
+	
+	\MaQuest{On a déjà utilisé de tels algorithmes en cours -- comment s'écrit cet algorithme en pseudo-code?}
+	
+	\begin{MaReponse}
+		\begin{algorithmic}[1]
+			\Require{$liste$, $elt\_rech$}
+			\Ensure{$position$ de l'élément $elt\_rech$ dans la liste, -1 si non trouvé}
+			\Function{ChercheElt}{liste, elt\_rech}
+			\State $N$ $\leftarrow longueur(liste)$
+			\For{$i$ allant de 1 à N}
+			\If{$elt\_rech = liste[i]$}
+			\Comment{On a trouvé l'élément recherché}
+			\State\Return{$i$}
+			\EndIf
+			\EndFor
+			\State\Return{$-1$}
+			\Comment{On ne l'a pas trouvé}
+			\EndFunction
+		\end{algorithmic}
+	\end{MaReponse}
+		
+	\begin{MonExo}[Recherche séquentielle]
+		\begin{alphenum}
+			\item Quelle est la complexité de cet algorithme?
+			\item Vous fondant sur le pseudo-code ci-dessus, coder une fonction \texttt{RechSeq(tab, elt)} qui effectue une recherche séquentielle de \texttt{elt} dans \texttt{tab}.
+		\end{alphenum}
+	\end{MonExo}
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item À l'évidence la complexité est linéaire, en $\mathcal{O}(n)$, puisque l'on parcourt dans le cas le pire la totalité du tableau, une fois (note: dans le cas \textit{au mieux}, donc celui où l'élément recherché est en tout début de tableau, on bascule évidemment sur une complexité constante, en $\mathcal{O}(1)$) -- mais il va de soi que l'on ne peut pas compter dessus (sinon la fonction recherche serait inutile, non?)
+			\item Code Python:			
+			\MonPython{010_RechSeq.py}
+		\end{alphenum}
+	\end{MaReponse}
+	
+	\subsection{Recherche dichotomique}
+	\subsubsection*{Présentation générale}
+	\MaQuest{A et B jouent au jeu suivant: A choisit un nombre entre 0 et 100, et ne le communique pas à B qui doit le deviner en posant des questions. Les réponses de A ne peuvent être que "oui" ou "non". \\
+	\vspace{\baselineskip}
+	Quelle stratégie doit adopter B pour poser le moins de questions possibles?}
 
+	\begin{MaReponse}
+		B doit chercher à éliminer le plus de possibilités à chaque question qu'il pose.
+		
+		Il pourrait commencer par demander "est-ce que ton nombre est supérieur à 90?": si A répondait "oui", il aurait éliminé d'un coup 90\% des possibilités -- mais le problème, évidemment, est qu'il y a 90\% de chances que A réponde "non" auquel cas il n'en aura éliminé que 10\%...
+		
+		Comme il ne sait rien à propos du nombre qu'il cherche sa stratégie optimale consiste donc à diviser par deux le champ des possibilités à chaque question qu'il pose: commencer par "est-ce que ton nombre est supérieur à 50?" puis, selon la réponse de A, "est-ce que ton nombre est supérieur à 25?" ou "est-ce que ton nombre est supérieur à 75?", puis de nouveau avec 12, ou 37, ou 62, ou 87, etc...
+	\end{MaReponse}
+	
+	La démarche que nous venons de décrire en est une de \textit{recherche dichotomique} (\textit{binary search} en anglais).
+	
+	\begin{MaVid}
+		\href{https://youtu.be/c-PMOD2O7E4}{Youtube short} présentant la recherche dichotomique telle qu'on vient de la décrire.
+	\end{MaVid}
+		
+	\MaQuest{Si c'est vraiment plus efficace que la recherche séquentielle, pourquoi ne se sert-on pas \textit{toujours} d'une recherche dichotomique?}
+	\begin{MaReponse}
+		La réponse est évidente -- la recherche dichotomique n'est possible \textbf{\textit{que}} si les éléments parmi lesquels on recherche sont triés (et dans le cas du jeu entre A et B, puisqu'on considère tous les nombres entre 0 et 100, ils sont implicitement triés).
+	\end{MaReponse}
+
+	\subsubsection*{Algorithme}	
+	Le principe est donc le suivant: on considère un tableau $T$ trié de $n$ éléments et une valeur $x$. L’algorithme prend en entrée $T$ et $x$. Il doit renvoyer la position de la valeur $x$ dans le tableau $T$ quand elle est présente et $-1$ sinon. Puisque le tableau est trié, comparer $x$ avec la valeur médiane permet de savoir si $x$ est situé dans la première moitié du tableau ("à gauche"), positionné au milieu, ou bien appartient à la seconde moitié du tableau ("à droite"). Le principe est donc le suivant: comparer $x$ avec la valeur de la case au milieu du tableau $T$:
+	
+	\begin{itemize}
+		\item Si les valeurs sont égales alors la position du milieu est la position cherchée;
+		\item Sinon on recommence en cherchant $x$ dans la moitié du tableau qui convient.
+	\end{itemize}
+
+	\MaQuest{Sur la base de ces descriptions, parvenez-vous à rédiger cet algorithme en pseudo-code?}
+	
+	\begin{MaReponse}
+		\begin{algorithmic}[1]
+			\Require{$T$, $x$}
+			\Ensure{$position$ de l'élément $x$ dans $T$, -1 si non trouvé}
+			\Function{RechDichotomique}{$T$, $x$}
+			\State $Debut$ $\leftarrow 1$
+			\State $Fin$ $\leftarrow longueur(T)$
+			\While{$Debut \leq Fin$}
+			\State $Milieu$ $\leftarrow (Debut + Fin) // 2$
+			\If{$x = T[Milieu]$}
+			\Comment{On a trouvé l'élément recherché}
+			\State\Return{$Milieu$}
+			\ElsIf{$x > T[Milieu]$}
+			\State $Debut$ $\leftarrow Milieu + 1$
+			\Comment{L'élément n'est pas "à gauche"}
+			\Else
+			\State $Fin$ $\leftarrow Milieu - 1$
+			\Comment{L'élément n'est pas "à droite"}
+			\EndIf
+			\EndWhile
+			\State\Return{$-1$}
+			\Comment{On ne l'a pas trouvé}
+			\EndFunction
+		\end{algorithmic}
+	\end{MaReponse}	
+	
+	
+	% MCOXXXXXX - MA REPONSE QUI REDECONNE ICI, EXOS INVISIBLES QUAND ON N'AFFICHE
+	% PAS LES REPONSES
+	\begin{MonExo}[TOTO]
+		TITI
+	\end{MonExo}
+	
+	\begin{MonExo}[Application concrète]
+		Effectuez une recherche dichotomique de l'élément \texttt{5} dans la liste \texttt{[1, 2, 5, 8, 9, 12, 14, 15]} et complétez le tableau suivant:
+		
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Debut} & \textbf{Fin} & \textbf{Milieu} & \textbf{\texttt{liste[Milieu]}}\\
+			\hline
+			... & ... & ... & ...\\
+			\hline 
+		\end{tabular}
+	\end{MonExo}
+	
+	\begin{MaReponse}
+		On est en pseudo-code donc je pars du principe que les indices du tableau vont de 1 à n (8 en l'occurrence). On cherche la valeur 5.
+		
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Debut} & \textbf{Fin} & \textbf{Milieu} & \textbf{\texttt{liste[Milieu]}}\\
+			\hline
+			1 & 8 & 4 & 8\\
+			\hline 
+			1 & 3 & 2 & 2 \\
+			\hline 
+			3 & 3 & 3 & 5 \\
+			\hline
+		\end{tabular}
+		
+		Et l'algorithme retourne donc l'indice 3.
+	\end{MaReponse}
+
+	
+	\begin{MonExo}[Application concrète -- 2]
+		Même exercice que le précédent, avec l'élément \texttt{7}, toujours dans la liste \texttt{[1, 2, 5, 8, 9, 12, 14, 15]}.
+		
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Debut} & \textbf{Fin} & \textbf{Milieu} & \textbf{\texttt{liste[Milieu]}}\\
+			\hline
+			... & ... & ... & ...\\
+			\hline 
+		\end{tabular}
+	\end{MonExo}
+	
+		\begin{MaReponse}
+		On est en pseudo-code donc je pars du principe que les indices du tableau vont de 1 à n (8 en l'occurrence). On cherche la valeur 7.
+		
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Debut} & \textbf{Fin} & \textbf{Milieu} & \textbf{\texttt{liste[Milieu]}}\\
+			\hline
+			1 & 8 & 4 & 8\\
+			\hline 
+			1 & 3 & 2 & 2 \\
+			\hline 
+			3 & 3 & 3 & 5 \\
+			\hline
+			4 & 3 & --- & --- \\
+			\hline
+		\end{tabular}
+		
+		A cette dernière étape on a Fin < Debut, donc on sort de la boucle et l'algorithme retourne  la valeur $-1$.
+	\end{MaReponse}
+	
+	\subsubsection*{Preuve \& Complexité}
+	\textbf{\uline{Terminaison}}: à chaque tour de boucle on divise par 2 la longueur de la partie du tableau à examiner. Cette longueur,qui est une valeur entière, est un variant de la boucle tant que (car elle est positive et strictement décroissante).
+	
+	\textbf{\uline{Correction partielle}}: on a deux situations distinctes à envisager:
+	\begin{itemize}
+		\item Si $x$ n'est pas dans $T$ alors on se convainc aisément qu'il n'appartient à aucun des sous-tableaux de $T$ donc puisque l'on sait que la boucle se termine on renverra bien $-1$.
+		\item Si $x$ appartient au tableau $T$, alors il s'agit de montrer qu'à chaque tour de boucle $x$ appartient bien à la partie du tableau $T$ comprenant les éléments de \texttt{Debut} à \texttt{Fin} ou bien que l'algorithme renvoie bien sa position dans le tableau. Le tableau est découpé en trois parties: $Intervalle\_1$ = [\texttt{Debut}, \texttt{Milieu-1}], $Intervalle\_2$ =  [\texttt{Milieu}, \texttt{Milieu}], et $Intervalle\_3$ = [\texttt{Milieu+1}, \texttt{Fin}].
+		\begin{itemize}
+			\item Si $x$ est à $T$[\texttt{Milieu}] (donc dans $Intervalle\_2$)alors le résultat est renvoyé et l'algorithme est terminé;
+			\item Si x est dans $Intervalle\_1$ alors le test $x$ > $T$[\texttt[{milieu}] est faux (car le tableau est trié) et \texttt{Fin} prend la valeur\texttt{Milieu - 1};
+			\item Si x est dans $Intervalle\_3$ alors le test $x$ > $T$[\texttt[{milieu}] est vrai (car le tableau est trié) et \texttt{Debut} prend bien la valeur\texttt{Milieu + 1};
+		\end{itemize}
+	\end{itemize}
+	
+	L'algorithme préserve donc bien l'invariant de boucle "$x$ appartient à la partie du tableau $T$ comprenant les éléments de \texttt{Debut} à \texttt{Fin}" et on a donc bien prouvé la correction partielle de cet algorithme.
+	
+	\textbf{\uline{Complexité}}: nous n'allons pas réaliser ici le calcul exact de cette complexité car il dépasse le cadre du programme -- nous allons en revanche l'étudier brièvement empiriquement et en apprendre le résultat.
+	
+	\begin{MonExo}[Recherche dichotomique dans différents tableaux]
+		On se place dans le cas le pire, donc celui où l'élément recherché n'est pas dans le tableau: imaginons donc que l'on cherche l'élément 1 dans des tableaux de différentes tailles ne contenant que des 0 (qui sont donc, à l'évidence, triés). Combien de tours de boucles sont-ils nécessaires pour arriver à cette conclusion (donc renvoyer $-1$) si le tableau contient:
+		\begin{alphenum}
+			\item 1 élément?
+			\item 2 éléments?
+			\item 4 éléments?
+			\item 32 éléments?
+			\item Que pourriez-vous deviner sur la complexité sur la base de ces quelques exemples?
+		\end{alphenum}
+	\end{MonExo}
+
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item Dès le départ on a \texttt{Debut} = \texttt{Milieu} = \texttt{Fin}, donc on fera une vérification, puis on aura \texttt{Debut} qui passera à 2 et on sortira donc de la boucle:
+			
+			\begin{tabular}{|c|c|c|}
+				\hline
+				\textbf{Debut} & \textbf{Fin} & \textbf{Milieu} \\
+				\hline
+				1 & 1 & 1 \\
+				\hline 
+				2 & 1 & --- \\
+				\hline
+			\end{tabular}
+			\vspace{\baselineskip}
+			\item Un tour supplémentaire:
+			
+			\begin{tabular}{|c|c|c|}
+				\hline
+				\textbf{Debut} & \textbf{Fin} & \textbf{Milieu} \\
+				\hline
+				1 & 2 & 1 \\
+				\hline 
+				2 & 2 & 2 \\
+				\hline 
+				3 & 2 & --- \\
+				\hline
+			\end{tabular}
+			\vspace{\baselineskip}
+			\item Encore un tour de plus!
+			
+			\begin{tabular}{|c|c|c|}
+				\hline
+				\textbf{Debut} & \textbf{Fin} & \textbf{Milieu} \\
+				\hline
+				1 & 4 & 2 \\
+				\hline 
+				3 & 4 & 3 \\
+				\hline 
+				4 & 4 & 4 \\
+				\hline 
+				5 & 4 & --- \\
+				\hline
+			\end{tabular}
+			\vspace{\baselineskip}
+			\item Cette fois, on ajoute 3 tours!
+			
+			\begin{tabular}{|c|c|c|}
+				\hline
+				\textbf{Debut} & \textbf{Fin} & \textbf{Milieu} \\
+				\hline
+				1 & 32 & 16 \\
+				\hline 
+				17 & 33 & 25 \\
+				\hline 
+				26 & 33 & 29 \\
+				\hline 
+				30 & 33 & 31 \\
+				\hline 
+				32 & 33 & 32 \\
+				\hline 
+				33 & 33 & 33 \\
+				\hline 
+				34 & 33 & --- \\
+				\hline
+			\end{tabular}
+			
+			\vspace{\baselineskip}
+			\item On a 1 tour pour 1 élément; 2 pour 2; 3 pour 4; 6 pour 32. Soustrayons 1 de toutes ces valeurs et on tombe sur: 0 $\Leftrightarrow$ 1; 1 $\Leftrightarrow$ 2; 2 $\Leftrightarrow$ 4; 5 $\Leftrightarrow$ 32. Écrit autrement, cela donne: 0 $\Leftrightarrow$ $2^{0}$; 1 $\Leftrightarrow$ $2^{1}$; 2 $\Leftrightarrow$ $2^{2}$; 5 $\Leftrightarrow$ $2^{5}$ --- et je vous laisse faire les calculs mais vous trouveriez également que 3 $\Leftrightarrow$ $8 = 2^{3}$, 4 $\Leftrightarrow$ $16 = 2^{4}$, 10 $\Leftrightarrow$ $1024 = 2^{10}$,  et même 100 $\Leftrightarrow$ 1.267.650.600.000.000.000.000.000.000.000 $\approx 2^{100}$!
+			
+			En d'autres termes, l'algorithme mettra, au pire, 100 fois plus de temps pour chercher un élément dans un tableau en contenant plus de mille milliards de milliards de milliards ($10^{30}$) que dans un tableau en contenant deux --- pas mal, non? En tous cas \textbf{\textit{beaucoup}} plus performant qu'une recherche séquentielle à la complexité linéaire (et qui donc mettrait mille milliards de milliards de milliards de fois plus de temps)!
+		\end{alphenum}
+	\end{MaReponse}	
+	
+	% MCOXXXXXX MAREPONSE DECONNANT DE NOUVEAU - tout ce qui suit n'apparait pas...
+	
+	Cette valeur, la "puissance de 2 à laquelle correspond un nombre" a un nom: c'est le logarithme binaire (dont la fonction est notée $log_2$) qui a la propriété suivante pour tout entier naturel n: $log_2(2^n) = n$.
+	
+	C'est une fonction mathématique que vous étudierez ultérieurement -- et c'est pour cela que nous n'irons pas plus loin aujourd'hui, si ce n'est pour affirmer:
+	
+	\begin{MonAmp}{A retenir}
+		La complexité de la recherche dichotomique dépend de la valeur de la première puissance de 2 supérieure à la taille du tableau. Elle est donc logarithmique, c'est-à-dire qu'elle est de l'ordre de $log_2(n)$. On dit qu’elle est en  $\mathcal{O}(log_2(n))$.
+	\end{MonAmp}
+	
+	\begin{MonExo}[Codage de la recherche dichotomique]
+		Vous fondant sur le pseudo-code ci-dessus, coder une fonction \texttt{RechDicho(T, x)} qui effectue une recherche dichotomique de $x$ dans un tableau $T$ passés en argument.
+	\end{MonExo}
+	\begin{MaReponse}
+		\MonPython{011_RechDich.py}
+	\end{MaReponse}
+
+	\begin{MonRet}
+		A l'instar des sections précédentes, ils vous sera demandé ici de retenir et de comprendre:
+		\begin{itemize}
+			\item Les principes de base de fonctionnement de la recherche séquentielle et, surtout, de la recherche dichotomique -- vous devez être capables de les expliquer si on vous en donne le pseudo-code ou le code;
+			\item La complexité des deux - mais pas le calcul logarithmique;
+			\item Le fonctionnement -- tel qu'on l'a décrit ici, qui doit vous permettre de résoudre des exercices comme ceux qui sont inclus dans le cahier d'exercices d'entraînement.
+		\end{itemize}
+		
+		
+	\end{MonRet}	
+	\pagebreak
+	
+	\section{Algorithmes gloutons}
+	
+\end{document}
 
 %Eléments manquants:
