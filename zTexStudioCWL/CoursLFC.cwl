@@ -46,9 +46,10 @@
 \begin{MaRgl}{title}#\env
 \begin{MaDef}{title}#\env
 \begin{MonRet}#\env
-\begin{MonExo}{title}#\env
+\begin{MonExo}[title]#\env
 \begin{MonQz}{title}#\env
 \begin{MaReponse}#\env
+\begin{MaVid}#\env
 
 # Algorithmic redefinitions
 \algorithmicfor#m

@@ -83,6 +83,8 @@
 \renewcommand{\algorithmicreturn}{\textbf{retourner}}
 \renewcommand{\algorithmicrequire}{\textbf{Entrée:}}
 \renewcommand{\algorithmicensure}{\textbf{Sortie:}} % Détournement du Ensure, mais ce n'est pas très grave...
+% Note: le elsif n'a pas besoin d'être renew, le package le "calcule" automatiquement à partir
+% de else et if
 
 % Environnement highlight pour WIP
 \newmdenv[backgroundcolor=yellow!20, linecolor=yellow!20, innerleftmargin=10pt, innerrightmargin=10pt, innertopmargin=10pt, innerbottommargin=10pt, skipabove=\baselineskip, skipbelow=\baselineskip]{monhlt}
@@ -186,6 +188,21 @@
 	coltitle=black,     % Title text color
 	colbacktitle=white, % Fonds de la partie titre à blanc
 	title={\LARGE{\faLightbulbO} \normalsize{\hspace{0.5cm}\textbf{#1:}}}, % Title format
+	boxrule=0.1mm,      % Frame thickness
+	arc=0mm,            % Corner radius of the frame
+	top=1mm,            % Space between the frame and the content at the top
+	bottom=1mm,         % Space between the frame and the content at the bottom
+	left=2mm,           % Space between the frame and the content on the left
+	right=2mm           % Space between the frame and the content on the right
+}
+
+% Format pour les explications Vidéo
+\newtcolorbox{MaVid}{
+	colback=white,      % Background color of the box
+	colframe=black,     % Frame color
+	coltitle=black,     % Title text color
+	colbacktitle=white, % Fonds de la partie titre à blanc
+	title={\LARGE{\faVideoCamera} \normalsize{\hspace{0.5cm}\textbf{Explication video:}}}, % Title format
 	boxrule=0.1mm,      % Frame thickness
 	arc=0mm,            % Corner radius of the frame
 	top=1mm,            % Space between the frame and the content at the top
