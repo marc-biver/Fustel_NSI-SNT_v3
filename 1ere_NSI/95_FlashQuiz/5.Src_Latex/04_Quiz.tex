@@ -1,0 +1,76 @@
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+% Le truc au-dessus pour avoir l'option shell-escape qui permet de faire du minted.
+\documentclass[12pt]{article}
+
+\newcommand{\thmquiz}{un peu de tout...}
+\newcommand{\idquiz}{04}
+
+\newcommand{\classe}{1\textsuperscript{ère} NSI}
+
+% Affichage ou non des reponses aux questions & exercices
+\newif\ifDispRep
+%\DispReptrue  % Show the text
+\DispRepfalse % Hide the text
+
+% Incorporation tous éléments de préambule communs à tous mes cours
+% Fonctionne comme ceci quand la variable d'environnement TEXINPUTS est bien positionnée ET prise en compte - dans mon cas ça implique de lancer TexStudio par script interposé. (voir Evernote)
+% Sinon on donne le chemin complet:
+%\usepackage{/Users/marcbiver/Documents/01_Prof/10_Forge_AEIF/_Forge/CoursLFC}
+\usepackage{CoursLFC}
+
+
+
+\begin{document}
+	\thispagestyle{empty} % pas de header / footer - il ramenait une ligne dasn l'en-tête qui devait venir de quelque part dans CoursLFC
+	% Titre minimaliste
+	\begin{center}
+		\setlength{\fboxrule}{2pt}
+		\setlength{\fboxsep}{5pt}
+		\fbox{\textbf{{\large \classe \ --- Quiz \idquiz: \thmquiz}}}
+		\vspace{0.5em}
+	\end{center}
+	
+	\begin{MonQz}{Parcours de dictionnaire}
+		\MonPython{04_2.py}
+		Compléter (A, B, C, et D) le code de la fonction \texttt{SujetsFaciles} pour qu'elle fasse ce qui est annoncé.
+	\end{MonQz}
+	\begin{MaReponse}
+	\end{MaReponse}
+	
+	\begin{MonQz}{Invariant de boucle}
+		\MonPython{04_1.py}
+		Cette fonction est censée calculer la factorielle de n (notée $n!$ qui vaut $n \times (n-1) \times \text{(...)} \times 2$). Démontrer que c'est vrai en utilisant un invariant de boucle.
+	\end{MonQz}
+	\begin{MaReponse}
+	\end{MaReponse}
+	
+%	\begin{MonQz}{Codage d'un entier naturel}
+%		\begin{alphenum}
+%			\item Quel est le nombre maximal que je peux coder sur 5 bits?
+%			\item Combien de bits me faudra-t-il au minimum pour coder le nombre 100?
+%		\end{alphenum}
+%	\end{MonQz}
+%	\begin{MaReponse}
+%	\end{MaReponse}
+	
+	\begin{MonQz}{Code mystère}
+		\MonPython{04_4.py}
+		Que va afficher ce code? (note: cette syntaxe de print permet d'afficher du texte bout à bout sans passage à la ligne. Ainsi "\texttt{print('a', end=""); print('b', end="")})" affichera "\texttt{ab}").
+		
+	\end{MonQz}
+	\begin{MaReponse}
+	\end{MaReponse}
+	
+	\begin{MonQz}{Message d'erreur}
+		Zut -- j'ai la bonne réponse à la question 1 mais quand je teste ma fonction \texttt{SujetsFaciles} j'ai ce message d'erreur: que veut-il dire?
+		\begin{verbatim}
+			SujetsFaciles(2, LstSujets)
+			File "C:\Users\Marc\PyProj\exemple.py", line 11, in SujetsFaciles
+			if lst[i]['difficulte'] < seuil:
+			TypeError: '<' not supported between instances of 'str' and 'int'
+		\end{verbatim}
+	\end{MonQz}
+	\begin{MaReponse}
+	\end{MaReponse}
+
+\end{document}
