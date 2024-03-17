@@ -1289,20 +1289,79 @@
 	
 	\subsection{Comparaisons entre ces algorithmes...}
 	\subsubsection*{Complexité "au mieux"}
-	On a dit plus haut dans ce cours que les calculs de complexité se font dans des configurations "au pire" -- donc dans les cas où, à taille de données en entrée équivalente, les données sont telles que l'algorithme effectuera un maximum d'opérations. Mais si, comme ils semble que ce soit le cas ici, on a des algorithmes apparemment équivalents, est-ce qu'on ne pourrait pas regarder ce qu'il se passe "au mieux" pour les départager?
+	Avant de se lancer dans des considérations théoriques, on va commencer par passer notre code du tri par insertion "au banc d'essai", sur 5 tableaux contenant des données triées de différentes manières --- et on va mesurer comment ça se passe.
 	
-	Considérons de nouveau le tri par insertion et imaginons que les données en entrée sont déjà triées. En ce cas, on voit bien que la condition \texttt{tab[p-1] > temp} n'est \textit{jamais} satisfaite, et que donc seule la boucle externe, la boucle \texttt{pour} influence la complexité. Or celle-ci est effectuée $(n-1)$ fois, donc on se retrouvera avec une complexité linéaire, en $\mathcal{O}(n)$.
+	Voici le code que l'on utilise pour les créer (il utilise la \textit{syntaxe par compréhension} sur laquelle nous reviendrons prochainement):
+	\MonPython{012_StressTestTriIns.py}
 	
-	Cette considération a-t-elle un intérêt? Imaginez que vous mettiez bout à bout deux listes, toutes deux déjà triées, une (appelée "t") très longue, et une (appelée "s") très courte, comme dans le schéma ci-dessous:
+	Les 5 tableaux créés par ce code que l'on a triés \textbf{au moyen du tri par insertion} sur ma machine pendant notre cours sont\footnote{Pour rappel: quand on parle de complexité, la \textit{durée} d'un traitement seul n'a pas d'intérêt, car trop dépendante de facteurs tels que le processeur de la machine, sa RAM, etc. Ce qui est intéressant en revanche c'est de comparer des temps de traitement d'un seul et même algorithme auquel on donne différents jeux de données en entrée.}:
+	\begin{itemize}
+		\item \textbf{T1:} 20.000 nombres entiers aléatoires, en ordre aléatoire:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.6\textwidth]{038_T1.png}
+		\end{figure}
+		\qquad \Large \faSortAlphaAsc \normalsize \quad Il a été trié en environ \textbf{5 secondes}.
+		\item \textbf{T2:} 20.000 nombres entiers, rangés en ordre croissant:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.6\textwidth]{039_T2.png}
+		\end{figure}
+		\qquad \Large \faSortAlphaAsc \normalsize \quad Il a été trié en environ \textbf{0 secondes} (trop rapide pour qu'on puisse déclencher un chronomètre).
+		\item \textbf{T3:} un tableau constitué de deux moitiés -- la première (indices les plus faibles): 10.000 nombres entiers, rangés en ordre croissant; la seconde (indices les plus élevés): 10.000 nombres entiers aléatoires, en ordre aléatoire:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.75\textwidth]{040_T3.png}
+		\end{figure}
+		\qquad \Large \faSortAlphaAsc \normalsize \quad Il a été trié en environ \textbf{2 secondes}.
+		\item \textbf{T3bis:} un tableau constitué des mêmes deux moitiés que le T3, mais dans l'ordre inverse (donc la partie "dans l'ordre" est sur les indices les plus élevés):
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.75\textwidth]{041_T3bis.png}
+		\end{figure}
+		\qquad \Large \faSortAlphaAsc \normalsize \quad Il a été trié en environ \textbf{8 secondes}.
+		\item \textbf{T4:} 20.000 nombres entiers, rangés en ordre décroissant (l'inverse du tableau T2):
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.6\textwidth]{042_T4.png}
+		\end{figure}
+		\qquad \Large \faSortAlphaAsc \normalsize \quad Il a été trié en environ \textbf{10 secondes}.
+	\end{itemize}
+	
+	Comment interpréter ces résultats\footnote{Pour rappel, en plus de la présente section du cours, on a fait en cours une analyse plus approfondie de ces résultats sur 200 passages des trois algorithmes (bulle, sélection, insertion) qu'on a pu comparer entre eux --- je vous joindrai les résultats en annexe de ce cours.}? Il nous suffit de penser au principe de fonctionnement tri par insertion qui parcourt la liste de gauche à droite (par indices croissants) et, pour chaque nouvelle valeur, la fait "glisser" à sa place définitive:
+	\begin{itemize}
+		\item Dans le cas du tableau T2, puisque les valeurs sont déjà dans l'ordre, à chaque tour de boucle, tout ce que l'algorithme fait c'est comparer la valeur à la précédente dans la liste puis, constatant qu'elle est à sa place (la condition \texttt{tab[i-1] > temp} n'est \textit{jamais} satisfaite), passer au suivant. Le nombre d'opérations effectué n'est donc influencé \textit{que} par la boucle externe, que l'on va parcourir $(n-1)$ fois, donc dans ce cas va être un multiple de $20.000$; quand on sait qu'un processeur moderne peut effectuer plusieurs millions d'opérations par seconde, il n'est pas étonnant qu'on n'ait pas eu le temps de déclencher le chronomètre pour ce test ...
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.8\textwidth]{045_T2_Insertion.png}
+		\end{figure}
+		\item A l'inverse, la table T4 est dans l'ordre inverse exact de ce qu'on voudrait qu'elle soit. Comptons le nombre d'opérations que l'on va devoir effectuer à l'étape $i$ de la boucle externe:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.8\textwidth]{043_T4_Insertion.png}
+		\end{figure}	
+		On voit aisément qu'on va effectuer un nombre d'opérations qui va être de l'ordre d'un multiple de $i$ (puisqu'on va effectuer des comparaisons et des déplacement de valeurs dans la case suivante (flèches courbes bleues) depuis la case i jusqu'à la case 1). Donc, pour le traitement complet de la table on est sur un multiple d'une somme de:
+		\begin{align*}
+			1 + 2 + 3 + \text{(...)} + (n-2) + (n-1) &= \frac{n\times (n-1)}{2} \\
+			&= \frac{1}{2} \times n^2 - n \times \frac{1}{2}
+		\end{align*}
+		On est donc sur un ordre de grandeur d'un multiple de $n^2 = 20.000^2 = 400.000.000$  --- soit 400 millions.... Pas étonnant, donc, que le tri prenne (au moins) quelques secondes!
+	\end{itemize}
+	
+	\textit{(Je vous laisse faire les raisonnements pour les tables T3 et T3bis qui sont des variantes des tables T2 et T4 (sachant que la table T1 est le "cas générique" d'une table non triée).)}
+	
+	On a dit plus haut dans ce cours que les calculs de complexité se font dans des configurations "au pire" -- donc dans les cas où, à taille de données en entrée équivalente, les données sont telles que l'algorithme effectuera un maximum d'opérations. Ici, en revanche, on vient de voir qu'il y a un fort intérêt à faire deux calculs: le "au pire" (T4), effectivement, qui nous donne une complexité quadratique ($\mathcal{O}(n^2)$), mais également le "au mieux" (T2) qui nous donne une complexité linéaire ($\mathcal{O}(n)$).
+	
+	Cette considération a-t-elle un intérêt? Oui, clairement: imaginez que vous mettiez bout à bout deux listes, toutes deux déjà triées, une (appelée "t") très longue, et une (appelée "s") très courte, comme dans le schéma ci-dessous (on pourrait imaginer l'intégration d'une liste de nouveaux clients à un répertoire de clients existants par exemple):
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.9\textwidth]{030_AuMieux.png}
 	\end{figure}
-	On se convainc aisément que dans ce cas la vaste majorité des itérations se fera sans passage dans la boucle internet et que seules les quelques dernières donneront lieu à un réel tri, ce qui réduira considérablement le temps de traitement par rapport à un tri par sélection où toutes les comparaisons seront effectuées quoi qu'il arrive.
+	On se trouve dans une situation proche de la liste T3 ci-dessus et on se convainc aisément que dans ce cas la vaste majorité des itérations se fera sans passage dans la boucle interne et que seules les quelques dernières donneront lieu à un réel tri, ce qui réduira considérablement le temps de traitement par rapport à un tri par sélection où toutes les comparaisons seront effectuées quoi qu'il arrive.
 	
 	\textit{Deux remarques au sujet de ce qui précède:
 	\begin{enumerate}
-		\item Vous noterez que dans cet exemple le fait de mettre la liste courte \textbf{après} la liste longue est fondamental -- c'est typiquement le genre de question d'optimisation qu'il faut régulièrement se poser;
+		\item Vous noterez que dans cet exemple le fait de mettre la liste courte \textbf{après} la liste longue est fondamental -- c'est typiquement le genre de question d'optimisation qu'il faut régulièrement se poser (c'est toute la différence entre la liste T3 et la liste T3bis dans nos essais précédents);
 		\item En pratique cette situation ne se poserait pas en ces termes -- je vous la présente ici simplement pour illustrer une différence de performances entre ces deux algorithmes de tri.
 	\end{enumerate}}
 	
@@ -1349,6 +1408,16 @@
 	\end{center}
 	
 	Ceci était un début de lien avec la section suivante de ce chapitre -- la \textit{recherche dans les tableaux}; nous y reviendrons donc.
+	
+	\begin{MonExo}[Application d'un tri stable]
+		Pour s'assurer qu'on a bien compris cette notion de tri stable et instable, appliquons-la à un exemple simple: soit la liste de binômes suivante, triez-la d'abord par le deuxième élément de manière stable, puis triez-la à nouveau par le premier élément, également de manière stable. Notez les résultats après chaque tri.
+		
+		Liste initiale : [("a", 3), ("b", 2), ("c", 3), ("d", 2)]
+	\end{MonExo}
+	\begin{MaReponse}
+		Premier tri (par le deuxième élément) : [("b", 2), ("d", 2), ("a", 3), ("c", 3)]
+		Deuxième tri (par le premier élément) : [("a", 3), ("b", 2), ("c", 3), ("d", 2)]
+	\end{MaReponse}
 
 	\subsubsection*{Avantages et inconvénients}
 	
@@ -1479,7 +1548,7 @@
 		\item Si les valeurs sont égales alors la position du milieu est la position cherchée;
 		\item Sinon on recommence en cherchant $x$ dans la moitié du tableau qui convient.
 	\end{itemize}
-
+	
 	\MaQuest{Sur la base de ces descriptions, parvenez-vous à rédiger cet algorithme en pseudo-code?}
 	
 	\begin{MaReponse}
@@ -1506,14 +1575,7 @@
 			\Comment{On ne l'a pas trouvé}
 			\EndFunction
 		\end{algorithmic}
-	\end{MaReponse}	
-	
-	
-	% MCOXXXXXX - MA REPONSE QUI REDECONNE ICI, EXOS INVISIBLES QUAND ON N'AFFICHE
-	% PAS LES REPONSES
-	\begin{MonExo}[TOTO]
-		TITI
-	\end{MonExo}
+	\end{MaReponse}
 	
 	\begin{MonExo}[Application concrète]
 		Effectuez une recherche dichotomique de l'élément \texttt{5} dans la liste \texttt{[1, 2, 5, 8, 9, 12, 14, 15]} et complétez le tableau suivant:
@@ -1534,20 +1596,26 @@
 			\hline
 			\textbf{Debut} & \textbf{Fin} & \textbf{Milieu} & \textbf{\texttt{liste[Milieu]}}\\
 			\hline
-			1 & 8 & 4 & 8\\
+			\textbf{\textcolor{blue}{1}} & \textbf{\textcolor{blue}{8}} & \textbf{\textcolor{blue}{4}} & \textbf{\textcolor{blue}{8}}\\
 			\hline 
-			1 & 3 & 2 & 2 \\
+			\textbf{\textcolor{red}{1}} & \textbf{\textcolor{red}{3}} & \textbf{\textcolor{red}{2}} & \textbf{\textcolor{red}{2}} \\
 			\hline 
-			3 & 3 & 3 & 5 \\
+			\textbf{\textcolor{mondarkgreen}{3}} & \textbf{\textcolor{mondarkgreen}{3}} & \textbf{\textcolor{mondarkgreen}{3}} & \textbf{\textcolor{mondarkgreen}{5}} \\
 			\hline
 		\end{tabular}
 		
+		(les couleurs associées aux étapes dans le tableau ci-dessus correspondent à celles dans le schéma ci-dessous)
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.9\textwidth]{044_RechDicho.png}
+		\end{figure}
+		
 		Et l'algorithme retourne donc l'indice 3.
 	\end{MaReponse}
-
 	
 	\begin{MonExo}[Application concrète -- 2]
-		Même exercice que le précédent, avec l'élément \texttt{7}, toujours dans la liste \texttt{[1, 2, 5, 8, 9, 12, 14, 15]}.
+		Même exercice que le précédent, avec l'élément \texttt{12}, toujours dans la liste \texttt{[1, 2, 5, 8, 9, 12, 14, 15]}.
 		
 		\begin{tabular}{|c|c|c|c|}
 			\hline
@@ -1558,7 +1626,35 @@
 		\end{tabular}
 	\end{MonExo}
 	
-		\begin{MaReponse}
+	\begin{MaReponse}
+		On est en pseudo-code donc je pars du principe que les indices du tableau vont de 1 à n (8 en l'occurrence). On cherche la valeur 12.
+		
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Debut} & \textbf{Fin} & \textbf{Milieu} & \textbf{\texttt{liste[Milieu]}}\\
+			\hline
+			1 & 8 & 4 & 8\\
+			\hline 
+			5 & 8 & 6 & 12 \\
+			\hline 
+		\end{tabular}
+		
+		On a trouvé la valeur recherchée, donc l'algorithme renvoie l'indice 6.
+	\end{MaReponse}
+	
+	\begin{MonExo}[Application concrète -- 3]
+		Même exercice que les précédents, avec l'élément \texttt{7}, toujours dans la liste \texttt{[1, 2, 5, 8, 9, 12, 14, 15]}.
+		
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Debut} & \textbf{Fin} & \textbf{Milieu} & \textbf{\texttt{liste[Milieu]}}\\
+			\hline
+			... & ... & ... & ...\\
+			\hline 
+		\end{tabular}
+	\end{MonExo}
+	
+	\begin{MaReponse}
 		On est en pseudo-code donc je pars du principe que les indices du tableau vont de 1 à n (8 en l'occurrence). On cherche la valeur 7.
 		
 		\begin{tabular}{|c|c|c|c|}
@@ -1606,7 +1702,7 @@
 			\item Que pourriez-vous deviner sur la complexité sur la base de ces quelques exemples?
 		\end{alphenum}
 	\end{MonExo}
-
+	
 	\begin{MaReponse}
 		\begin{alphenum}
 			\item Dès le départ on a \texttt{Debut} = \texttt{Milieu} = \texttt{Fin}, donc on fera une vérification, puis on aura \texttt{Debut} qui passera à 2 et on sortira donc de la boucle:
@@ -1678,9 +1774,7 @@
 			
 			En d'autres termes, l'algorithme mettra, au pire, 100 fois plus de temps pour chercher un élément dans un tableau en contenant plus de mille milliards de milliards de milliards ($10^{30}$) que dans un tableau en contenant deux --- pas mal, non? En tous cas \textbf{\textit{beaucoup}} plus performant qu'une recherche séquentielle à la complexité linéaire (et qui donc mettrait mille milliards de milliards de milliards de fois plus de temps)!
 		\end{alphenum}
-	\end{MaReponse}	
-	
-	% MCOXXXXXX MAREPONSE DECONNANT DE NOUVEAU - tout ce qui suit n'apparait pas...
+	\end{MaReponse}
 	
 	Cette valeur, la "puissance de 2 à laquelle correspond un nombre" a un nom: c'est le logarithme binaire (dont la fonction est notée $log_2$) qui a la propriété suivante pour tout entier naturel n: $log_2(2^n) = n$.
 	
@@ -1696,21 +1790,46 @@
 	\begin{MaReponse}
 		\MonPython{011_RechDich.py}
 	\end{MaReponse}
-
+	
 	\begin{MonRet}
 		A l'instar des sections précédentes, ils vous sera demandé ici de retenir et de comprendre:
 		\begin{itemize}
 			\item Les principes de base de fonctionnement de la recherche séquentielle et, surtout, de la recherche dichotomique -- vous devez être capables de les expliquer si on vous en donne le pseudo-code ou le code;
-			\item La complexité des deux - mais pas le calcul logarithmique;
+			\item La complexité des deux -- mais pas le calcul logarithmique;
 			\item Le fonctionnement -- tel qu'on l'a décrit ici, qui doit vous permettre de résoudre des exercices comme ceux qui sont inclus dans le cahier d'exercices d'entraînement.
 		\end{itemize}
 		
 		
-	\end{MonRet}	
+	\end{MonRet}
 	\pagebreak
 	
 	\section{Algorithmes gloutons}
+	On s'intéresse ici aux problèmes d'\textit{optimisation}, c'est-à-dire ceux qui acceptent de multiples solutions possibles mais où l'on en cherche une satisfaisant un certain nombre de contraintes. Par exemple:
+	\begin{itemize}
+		\item La recherche du plus court chemin reliant deux villes en utilisant un réseau routier existant;
+		\item Le nombre minimum de pièces de monnaie qu'un commerçant peut rendre à un client;
+		\item Le nombre maximum de cours que l'on peut organiser dans une même journée dans un  établissement ayant un nombre fixé de salles et connaissant la durée et les horaires de chaque cours.
+	\end{itemize}
 	
+	En pratique, on cherche à trouver une solution algorithmique pour résoudre des problèmes d'optimisation quand:
+	\begin{enumerate}
+		\item Le problème posé possède un très grand nombre de solutions;
+		\item On sait évaluer la qualité de chacune des solutions (et donc les comparer entre elles pour identifier la meilleure).
+	\end{enumerate}
+	
+	Étudions quelques uns de ces problèmes...
+	
+	\subsection{Le problème du voyageur de commerce}
+	
+	Le problème du voyageur de commerce (ou "TSP" comme \textit{Travelling Salesman Problem}) est un grand classique des questions logistiques: un voyageur de commerce doit se rendre dans plusieurs villes. Si on connaît la distance séparant chacune des villes, peut-on déterminer l'itinéraire le plus court lui permettant de visiter chaque ville une et une seule fois et qui se termine dans la ville de départ?
+	
+	Supposons que le voyageur se trouve dans une première ville A et qu'il doit se rendre dans quatre autres villes B,C,D et E, puis enfin revenir à son point de départ A. On donne le tableau des distance kilométriques séparant chacune des villes (ainsi que sa représentation sous forme de graphe) suivant:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{046_TSP.png}
+	\end{figure}
+	
+
 \end{document}
 
 %Eléments manquants:
