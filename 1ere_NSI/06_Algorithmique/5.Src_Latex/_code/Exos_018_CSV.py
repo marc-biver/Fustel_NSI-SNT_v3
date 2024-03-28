@@ -1,0 +1,1 @@
+import csvfichier = open('Truc.csv', 'r', encoding = 'utf-8')table = list(csv.DictReader(fichier))

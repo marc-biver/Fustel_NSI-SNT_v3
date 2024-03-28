@@ -1,0 +1,1 @@
+def AgeMoy(classe):    SommeAges = 0    NbAges = 0    for elt in table:        if elt['Classe'] == classe:            NbAges += 1            SommeAges += int(elt['Age'])    return(SommeAges / NbAges)

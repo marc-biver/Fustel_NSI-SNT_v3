@@ -1,0 +1,1 @@
+def Occ(t):        res = {}    for x in t:        if x in res:            res[x] += 1        else:            res[x] = 1    return res

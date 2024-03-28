@@ -4,11 +4,11 @@
 
 % Affichage ou non des reponses aux questions & exercices
 \newif\ifDispRep
-\DispReptrue  % Show the text
-%\DispRepfalse % Hide the text
+%\DispReptrue  % Show the text
+\DispRepfalse % Hide the text
 
 % Version du document
-\newcommand{\versiondoc}{v0.2}
+\newcommand{\versiondoc}{v0.3}
 
 % Incorporation tous éléments de préambule communs à tous mes cours
 % Sans chemin relatif parce que TexStudio lancé depuis un script qui prend en compte la variable d'environnement TEXINPUTS
@@ -32,7 +32,9 @@
 			}
 			
 		\vspace{1cm}
-		\huge{Algorithmique} }
+		\huge{Algorithmique}
+		
+		\large{(et un peu de traitement de données en table / dictionnaires)}}
 		 
 		\vspace{1cm}
 	}
@@ -294,24 +296,478 @@
 				\item \texttt{[1, 2, 3, 5]}
 			\end{enumerate}
 			\item Là, en revanche, on inverse le sens de tri -- on fait une permutation si l'élément de droite (d'indice supérieur) est \textbf{supérieur} à celui de gauche: donc on obtiendra à la fin la liste triée par ordre décroissant au lieu de croissant.
-			\item A la fin de la première itération de la boucle externe (donc quand la boucle interne a fini son travail une première fois), on a ramené le plus grand élément de la liste à la fin de celle-ci; à la fin de la deuxième itération, le deuxième plus grand est en avant-dernière position; (...); à la fin de la i\textsuperscript{ième} itération, le i\textsuperscript{ième} plus grand est en i\textsuperscript{ième} position en partant de la fin, et tous ceux qui le suivent sont positionnés en ordre croissant\footnote{Si vous ne me croyez pas, démontrez-le en utilisant un invariant de boucle -- c'est exactement à cela qu'ils servent!!}. Donc quand on passe à la (i+1)\textsuperscript{ième} itération de la boucle, on a déjà les i éléments "de droite" (de plus grands indices) de la liste qui sont déjà triés et qu'il ne sert plus à rien, de trier de nouveau --  on peut donc modifier la boucle interne pour qu'elle ne regarde plus ces éléments, et donc soit plus optimale, en la faisant aller non plus de 0 à n-2 mais de 0 à n-i-2. Le résultat sera le suivant:
+			\item A la fin de la première itération de la boucle externe (donc quand la boucle interne a fini son travail une première fois), on a ramené le plus grand élément de la liste à la fin de celle-ci; à la fin de la deuxième itération, le deuxième plus grand est en avant-dernière position; (...); à la fin de la i\textsuperscript{ième} itération, le i\textsuperscript{ième} plus grand est en i\textsuperscript{ième} position en partant de la fin, et tous ceux qui le suivent sont positionnés en ordre croissant (\textit{si vous ne me croyez pas, démontrez-le en utilisant un invariant de boucle -- c'est exactement à cela qu'ils servent!!}). Donc quand on passe à la (i+1)\textsuperscript{ième} itération de la boucle, on a déjà les i éléments "de droite" (de plus grands indices) de la liste qui sont déjà triés et qu'il ne sert plus à rien, de trier de nouveau --  on peut donc modifier la boucle interne pour qu'elle ne regarde plus ces éléments, et donc soit plus optimale, en la faisant aller non plus de 0 à n-2 mais de 0 à n-i-2. Le résultat sera le suivant:
 			\MonPython{Exos_012_TriBullesOptim.py}
 		\end{alphenum}
 	\end{MaReponse}
 	
-	% MCOXXXXXX - AR
+
 
 	\begin{MonExo}[Devinette de nombre]
-		Le code utilisé pour l'implémentation de cette fonction est le suivant:
+		Le code utilisé pour l'implémentation de la fonction de recherche dichotomique est le suivant:
 		\MonPython{011_RechDich.py}
-		Modifier ce code pour en faire le jeu évoqué en cours -- vous choisissez un nombre entre 1 et 100 et l'ordinateur doit le deviner l'ordinateur choisit un nombre, puis demande à l'utilisateur 
-	\end{MonExo}
-
-	\begin{MonExo}[Recherche dichotomique]
-		Donnez deux exemples d'exécution de recherche dichotomique où le nombre d'exécutions de la boucle est exactement 5 --- un sans solution (retour de $-1$), un avec une solution.
+		Appuyez-vous sur cette approche et développez le jeu évoqué en cours -- vous choisissez un nombre entre 0 et 100 et l'ordinateur doit le deviner en vous posant des questions.
+		
+		\vspace{\baselineskip}
+		Exemple de séquence:
+		\begin{verbatim}
+			Pensez à un nombre entre 0 et 100...
+			Si il est plus grand que 50, tapez 1; s'il est plus petit, tapez 2;
+			s'il est égal à 50 tapez 3.
+			2
+			Si il est plus grand que 25, tapez 1; s'il est plus petit, tapez 2;
+			s'il est égal à 25 tapez 3.
+			3
+			J'ai trouvé! Votre nombre est 25.
+		\end{verbatim}
+		
+		\vspace{\baselineskip}
+		Indices:
+		\begin{itemize}
+			\item Vous allez évidemment devoir utiliser la fonction "input()" pour recueillir les réponses de l'utilisateur;
+			\item Vous allez construire de nombreuses fois le même message, avec des valeurs différentes. Voici un exemple qui pourra vous aider:
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.9\textwidth]{048_Concat.png}
+			\end{figure}
+		\end{itemize}
+		%\vspace{1.5\baselineskip}
+		\vspace{\baselineskip}
+		\textit{Version améliorée: l'ordinateur doit être capable de détecter si l'utilisateur triche (change de nombre en cours de route)...}
 	\end{MonExo}
 	\begin{MaReponse}
-		%MCOXXXXXX
+		Le code demandé ici est relativement simple:
+		\MonPython{Exos_013_RechNb.py}
+		
+		Pour ce qui est de la version améliorée, il est impossible de détecter que l'utilisateur a menti tant qu'on n'a pas fini l'algorithme: en effet, à tout moment, tant que \texttt{debut <= fin}, on n'a pas couvert la totalité des nombres possibles et donc le nombre deviné par l'utilisateur peut en être un qu'on n'a pas encore couvert. En revanche, si l'on termine l'algorithme sans avoir trouvé (lorsque \texttt{debut > fin}), on est forcément dans un cas où l'utilisateur a triché (puisque, on l'a démontré en cours, l'algorithme est correct). On peut donc, après la boucle, ajouter un message pour dire à l'utilisateur qu'on l'a capté!
+	\end{MaReponse}
+
+	\begin{MonExo}[Recherche dichotomique]
+		Donnez deux exemples d'exécution de recherche dichotomique où le nombre d'exécutions de la boucle est exactement 4 --- un sans solution (retour de $-1$), une avec une solution. Dans les deux cas il vous est demandé de donner la liste considérée et le nombre recherché.
+	\end{MonExo}
+	\begin{MaReponse}
+		Le cas le plus simple est celui où l'on ne trouve pas la valeur cherchée: en effet, comme on l'a vu en cours, c'est le cas le pire du point de vue de la complexité, et dans ce cas elle est en $\mathcal{O}(log_2(n))$. Donc pour avoir 4 opérations, il faut une liste de longueur $2^4 = 16$. Donc, par exemple, la recherche de "20" dans la liste \texttt{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]} se fera en 4 itérations.
+		
+		Si l'on y réfléchit bien, le cas où l'on va trouver l'élément (si on ne demande pas plus de conditions comme c'est le cas ici) n'est pas beaucoup plus simple puisque l'algorithme de la recherche dichotomique est construit de telle sorte que les derniers éléments à être considérés sont les extrémités du tableau. On peut donc dire que la recherche de "1" (tout comme celle de "16") dans la liste \texttt{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]} se fera en 4 itérations.
 	\end{MaReponse}
 	
+	\begin{MonExo}[Recherche dichotomique modifiée]
+		\begin{alphenum}
+			\item  Modifier l'algorithme de recherche dichotomique afin qu'il indique le nombre valeurs examinées dans un tableau donné pour localiser un élément dans un tableau trié ou indiquer qu'il n’est pas présent dans le tableau
+			\item Quels tests peut-on imaginer pour cet algorithme ?
+		\end{alphenum}
+	\end{MonExo}
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item La modification de l'algorithme est simple -- il suffit d'ajouter un compteur et de l'afficher (très similaire à ce que l'on a fait avec la variable \texttt{cps} dans l'exercice 9 ci-dessus). Notez:
+			\begin{itemize}
+				\item Les lignes 4, 8, et 10 de l'algorithme ci-dessous où l'on implémente le compteur;
+				\item La ligne 7 où l'on stocke T[Milieu] dans une variable, ce qui nous permet de l'utiliser plusieurs fois en ne la lisant qu'une seule fois.
+			\end{itemize} 
+			
+			\begin{algorithmic}[1]
+				\Require{$T$, $x$}
+				\Ensure{$position$ de l'élément $x$ dans $T$, -1 si non trouvé}
+				\Function{RechDichotomique}{$T$, $x$}
+				\State $Debut$ $\leftarrow 1$
+				\State $Fin$ $\leftarrow longueur(T)$
+				\State $ValLues$ $\leftarrow 0$
+				\While{$Debut \leq Fin$}
+				\State $Milieu$ $\leftarrow (Debut + Fin) // 2$
+				\State $ValCur$ $\leftarrow T[Milieu]$
+				\State $ValLues$ $\leftarrow ValLues + 1$
+				\If{$x = ValCur$}
+				\Comment{On a trouvé l'élément recherché}
+				\State Afficher "On a lu: " $ValLues$ " valeurs dans le tableau"
+				\State\Return{$Milieu$}
+				\ElsIf{$x > ValCur$}
+				\State $Debut$ $\leftarrow Milieu + 1$
+				\Comment{L'élément n'est pas "à gauche"}
+				\Else
+				\State $Fin$ $\leftarrow Milieu - 1$
+				\Comment{L'élément n'est pas "à droite"}
+				\EndIf
+				\EndWhile
+				\State\Return{$-1$}
+				\Comment{On ne l'a pas trouvé}
+				\EndFunction
+			\end{algorithmic}
+			\item Pour les tests à effectuer il importe d'essayer de couvrir le plus de cas possibles. On peut par exemple imaginer un jeu de tests contenant:
+			\begin{itemize}
+				\item Une recherche de 2 dans \texttt{L = [1, 2, 3, 4, 5, 6]} (valeur trouvée, qui n'est pas à une extrémité);
+				\item Une recherche de 5 dans \texttt{L} (valeur non trouvée);
+				\item Une recherche de 1 puis 4 dans \texttt{L} (valeur trouvée, qui est à une extrémité);
+				\item Recherche de 1 dans \texttt{LVide = []} (liste vide).
+			\end{itemize}
+		\end{alphenum}
+	\end{MaReponse}
+	
+	\begin{MonExo}[Jeu des 7 différences (enfin 2 en l'occurrence...)]
+		Soit le code suivant:
+		\MonPython{Exos_014_RechDichFausse.py}
+		Voyez-vous les deux différences entre ce code et celui qu'on a développé en cours? Quel problème est-ce que cela pose? Que se passerait-il si je lançais la commande \texttt{RechDich([1, 2, 3, 4, 5], 5)}?
+	\end{MonExo}
+	\begin{MaReponse}
+		Les différences se situent aux lignes 12 et 14 du code où l'on a \texttt{debut = milieu} et \texttt{fin = milieu} au lieu de \texttt{debut = milieu + 1} et \texttt{fin = milieu - 1} respectivement. Ceci pourrait entrainer une boucle infinie dans certains cas comme on va le voir sur l'exemple proposé dans l'énoncé (comme on travaille ici sur du code Python et non du pseudo-code j'utilise les indices de 0 à n):
+		
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Debut} & \textbf{Fin} & \textbf{Milieu} & \textbf{\texttt{liste[Milieu]}}\\
+			\hline
+			0 & 4 & 2 & 3\\
+			\hline 
+			2 & 4 & 3 & 4 \\
+			\hline 
+			3 & 4 & 3 & 4 \\
+			\hline
+			3 & 4 & 3 & 4 \\
+			\hline
+			\multicolumn{4}{c}{\textbf{etc.............}} 
+		\end{tabular}
+		
+		Vous remarquerez que c'est le seul cas où le problème se posera --- une recherche de n'importe quelle autre valeur fonctionnera sans problème.
+	\end{MaReponse}
+	
+	\begin{MonExo}[Une fonction tordue]
+		On considère le code de fonction suivant:
+		\MonPython{Exos_015_NbrDup.py}
+		\begin{alphenum}
+			\item A la main, déterminez le résultat de l'appel à cette fonction pour les cas suivants:
+			\begin{enumerate}
+				\item \texttt{t = [1, 2, 3]}
+				\item \texttt{t = [1, 1, 1]}
+				\item \texttt{t = [1, 1, 3]}
+				\item \texttt{t = [1, 2, 2]}
+			\end{enumerate}
+			\item Comment, du coup, formuleriez-vous la \texttt{docstring} de cette fonction pour expliquer ce qu'elle fait?
+			\item En termes de complexité (donc du nombre d'opérations effectuées par la fonction), lequel des 4 cas suivants est le pire?
+			\item On se place dans un cas "au pire": combien de fois, en fonction de $n$ la taille du tableau \texttt{t}, l'instruction \texttt{n\_dup[i] += 1} est-elle effectuée lorsque:
+			\begin{enumerate}
+				\item $i$ vaut $0$?
+				\item $i$ vaut $1$?
+				\item $i$ vaut $n - 1$?
+			\end{enumerate}
+			\item En déduire, en justifiant bien, la complexité en fonction de $n$ de la fonction \texttt{NbrDup}.
+		\end{alphenum}
+	\end{MonExo}
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item Reprenons l'approche que nous avons déjà utilisée plus haut, à savoir un tableau qui nous permet de suivre les valeurs successives de différentes variables:
+			\begin{enumerate}
+				\item Pour \texttt{t = [1, 2, 3]}:
+				
+				\begin{tabular}{|c|c|c|c|c|c|}
+					\hline
+					\textbf{Ligne Code} & \texttt{n\_dup} & \texttt{i} & \texttt{j} & \texttt{t[i]} & \texttt{t[j]} \\
+					\hline
+					6 & \texttt{[0,0,0]} & - & - & - & -\\
+					\hline 
+					9 & \texttt{[0,0,0]} & 0 & 1 & 1 & 2\\
+					\hline 
+					9 & \texttt{[0,0,0]} & 0 & 2 & 1 & 3\\
+					\hline 
+					9 & \texttt{[0,0,0]} & 1 & 2 & 2 & 3\\
+					\hline 
+				\end{tabular}
+				
+				Et le traitement renvoie donc \texttt{[0,0,0]}
+				
+				\item Pour \texttt{t = [1, 1, 1]}:
+				
+				\begin{tabular}{|c|c|c|c|c|c|}
+					\hline
+					\textbf{Ligne Code} & \texttt{n\_dup} & \texttt{i} & \texttt{j} & \texttt{t[i]} & \texttt{t[j]} \\
+					\hline
+					6 & \texttt{[0,0,0]} & - & - & - & -\\
+					\hline 
+					9 & \texttt{[0,0,0]} & 0 & 1 & 1 & 1\\
+					\hline 
+					10 & \texttt{[1,0,0]} & 0 & 1 & 1 & 1\\
+					\hline 
+					9 & \texttt{[1,0,0]} & 0 & 2 & 1 & 1\\
+					\hline 
+					10 & \texttt{[2,0,0]} & 0 & 1 & 1 & 1\\
+					\hline 
+					9 & \texttt{[2,0,0]} & 1 & 2 & 1 & 1\\
+					\hline 
+					10 & \texttt{[2,1,0]} & 0 & 1 & 1 & 1\\
+					\hline 
+				\end{tabular}
+				
+				Et le traitement renvoie donc \texttt{[2,1,0]}
+				
+				\item Pour \texttt{t = [1, 1, 3]}:
+				
+				\begin{tabular}{|c|c|c|c|c|c|}
+					\hline
+					\textbf{Ligne Code} & \texttt{n\_dup} & \texttt{i} & \texttt{j} & \texttt{t[i]} & \texttt{t[j]} \\
+					\hline
+					6 & \texttt{[0,0,0]} & - & - & - & -\\
+					\hline 
+					9 & \texttt{[0,0,0]} & 0 & 1 & 1 & 1\\
+					\hline 
+					10 & \texttt{[1,0,0]} & 0 & 1 & 1 & 1\\
+					\hline 
+					9 & \texttt{[1,0,0]} & 0 & 2 & 1 & 3\\
+					\hline 
+					9 & \texttt{[1,0,0]} & 1 & 2 & 1 & 3\\
+					\hline 
+				\end{tabular}
+				
+				Et le traitement renvoie donc \texttt{[1,0,0]}
+				
+				\item Pour \texttt{t = [1, 2, 2]}:
+				
+				\begin{tabular}{|c|c|c|c|c|c|}
+					\hline
+					\textbf{Ligne Code} & \texttt{n\_dup} & \texttt{i} & \texttt{j} & \texttt{t[i]} & \texttt{t[j]} \\
+					\hline
+					6 & \texttt{[0,0,0]} & - & - & - & -\\
+					\hline 
+					9 & \texttt{[0,0,0]} & 0 & 1 & 1 &2\\
+					\hline 
+					9 & \texttt{[0,0,0]} & 0 & 2 & 1 & 2\\
+					\hline 
+					9 & \texttt{[0,0,0]} & 1 & 2 & 2 & 2\\
+					\hline 
+					10 & \texttt{[0,1,0]} & 1 & 2 & 2 & 2\\
+					\hline 
+				\end{tabular}
+				
+				Et le traitement renvoie donc \texttt{[0,1,0]}
+			\end{enumerate}
+			
+			\item On pourrait écrire (mais je vous accorde que c'est bien tordu...):
+			\begin{verbatim}
+				''' Fonction qui prend en entrée un tableau t et qui renvoie 
+				un tableau n_dup de même taille que t qui contient, à chaque 
+				indice, le nombre de fois que t[i] est présent dans la suite 
+				du tableau (donc dans les indices [i+1, n-1]).'''
+			\end{verbatim}
+			
+			\item La réponse est à la fois logique et facile à constater en regardant les tableaux ci-dessus. La seule instruction qui n'est pas effectuée à chaque fois est \texttt{n\_dup[i] += 1} puisqu'elle dépend de la condition \texttt{if t[i] == t[j]}; le cas le pire est donc celui où cette condition est vérifiée un maximum de fois --- donc dans le cas (b) ci-dessus, celui où toutes les valeurs du tableau sont identiques. Ceci se vérifie aisément en constatant le nombre de lignes des tableaux qu'on a utilisés ci-dessus, qui est maximal dans le cas (b).
+			
+			\item On se place donc ici dans le cas d'un tableau de longueur $n$ contenant $n$ fois la même valeur (voir ci-dessus: cas le pire, celui où la condition \texttt{if t[i] == t[j]} est vérifiée à chaque itération de la boucle). 
+			
+			\begin{enumerate}
+				\item Si $i = 0$ alors $j$ ira de 1 à $(n-1)$ et donc l'instruction sera exécutée $(n-1)$ fois.
+				\item Si $i = 1$ alors $j$ ira de 2 à $(n-1)$ et donc l'instruction sera exécutée $(n-2)$ fois.
+				\item Si $i = (n - 1)$ alors $j$ ira de $n$ à $(n-1)$ et donc l'instruction ne sera pas exécutée du tout (exécutée 0 fois).
+			\end{enumerate}
+			
+			\item On peut généraliser ce que l'on vient de calculer en disant que lorsqu'on a $i = k$, l'instruction \texttt{n\_dup[i] += 1} est exécutée exactement $(n - 1 - k)$ fois. Donc si l'on regarde le traitement dans son ensemble le nombre d'exécutions de l'instruction sera:
+			
+			\begin{align*}
+				(n - 1) + (n - 2) + \text{(...)} + 2 + 1 + 0 &= \frac{n\times (n-1)}{2} \\
+				&= \frac{1}{2} \times n^2 - n \times \frac{1}{2}
+			\end{align*}
+			
+			La complexité de la fonction dépend donc du carré de $n$, elle est donc quadratique et se note "$\mathcal{O}(n^2)$".
+		\end{alphenum}
+	\end{MaReponse}
+	
+	\begin{MonExo}[Un peu de travail sur les dictionnaires]
+		On considère le code de fonction suivant:
+		\MonPython{Exos_016_Occ.py}
+		\begin{alphenum}
+			\item \textbf{\textit{Encore}} une fonction où on a oublié de mettre la \texttt{docstring}!! Que proposez-vous?
+			\item Ecrire une fonction \texttt{compare\_tableaux(t, u)} qui prend deux tableaux \texttt{t} et \texttt{u} en entrée et détermine si ils contiennent les mêmes éléments, mais sans les trier.
+		\end{alphenum}
+	\end{MonExo}
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item Cette fonction prend un tableau en entrée et renvoie en sortie un dictionnaire avec tous les éléments distincts présents dans le tableau ainsi que le nombre d'occurrences de chacun de ces éléments.
+			
+			\item Il est évident que la fonction précédente ne nous a pas été fournie par hasard -- on va s'appuyer dessus pour rédiger la fonction \texttt{compare\_tableaux}:
+			\MonPython{Exos_017_CompTab.py}
+		\end{alphenum}
+	\end{MaReponse}
+	
+	\begin{MonExo}[Ah tiens au fait...]
+		Est-ce que la fonction \texttt{Occ} qu'on a vue à l'exercice précédent fonctionnerait si on lui passait en entrée une chaine de caractères au lieu d'une liste? Que renverrait l'appel \texttt{Occ("abracadabra")}?
+		
+		Qu'en serait-il de \texttt{compare\_tableaux} si on lui passait deux chaines de caractères en entrée?
+	\end{MonExo}
+	\begin{MaReponse}
+		Dans \texttt{Occ} on ne "touche" à la variable passée en argument qu'une seule fois, dans la boucle principale "\texttt{for x in t}" -- et on a vu en cours qu'on peut tout à fait parcourir une chaîne de caractères de cette manière. Donc l'appel \texttt{Occ("abracadabra")} fonctionnerait bien et renverrait \texttt{\{'a': 5, 'b': 2, 'r': 2, 'c': 1, 'd': 1\}}.
+		
+		Dans \texttt{compare\_tableaux}, on "touche" à nos variables en entrée deux fois:
+		\begin{itemize}
+			\item Via la fonction \texttt{len} -- dont on a vu en cours qu'elle fonctionne très bien avec les chaines de caractère;
+			\item Via la fonction \texttt{Occ} -- qu'on vient de regarder.
+		\end{itemize}
+		Donc en dépit de son nom \texttt{compare\_tableaux} fonctionnerait très bien avec des chaines de caractères.
+	\end{MaReponse}
+	
+	\begin{MonExo}[Tris décroissants]
+		\begin{alphenum}
+			\item Ré-écrire l'algorithme du tri par sélection tel qu'on l'a vu en cours pour qu'il produise un tri par ordre décroissant;
+			\item Même chose avec l'algorithme de tri par insertion.
+		\end{alphenum}
+	\end{MonExo}
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item Il suffit de substituer la notion de maximum à la notion de minimum pour inverser l'ordre du tri dans le tri par sélection:
+			\begin{algorithmic}[1]
+				\Require{$tab$, une liste}
+				\Ensure{$tab$, triée}
+				\Function{TriSelection}{tab}
+				\State n $\leftarrow$ longueur(tab)
+				\For{$p$ allant de 1 à (n-1)}
+				\State pmax $\leftarrow$ p
+				\For{$j$ allant de (p+1) à n}
+				\If{$tab[j] > tab[pmax]$}
+				\Comment{On a trouvé un nouveau max}
+				\State $pmax$ $\leftarrow j$
+				\EndIf
+				\EndFor
+				\State Échanger tab[pmax] et tab[p]
+				\EndFor
+				\State\Return{$tab$}
+				\EndFunction
+			\end{algorithmic}
+			
+			\item Dans le tri par insertion, c'est encore plus simple: lorsqu'on remonte la partie déjà triée du tableau, on se contente de chercher l'indice où \texttt{temp} dépasse \texttt{tab[p-1]} et on insère temp à cet endroit (la seule ligne impactée est la ligne 6 où l'on a remplacé un ">" par un "<"):
+			\begin{algorithmic}[1]
+				\Require{$tab$, une liste}
+				\Ensure{$tab$, triée}
+				\Function{TriInsertion}{tab}
+				\State n $\leftarrow$ longueur(tab)
+				\For{$i$ allant de 2 à n}
+				\State temp $\leftarrow$ tab[i]
+				\State p $\leftarrow$ i
+				\While{$p > 1$ et tab[p-1] < temp}
+				
+				\Comment{On remonte le tableau jusqu'à trouver la place de tab[i]}
+				\State tab[p] $\leftarrow$ tab[p-1]
+				\State p $\leftarrow$ p-1
+				\EndWhile
+				\State tab[p] $\leftarrow$ temp
+				\Comment{On a trouvé la place de tab[i]}
+				\EndFor
+				\State\Return{$tab$}
+				\EndFunction
+			\end{algorithmic}
+		\end{alphenum}
+	\end{MaReponse}
+	
+	\begin{MonExo}[Un festival glouton]
+		Vous venez d'arriver au Festival d'Avignon et découvrez qu'il se déroule sur 5 scènes différentes, avec une programmation extrêmement complexe:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{050_Avignon.png}
+		\end{figure}
+		Brillant élève de NSI que vous êtes, vous vous décidez à choisir les spectacles auxquels vous allez assister en appliquant une méthode gloutonne. Les règles à respecter sont:
+		\begin{itemize}
+			\item Vous voulez voir le nombre maximal possible de spectacles dans la journée;
+			\item Lorsque vous commencez un spectacle vous voulez le voir en entier (du début à la fin);
+			\item On suppose que le temps de trajet entre les scènes est nul.
+		\end{itemize}
+		
+		On va considérer deux algorithmes gloutons séparés: appliquez le déroulé de chacun d'entre eux et concluez sur celui qui fonctionne le mieux.
+		\begin{alphenum}
+			\item Algorithme A: moins on attend entre deux spectacles plus on en verra, donc à chaque étape on choisit le prochain spectacle qui débute le plus tôt.
+			\item Algorithme B: plus chaque spectacle que l'on voit finit tôt plus on aura de temps pour voir d'autres spectacles, donc à chaque étape on choisit le prochain spectacle qui finit en premier.
+		\end{alphenum}
+	\end{MonExo}
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item Algorithme A:
+			\begin{description}
+				\item[Etape 1] 3A
+				\item[Etape 2] 2B
+				\item[Etape 3] 3B
+				\item[Etape 4] 2C
+				\item[Etape 5] 3D
+				\item[Etape 6] 2D
+				\item[Etape 7] 4D
+				\item[Etape 8] 3F
+				\item[Etape 9] 3G
+				\item[Etape 10] 2G
+			\end{description}
+			\item Algorithme B:
+			\begin{description}
+				\item[Etape 1] 4A
+				\item[Etape 2] 2A
+				\item[Etape 3] 4B
+				\item[Etape 4] 3B
+				\item[Etape 5] 2C ou 3C
+				\item[Etape 6] 3D
+				\item[Etape 7] 5D
+				\item[Etape 8] 5E
+				\item[Etape 9] 5F
+				\item[Etape 10] 3F
+				\item[Etape 11] 3G
+				\item[Etape 12] 2G
+			\end{description}
+		\end{alphenum}
+		Et on conclut donc que l'approche B est mieux optimisée que l'approche 1A.
+	\end{MaReponse}
+	
+	\begin{MonExo}[Encore un peu d'algorithmes gloutons...]
+		On considère la figure ci-dessous:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.7\textwidth]{051_TabGlouton.png}
+		\end{figure}
+		Le jeu sur cette grille consiste à partir n part de la case "\textbf{D}" à gauche et de se rendre sur une des cases vides à droite en se déplaçant de case en case. Lorsqu'on est sur une case on peut se déplacer sur une des deux cases voisines situées sur la droite, mais pas sur la case reliée uniquement par un sommet (donc de la case D on peut aller en 4 ou en 7 mais pas en 5).
+		
+		On note S la somme de toutes les cases traversées. Par exemple on peut effectuer la trajectoire suivante: \texttt{D - 7 - 5 - 3 - 5 - 7 - 9 - 8 - 9 - 6} qui donne $S = 59$.
+		
+		Le but du jeu est d'effectuer la trajectoire qui rend la somme S la plus petite possible.
+		
+		\begin{alphenum}
+			\item Décrivez une approche gloutonne à la résolution de ce problème. Combien de calculs sont nécessaires pour choisir la trajectoire?
+			\item En appliquant cette approche, quelle trajectoire et quelle somme S obtenez-vous?
+			\item Sur cette grille, en cherchant bien, la trajectoire optimale donne une somme $S = 23$. Votre algorithme glouton a-t-il trouvé cette trajectoire optimale? Si la réponse est non, est-ce que la trajectoire trouvée vous semble proche de la trajectoire optimale?
+			\item Comment pourrait-on modifier l'algorithme pour l'améliorer? Combien de calculs sont nécessaires pour choisir la trajectoire avec cette amélioration?
+			\item Pour être sûr d'obtenir la solution optimale cependant, il n'y a d'autre choix que d'adopter une approche "force brute" -- regarder toutes les trajectoires possibles et choisir celle au score le plus faible. Démontrer qu'on va devoir calculer 512 trajectoires.
+calculs.
+		\end{alphenum}
+	\end{MonExo}
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item A chaque étape on a le choix entre deux cases: on va systématiquement choisir celle de valeur inférieure et, en cas d'égalité, on va en choisir une au hasard. Toutes les trajectoires ont 9 étapes donc on va effectuer 9 comparaisons avant d'obtenir notre trajectoire.
+			\item \texttt{D - 4 - 4 - 2 - 5 - 7 - 7 - 8 - 8 - 5}, pour $S = 50$.
+			\item Il est évident que notre algorithme n'a pas trouvé la meilleure trajectoire, et d'assez loin.
+			\item On pourrait, à chaque coup, regarder les deux cases suivantes --- donc 4 combinaisons à comparer --- et choisir la case qui fournit la combinaison la plus faible. Par exemple, en partant de D, les premières étapes seraient:
+			\begin{itemize}
+				\item Quatre premières combinaisons possibles: 4-4, 4-5, 7-5, 7-2. La combinaison la plus faible est la première (8), donc on choisit 4.
+				\item Quatre combinaisons suivantes: 4-2, 4-3, 5-2, 5-3 --- donc on choisit 4.
+				\item Quatre combinaisons suivantes: 3-2, 3-8, 2-8, 2-5 --- donc on choisit 3.
+			\end{itemize}
+			Et on constate qu'à cette étape on diverge de l'algorithme précédent. Je vous laisse l'appliquer jusqu'au bout --- vous verrez qu'on arrive à une solution bien meilleure. Dans cette approche, à chaque étape, on va effectuer quatre calculs -- pour arriver à un total de 36 opérations, donc.
+			\item A chaque étape on a deux choix possibles -- les deux cases sur la droite. Tous les trajets ont une longueur de 9 cases, donc le nombre de trajectoires possibles est bien de $2^9 = 512$.
+		\end{alphenum}
+	\end{MaReponse}
+	
+	\begin{MonExo}[Et un petit exo sur les fichiers CSV pour finir]
+		Soit le code suivant:
+		\MonPython{Exos_018_CSV.py}
+		Et soit le fichier \texttt{Truc.csv} contenant les données suivantes:
+		\begin{verbatim}
+			Eleve,Age,Classe
+			Loubna,17,1G5
+			Olivier,16,1G2
+			Lenny,17,1G2
+		\end{verbatim}
+		\begin{alphenum}
+			\item Rédigez un programme qui affiche à l'écran tous les prénoms d'élèves du fichier \texttt{Truc.csv} les uns à la suite des autres.
+			\item Rédigez une fonction \texttt{AgeMoy(classe)} qui renvoie l'âge moyen des élèves présents dans la classe passée en argument.
+		\end{alphenum}
+	\end{MonExo}
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item Aucune difficulté particulière ici, on parcourt juste la liste de dictionnaires et on affiche la valeur de la clé \texttt{Eleve} (attention aux majuscules!) à chaque fois:
+			\MonPython{Exos_019_AfficheEleves.py}
+			\item Même concept fondamental que pour la question précédente, juste un tout petit peu plus compliqué puisqu'il faut bien penser à:
+			\begin{itemize}
+				\item Convertir la valeur de la clé \texttt{Age} en entier (puisqu'elle provient d'un fichier et qu'elle est donc au format \texttt{string});
+				\item Utiliser deux accumulateurs: l'un, \texttt{NbEleves}, pour compter les élèves concernés, et l'autre, \texttt{SommeAges}, pour accumuler tous les âges pour permettre à la fin de calculer la moyenne.
+				\item Et bien entendu vérifier que l'élève que l'on considère est bien dans la classe demandée.
+			\end{itemize}
+			Ce qui nous donne:
+			\MonPython{Exos_020_AgeMoy.py}
+		\end{alphenum}
+	\end{MaReponse}
 \end{document}

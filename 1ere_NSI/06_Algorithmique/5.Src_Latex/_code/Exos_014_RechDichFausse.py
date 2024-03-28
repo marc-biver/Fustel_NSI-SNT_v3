@@ -1,0 +1,1 @@
+def RechDich(T, x):    '''    Fonction qui effectue une recherche dichotomique de x dans T.    '''    debut = 0    fin = len(T) - 1    while fin >= debut:        milieu = (fin + debut) // 2        if T[milieu] == x:            return milieu        elif x > T[milieu]:            debut = milieu        else:            fin = milieu    return -1

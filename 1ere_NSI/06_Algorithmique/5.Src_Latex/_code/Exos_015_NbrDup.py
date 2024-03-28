@@ -1,0 +1,1 @@
+def NbrDup(t):    '''    Fonction qui fait quelque chose d'assez tordu......    '''    n = len(t)    n_dup = [0] * n    for i in range(n):        for j in range(i + 1, n):            if t[i] == t[j]:                n_dup[i] += 1    return n_dup

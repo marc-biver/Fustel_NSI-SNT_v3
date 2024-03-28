@@ -8,7 +8,7 @@
 \DispRepfalse % Hide the text
 
 % Version du document
-\newcommand{\versiondoc}{v0.3}
+\newcommand{\versiondoc}{v0.4}
 
 % Incorporation tous éléments de préambule communs à tous mes cours
 % Sans chemin relatif parce que TexStudio lancé depuis un script qui prend en compte la variable d'environnement TEXINPUTS
@@ -924,7 +924,7 @@
 	\begin{description}
 		\item[téraFLOPS] $10^{12}$ opérations par seconde, soit mille milliards.
 		\item[pétaFLOPS] $10^{15}$ opérations par seconde, soit un million de milliards (mille fois plus puissant que le premier).
-		\item[exaFLOPS] $10^{18}$ opérations par seconde, soit un milliard milliards (mille fois plus puissant que le précédent, un million de fois plus que le premier).
+		\item[exaFLOPS] $10^{18}$ opérations par seconde, soit un milliard de milliards (mille fois plus puissant que le précédent, un million de fois plus que le premier)\footnote{Pour vous donner une idée, un milliard de milliards, c'est le même ordre de grandeur que le nombre total de grains de sable sur les plages de la planète terre selon une estimation de l'Université de Hawaï -- même si elle n'est pas très fiable}.
 	\end{description}
 	
 	\subsection{Complexité - à retenir}
@@ -1683,8 +1683,8 @@
 		\item Si $x$ appartient au tableau $T$, alors il s'agit de montrer qu'à chaque tour de boucle $x$ appartient bien à la partie du tableau $T$ comprenant les éléments de \texttt{Debut} à \texttt{Fin} ou bien que l'algorithme renvoie bien sa position dans le tableau. Le tableau est découpé en trois parties: $Intervalle\_1$ = [\texttt{Debut}, \texttt{Milieu-1}], $Intervalle\_2$ =  [\texttt{Milieu}, \texttt{Milieu}], et $Intervalle\_3$ = [\texttt{Milieu+1}, \texttt{Fin}].
 		\begin{itemize}
 			\item Si $x$ est à $T$[\texttt{Milieu}] (donc dans $Intervalle\_2$)alors le résultat est renvoyé et l'algorithme est terminé;
-			\item Si x est dans $Intervalle\_1$ alors le test $x$ > $T$[\texttt[{milieu}] est faux (car le tableau est trié) et \texttt{Fin} prend la valeur\texttt{Milieu - 1};
-			\item Si x est dans $Intervalle\_3$ alors le test $x$ > $T$[\texttt[{milieu}] est vrai (car le tableau est trié) et \texttt{Debut} prend bien la valeur\texttt{Milieu + 1};
+			\item Si $x$ est dans $Intervalle\_1$ alors le test $x$ > $T$[\texttt[{milieu}] est faux (car le tableau est trié) et \texttt{Fin} prend la valeur\texttt{Milieu - 1};
+			\item Si $x$ est dans $Intervalle\_3$ alors le test $x$ > $T$[\texttt[{milieu}] est vrai (car le tableau est trié) et \texttt{Debut} prend bien la valeur\texttt{Milieu + 1};
 		\end{itemize}
 	\end{itemize}
 	
@@ -1808,7 +1808,6 @@
 	\begin{itemize}
 		\item La recherche du plus court chemin reliant deux villes en utilisant un réseau routier existant;
 		\item Le nombre minimum de pièces de monnaie qu'un commerçant peut rendre à un client;
-		\item Le nombre maximum de cours que l'on peut organiser dans une même journée dans un  établissement ayant un nombre fixé de salles et connaissant la durée et les horaires de chaque cours.
 	\end{itemize}
 	
 	En pratique, on cherche à trouver une solution algorithmique pour résoudre des problèmes d'optimisation quand:
@@ -1821,15 +1820,214 @@
 	
 	\subsection{Le problème du voyageur de commerce}
 	
+	\subsubsection*{Présentation générale}
 	Le problème du voyageur de commerce (ou "TSP" comme \textit{Travelling Salesman Problem}) est un grand classique des questions logistiques: un voyageur de commerce doit se rendre dans plusieurs villes. Si on connaît la distance séparant chacune des villes, peut-on déterminer l'itinéraire le plus court lui permettant de visiter chaque ville une et une seule fois et qui se termine dans la ville de départ?
 	
 	Supposons que le voyageur se trouve dans une première ville A et qu'il doit se rendre dans quatre autres villes B,C,D et E, puis enfin revenir à son point de départ A. On donne le tableau des distance kilométriques séparant chacune des villes (ainsi que sa représentation sous forme de graphe) suivant:
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=\textwidth]{046_TSP.png}
+		\includegraphics[width=0.8\textwidth]{046_TSP.png}
 	\end{figure}
 	
+	Le problème ici revient donc à déterminer quel ordre de visite des quatre villes B, C, D, et E correspond à la somme de distances la plus faible. Ici on a 24 trajets possibles. En effet, à partir de la ville A il y a 4 choix possibles (B, C, D ou E), puis à partir de la deuxième 3 choix restants, puis 2 choix, et enfin 1. Le nombre total de trajets possibles est donc $4 \times 3 \times 2 \times 1 = 24$, \footnote{ce qui s'appelle \textit{factorielle} de $4$ et se note $4!$.} qui se traduisent en 12 sommes de distances distinctes (puisque les trajets sont deux à deux de distance identique comme le trajet A-B-C-D-E-A et le trajet A-E-D-C-B-A). Si l'on fait les sommes cela donne les distances suivantes:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\textwidth]{047_TSP_Trajets.png}
+	\end{figure}
+	
+	Alors certes on a résolu le problème -- le trajet optimal est A-B-D-C-E-A (ou l'inverse), pour un total de 709 kilomètres. Mais si on applique le même raisonnement avec une ville supplémentaire, on arrive à $(5 \times 24) / 2 = 60$ distances à calculer, puis $(6 \times 120) / 2 = 360$ --- pour 10 villes à visiter on est déjà à 1.814.400 (presque 2 millions) sommes de distances à calculer, et pour 20 on est à plus de $10^{18}$ soit un milliard de milliards\footnote{Et comme je vous l'ai déjà dit, un milliard de milliards, c'est le même ordre de grandeur que le nombre total de grains de sable sur les plages de la planète terre selon une estimation de l'Université de Hawaï -- même si elle n'est pas très fiable}!!! Ca ne semble pas très réaliste, comme approche, dès lors qu'on considère autre chose qu'un nombre très faible de villes à visiter...
+	
+	\subsubsection*{Approche gloutonne}	
+	Une autre stratégie existe: la solution dite "gloutonne". Elle consiste à choisir la ville la plus proche à chaque étape (\textit{meilleur choix sur le moment}) dans l'espoir d'obtenir une solution globalement optimale (la meilleure possible). Du coup, à chaque étape on va construire le circuit en ajoutant la ville non encore intégrée au circuit la plus proche de la dernière ajoutée.
+	
+	Dans notre exemple on aura donc: A puis B (55 km de A) puis D (176 km de B) puis E (123 km de D) puis enfin C (c'est la dernière qui reste donc ce n'est plus un choix). Le trajet obtenu au moyen de cette approche gloutonne est donc A-B-D-E-C-A, pour un total de 810 kilomètres.
+	
+	C'est évidemment mois bien que l'approche systématique précédente, mais on a effectué ici 3 recherches d'un minimum dans une liste en tout -- par opposition aux 12 calculs que l'on avait faits avant.
+	
+	\begin{MonCash}{Qui veut gagner 1 million de dollars?}
+		En langage de la théorie de la complexité, on dit que ce problème est \textit{NP-complet}: il n'existe a priori pas d'algorithme en temps polynomial (donc en $\mathcal{O}(n^2)$, $\mathcal{O}(n^3)$, etc.) capable de le résoudre (mais il est à l'inverse très facile de vérifier si une solution proposée satisfait aux conditions demandées). Personne n'a cependant jamais réussi à  démontrer cela --- et l'Institut Clay aux États-Unis a promis un million de dollars pour celui ou celle qui y parviendra... Tentés?
+		
+		\vspace{\baselineskip}
+		Pour en savoir plus: page Wikipedia sur les problèmes dits du millénaire de l'Institut Clay ---
+		\href{https://fr.wikipedia.org/wiki/Problèmes_du_prix_du_millénaire#Problème_ouvert_P_=_NP}{Problème P=NP}.
+	\end{MonCash}
+	
+	\subsubsection*{Mise en pratique de l'approche gloutonne}
 
+	\begin{MonExo}[Implémentation d'algorithme glouton pour le TSP]
+		Il vous est fourni une liste de listes correspondant aux distances entre différentes villes. Ainsi, pour le cas des villes ABCDE que l'on vient de considérer, la liste aurait la forme suivante:
+		
+		\begin{verbatim}
+			Villes = ["A", "B", "C", "D", "E"]
+			DistancesVilles=[\
+			[  0,  55, 303, 188, 183],\
+			[ 55,   0, 306, 176, 203],\
+			[303, 306,   0, 142, 153],\
+			[188, 176, 142,   0, 123],\
+			[183, 203, 153, 123,   0]\
+			]
+		\end{verbatim}
+		On donne les principes suivants pour l'implémentation de l'algorithme glouton:
+		\begin{itemize}
+			\item On va retourner une liste contenant le parcours: \texttt{Parcours}::
+			\begin{itemize}
+				\item Elle est initialisée au point de départ (\texttt{"A"} ici);
+				\item A chaque itération de la boucle, on cherche la ville suivante du parcours suivant deux critères:
+				\begin{itemize}
+					\item Qu'elle ne soit pas déjà présente dans \texttt{Parcours};
+					\item Qu'elle ait la distance minimale par rapport à la dernière ville présente dans \texttt{Parcours}.
+				\end{itemize}
+				\item Une fois que la longueur de \texttt{Parcours} est la même que celle de \texttt{Villes} (on a donc été partout) on ajoute la ville de départ à la fin (le parcours est une boucle) et on renvoie le résultat.
+			\end{itemize}
+		\end{itemize}
+		\begin{alphenum}
+			\item Rédiger sous forme de pseudo-code l'algorithme glouton pour résoudre ce problème;
+			\item Traduisez ce pseudo-code en une fonction Python qui prend en entrée les deux listes ci-dessus et renvoie en sortie la liste \texttt{parcours}.
+		\end{alphenum}
+	\end{MonExo}
+	\begin{MaReponse}
+		\textbf{\uline{Pseudo-code:}}
+		\begin{algorithmic}[1]
+			\Require{$Villes$, liste de noms de villes; $Distances$, matrice de distances entre ces villes; $Depart$, nom de la ville point de départ.}
+			\Ensure{$Parcours$, liste contenant le parcours entre ces villes}
+			\Function{TSP\_Glouton}{Villes, Distances, Depart}
+			\State VilleCourante $\leftarrow$ Depart
+			\State Parcours $\leftarrow$ [Depart]
+			\While{longueur(Parcours) < longueur(Villes)}
+			\State DistanceMin $\leftarrow$ 0
+			\ForAll{(ville, distance) de Distances(VilleCourante)}
+			\If{ville $\notin$ Parcours}
+			\If{DistanceMin = 0 ou distance < DistanceMin}
+			\State DistanceMin $\leftarrow$ distance
+			\State ProchVille $\leftarrow$ ville
+			\EndIf
+			\EndIf
+			\EndFor
+			\State Parcours $\leftarrow$ Parcours \& ProchVille
+			\State VilleCourante $\leftarrow$ ProchVille
+			\EndWhile
+			\State Parcours $\leftarrow$ Parcours \& Depart
+			\State\Return{Parcours}
+			\EndFunction
+		\end{algorithmic}
+		
+		Ce pseudo-code est (de loin) le plus compliqué que l'on ait vu jusqu'à présent, alors précisons quelques éléments le concernant:
+		\begin{itemize}
+			\item On est en plein dans le "vrai" pseudo-code ici -- on raisonne uniquement en "villes", pas du tout en indices de listes. Ainsi, on évite toutes les étapes de conversion de nom à indice et réciproquement qui seront nécessaires dans le code ci-dessous.
+			\item La ligne 6 est très représentative de ces raccourcis: on considère que la table \texttt{Distances} contient un rang par ville (ce qui est bien le cas) auquel on accède par \texttt{Distances(VilleCourante)}, et que chacun des éléments de ce rang est constitué de deux valeurs: \texttt{ville} et \texttt{distance}. C'est vrai, mais c'est un net raccourci: la ville est en fait l'indice dans la liste et la distance est la valeur à cet indice.
+			\item Ligne 5: on initialise la distance minimale à partir de la ville en cours à 0, ce qui permet (ligne 8) de prendre la première ville que l'on trouve comme distance minimale initiale.
+		\end{itemize}
+		
+		\textbf{\uline{Code Python:}} le code ci-dessous est une traduction du pseudo-code ci-dessus qui du coup contient tous les détours nécessaires pour passer d'indice à nom de ville. Il utilise par ailleurs une méthode des objets liste que vous ne connaissez pas encore: \texttt{liste.index(element)} va renvoyer l'indice auquel se trouve "element" dans la liste. Il est évident que si vous ne connaissiez pas cette méthode vous pouviez sans problème faire une boucle qui parcoure la liste jusqu'à trouver l'élément -- sur le modèle de la recherche séquentielle.
+		
+		Autre petite précision: il est important de noter ici une contrainte forte: il faut impérativement que les villes dans la matrice de distances soient dans le même ordre que dans la liste de Villes -- sinon le programme ne fonctionne pas.
+		
+		\MonPython{"013_TSP_Glouton.py"}
+	\end{MaReponse}
+	
+	\subsection{Le problème du rendu de monnaie}
+	Pour mieux comprendre le principe de ces algorithmes gloutons, examinons un second exemple: on veut programmer une caisse automatique pour qu'elle rende la monnaie de façon optimale, c'est-à-dire avec le nombre minimal de pièces et de billets.
+	
+	Les valeurs des pièces et des billets à disposition sont: 1, 2, 5, 10, 20, 50, 100 et 200 euros (on va ignorer les centimes ici). On suppose que la machine dispose d'autant d'exemplaires de pièces et de billets que nécessaire pour rendre la monnaie.
+	
+	\begin{MonExo}[Un petit exemple "à la main" pour démarrer...]
+		Un objet coûte 34\euro{} et le client l'a payé avec un billet de 50\euro{}. La machine doit donc lui rendre 16\euro{}.
+		
+		De quoi est composé le rendu de 16\euro{} par la machine si on veut rendre un minimum de pièces et de billets?
+	\end{MonExo}
+	\begin{MaReponse}
+		On va rendre un billet de 10\euro{}, un de 5\euro{}, et une pièce de 1\euro{}.
+	\end{MaReponse}
+	
+	Résoudre ce problème ne vous a pas posé de problèmes excessifs -- mais la question est comment peut-on constituer un algorithme qui puisse le faire automatiquement. Comme dans le cas du voyageur de commerce on a deux approches possibles: l'approche "force brute" et l'approche "gloutonne".
+	
+	\subsubsection*{Résolution par force brute}
+	Il s'agit dans ce cas de lister toutes les combinaisons possibles de billets et de pièces permettant de constituer le montant du rendu de monnaie puis d'en sélectionner celle qui contient le moins d'éléments. Par exemple, dans le cas de nos 16\euro{} on pourrait considérer les combinaisons suivantes (toutes les possibilités ne sont pas listées ici -- on y passerait trop de temps!):
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{049_RenduMonnaie.png}
+	\end{figure}
+	
+	On sent bien, intuitivement, que cette approche n'est pas franchement optimale...
+	
+	\subsubsection*{Résolution par une approche gloutonne}
+	\MaQuest{Comment décririez-vous cette approche? Quels en seraient les principes?}
+	\begin{MaReponse}
+		On fait à chaque étape le choix qui semble meilleur en espérant obtenir une solution optimale. Autrement dit, ici on rend le billet ou la pièce de la plus grande valeur possible, puis on recommence sur la somme à laquelle on a soustrait ce que l'on vient de rendre.
+		
+		Donc spécifiquement pour nos 16\euro{}:
+		\begin{enumerate}
+			\item On rend la plus grande valeur possible: un billet de 10\euro{};
+			\item Il reste 5\euro{} à rendre donc on rend un billet de 5\euro{};
+			\item On rend enfin une pièce de 1\euro{}.
+		\end{enumerate}
+	\end{MaReponse}
+	
+	\begin{MonExo}[Algorithme \& Code du rendu de monnaie]
+		Comme on l'a fait pour le TSP plus haut, on vous demande ici d'écrire en pseudo-code l'algorithme glouton de rendu de monnaie et de le traduire ensuite en code Python.
+		
+		On prendra en entrée une liste \texttt{Coupures = [200, 100, 50, 20, 10, 5, 2, 1]} qui contient, dans l'ordre décroissant les coupures possibles (auxquelles on va se limiter dans le cadre de ce cours).
+	\end{MonExo}
+	\begin{MaReponse}
+		\textbf{\uline{Pseudo-code:}}
+		\begin{algorithmic}[1]
+			\Require{$Montant$, montant à rendre, $Coupures$}
+			\Ensure{$Rendu$, liste contenant les coupures rendues}
+			\Function{Monnaie\_Glouton}{Montant}
+			\State Rendu $\leftarrow$ []
+			\ForAll{Denomination $\in$ Coupures}
+			\While{Monnaie $\geq$ Denomination}
+			\State Rendu $\leftarrow$ Rendu \& Denomination
+			\State Monnaie $\leftarrow$ $Monnaie - Denomination$
+			\EndWhile
+			\EndFor
+			\State\Return{Rendu}
+			\EndFunction
+		\end{algorithmic}
+		\textbf{\uline{Code Python:}}
+		\MonPython{015_Monnaie_Glouton.py}
+	\end{MaReponse}
+	
+	\MaQuest{On a quand même l'impression qu'ici, il n'y a pas de meilleure solution possible (à l'inverse du TSP que l'on a vu précédemment)... Est-ce que vous pensez que c'est le cas? Pourquoi? Et pourquoi n'était-ce pas le cas pour le TSP?}
+	\begin{MaReponse}
+		Cette question est intuitivement évidente mais pas simple à expliquer: les euros forment ce qu'on appelle un système \textit{canonique}, c'est-à-dire un système pour lequel l'algorithme glouton trouve un rendu optimal. 
+		
+		On ne va pas le démontrer ici mais analyser quelques combinaisons de pièces pour s'en convaincre:
+		\begin{itemize}
+			\item Les pièces et billets de 1, 5, 10, 50 et 100 ne peuvent pas apparaître deux fois dans un rendu optimal: en effet, on peut améliorer le rendu en remplaçant deux exemplaires de chacun des ces montants par un seul exemplaire du double du montant (par exemple deux billets de 5\euro{} par un billet de 10\euro{)};
+			\item Les pièces de 2\euro{} et les billets de 20\euro{} ne peuvent être utilisés que 2 fois au maximum pour un rendu optimal: par exemple, le rendu optimal de 6\euro{} est un billet de 5\euro{} et une pièce de 1\euro{} plutôt que 3 pièces de 2\euro{};
+			\item Dans un rendu optimal on ne peut avoir 2 exemplaires de 20\euro{} (respectivement 2\euro{}) et un exemplaire de 10\euro{} (respectivement 1\euro{})car un billet de 50\euro{} (respectivement un billet de 5\euro{}) serait un meilleur rendu.
+		\end{itemize}
+		
+		Un contre-exemple serait un système où les valeurs de billets seraient 1, 6, et 10. Pour rendre 12, l'algorithme glouton rendrait 10, 1, et 1 -- soit trois billets, alors que le rendu optimal aurait été de deux billets de 6.
+	\end{MaReponse}
+	
+	\begin{MonExo}[Et si il manque des billets...?]
+		Supposons que l'on paie 37\euro{} à cette caisse automatique avec un billet de 100\euro{}; on doit donc rendre 63\euro{}.
+		\begin{alphenum}
+			\item Quelle sera la composition de la monnaie rendue par la machine en utilisant l'algorithme glouton?
+			\item Supposons maintenant que la machine n'ait plus à disposition de billets de 5\euro{} ni de 10\euro{}. Quelle sera la monnaie rendue par la machine en utilisant l'algorithme glouton?
+		\end{alphenum}
+	\end{MonExo}
+	\begin{MaReponse}
+		\begin{alphenum}
+			\item Pas de difficulté particulière: un billet de 50\euro{}, un de 10\euro{}, une pièce de 2\euro{}, et une de 1\euro{}.
+			\item Les étapes de la démarche vont être les suivantes:
+			\begin{enumerate}
+				\item On rend un billet de 50\euro{}, il reste 13\euro{} à rendre.
+				\item Un billet de 20\euro{} est trop grand, il reste toujours 13\euro{};
+				\item On n'a ni billet de 10\euro{} ni de 5\euro{}, il reste toujours 13\euro{};
+				\item On va rendre 12\euro{} des 13\euro{} restants en 6 pièces de 2\euro{};
+				\item On rend une dernière pièce de 1\euro{}.
+			\end{enumerate}
+		\end{alphenum}
+	\end{MaReponse}
+	
+	\subsection{Bilan du l'approche gloutonne}
+	Pour résumer ce que l'on a vu sur nos deux exemples, les algorithmes gloutons sont des algorithmes permettant de déterminer des solutions de problèmes d’optimisation (problèmes dans lesquels on cherche un minimum ou un maximum) en faisant des choix qui semblent les meilleurs sur le moment. Les solutions produites ne sont pas toujours les meilleures possibles et ne sont donc pas adaptées à toutes les situations.
+	
+	Toutefois, la stratégie gloutonne n'envisageant pas toutes les solutions possibles, elle a le mérite d’être réalisable en temps machine raisonnable.
 \end{document}
 
 %Eléments manquants:
