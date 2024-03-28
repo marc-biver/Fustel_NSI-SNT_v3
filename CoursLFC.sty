@@ -69,6 +69,7 @@
 \RequirePackage{algpseudocode} % pour faire du pseudo-code
 \RequirePackage{textcomp} % pour le point médian
 \RequirePackage[bottom]{footmisc} % Pour que la note de bas de page en page de couv soit bien tout en bas.
+\RequirePackage{eurosym} % Pour le symbole euros
 
 % Traduction des commandes pour le package algorithmic
 \renewcommand{\algorithmicfor}{\textbf{pour}}
@@ -147,7 +148,15 @@
 
 % Définition (simplifiee) de leur textbox
 \definecolor{lightgray}{gray}{0.9}
-\newmdenv[linecolor=black, backgroundcolor=lightgray, innerleftmargin=10pt, innerrightmargin=10pt, innertopmargin=10pt, innerbottommargin=10pt]{greyedtextbox}
+\newmdenv[
+	linecolor=black,
+	backgroundcolor=lightgray,
+	innerleftmargin=10pt,
+	innerrightmargin=10pt,
+	innertopmargin=10pt,
+	innerbottommargin=10pt,
+	nobreak=false
+	]{greyedtextbox}
 % OLD - je garde pour me souvenir des parametres dispos
 %\newmdenv[
 %linecolor=black,
@@ -192,6 +201,22 @@
 	colbacktitle=white, % Fonds de la partie titre à blanc
 	title={\LARGE{\faLightbulbO} \normalsize{\hspace{0.5cm}\textbf{#1:}}}, % Title format
 	boxrule=0.1mm,      % Frame thickness
+	arc=0mm,            % Corner radius of the frame
+	top=1mm,            % Space between the frame and the content at the top
+	bottom=1mm,         % Space between the frame and the content at the bottom
+	left=2mm,           % Space between the frame and the content on the left
+	right=2mm           % Space between the frame and the content on the right
+}
+
+% Environnement one-shot pour P=NP mais c'est plus propre dans le doc tex comme ça.
+\definecolor{encoreplusverylightgreen}{RGB}{220, 255, 220}
+\newtcolorbox{MonCash}[1]{
+	colback=encoreplusverylightgreen,      % Background color of the box
+	colframe=mondarkgreen,     % Frame color
+	coltitle=black,     % Title text color
+	colbacktitle=encoreplusverylightgreen, % Fonds de la partie titre à blanc
+	title={\Large{\faDollar \quad \faDiamond \quad \faMoney} \normalsize{\hspace{0.5cm}\textbf{#1}}}, % Title format
+	boxrule=0.7mm,      % Frame thickness
 	arc=0mm,            % Corner radius of the frame
 	top=1mm,            % Space between the frame and the content at the top
 	bottom=1mm,         % Space between the frame and the content at the bottom
@@ -264,11 +289,21 @@
 }
 
 % Format d'inclusion de code Python - avec un fichier en entrée
+%\newcommand{\MonPython}[1]{
+%		\inputminted[
+%		bgcolor=gray!15,
+%		fontsize=\footnotesize,
+%		linenos=true,
+%		breaklines, % Allows line breaks
+%		]{python}{_code/#1}
+%}
 \newcommand{\MonPython}[1]{
+	\begin{mdframed}[backgroundcolor=gray!15, hidealllines=true, innerleftmargin=10pt, innerrightmargin=10pt, innertopmargin=10pt, innerbottommargin=10pt]
 		\inputminted[
-		bgcolor=gray!15,
 		fontsize=\footnotesize,
 		linenos=true,
 		breaklines, % Allows line breaks
 		]{python}{_code/#1}
+	\end{mdframed}
 }
+
