@@ -122,6 +122,33 @@
 	before=\refstepcounter{monexo}
 }
 
+% Environnement d'activités (pour le hors série pygame au départ)
+% NB: rgb : 0 à 1; RGB = 0 à 255
+\definecolor{vertcadre}{RGB}{0, 110, 22} % Adjust the rgb values as needed
+\definecolor{vertfond}{RGB}{0, 255, 51} % Light blue for the background
+\newcounter{monact}
+\setcounter{monact}{1}
+\newtcolorbox{MonAct}[1][]{
+	breakable,
+	colback=white,
+	colbacktitle=vertfond,
+	colframe=vertcadre,
+	fonttitle=\bfseries,
+	coltitle=black,
+	title=Activité \themonact: #1,
+	enhanced,
+	sharp corners,
+	boxrule=0.2mm,
+	toprule=0.2mm,
+	bottomrule=0.2mm,
+	titlerule=0.2mm,
+	arc=0mm,
+	top=1mm,
+	bottom=1mm,
+	left=2mm,
+	right=2mm,
+	before=\refstepcounter{monact}
+}
 
 % Style pour mes questions rhétoriques - conservé pour compatibilité
 \newcommand{\MaQuestion}[1]{\par\vspace{0.3\baselineskip}\noindent$\rightarrow$\textit{#1}?\par\vspace{0.3\baselineskip}}
@@ -216,6 +243,23 @@
 	coltitle=black,     % Title text color
 	colbacktitle=encoreplusverylightgreen, % Fonds de la partie titre à blanc
 	title={\Large{\faDollar \quad \faDiamond \quad \faMoney} \normalsize{\hspace{0.5cm}\textbf{#1}}}, % Title format
+	boxrule=0.7mm,      % Frame thickness
+	arc=0mm,            % Corner radius of the frame
+	top=1mm,            % Space between the frame and the content at the top
+	bottom=1mm,         % Space between the frame and the content at the bottom
+	left=2mm,           % Space between the frame and the content on the left
+	right=2mm           % Space between the frame and the content on the right
+}
+
+% Environnement d'ALERTE!!
+\definecolor{tresrouge}{RGB}{255, 0, 0}
+\definecolor{rougepale}{RGB}{255, 200, 200}
+\newtcolorbox{MonAlarme}[1]{
+	colback=rougepale,      % Background color of the box
+	colframe=tresrouge,     % Frame color
+	coltitle=black,     % Title text color
+	colbacktitle=rougepale, % Fonds de la partie titre à blanc
+	title={\LARGE{\faExclamationTriangle \quad \faExclamationTriangle} \Large{\hspace{0.2cm}\textbf{#1}\hspace{0.2cm}} \LARGE{\faExclamationTriangle \quad \faExclamationTriangle}}, % Title format
 	boxrule=0.7mm,      % Frame thickness
 	arc=0mm,            % Corner radius of the frame
 	top=1mm,            % Space between the frame and the content at the top

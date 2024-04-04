@@ -43,10 +43,12 @@
 \begin{alphenum}#\env
 \begin{zeromgitem}#\env
 \begin{MonAmp}{title}#\env
+\begin{MonAlarme}{title}#\env
 \begin{MaRgl}{title}#\env
 \begin{MaDef}{title}#\env
 \begin{MonRet}#\env
 \begin{MonExo}[title]#\env
+\begin{MonAct}[title]#\env
 \begin{MonQz}{title}#\env
 \begin{MaReponse}#\env
 \begin{MaVid}#\env
