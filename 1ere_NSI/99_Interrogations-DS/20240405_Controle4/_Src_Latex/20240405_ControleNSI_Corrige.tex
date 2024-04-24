@@ -1,8 +1,8 @@
 % !TeX document-id = {63e2cb4c-39e5-4fe5-ae31-d450d2286238}
 % !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
 \documentclass[11pt,a4paper]{exam}
-%\printanswers % pour imprimer les réponses (corrigé)
-\noprintanswers % Pour ne pas imprimer les réponses (énoncé)
+\printanswers % pour imprimer les réponses (corrigé)
+%\noprintanswers % Pour ne pas imprimer les réponses (énoncé)
 \addpoints % Pour compter les points
 \usepackage[utf8]{inputenc}
 \usepackage{minted}
@@ -120,13 +120,46 @@ def compte_elts(liste):
 			
 			\part[2] Expliquez en deux ou trois phrases le principe d'une approche gloutonne à la résolution d'un problème.
 			\begin{solution}
-				MCOXXXXXX: Eléments attendus:
+				Les éléments de réponse attendus étaient (tous n'étaient pas obligatoirement à intégrer à votre réponse):
+				\begin{itemize}
+					\item Une approche gloutonne vise à résoudre des problèmes d'optimisation -- c'est-à-dire qu'ils ne recherchent pas \textit{la} solution à un problème, mais la solution \textit{la meilleure possible} (selon un axe d'optimisation défini) à ce problème.
+					\item Une approche gloutonne est une méthode de résolution qui fait, à chaque étape, le choix le plus avantageux à court terme ou le plus "gourmand" sans prendre en compte les conséquences futures. Ce choix est fait dans l'espoir qu'il mènera à une solution globale optimale du problème.
+					\item On parle d'\textit{optima locaux} -- ce qui décrit la notion de "meilleur choix" local, pour chaque étape prise individuellement.
+					\item Les algorithmes gloutons ne fournissent pas nécessairement la meilleure solution possible -- mais ils peuvent le faire dans certains cas, comme celui du rendu de monnaie caractérisé par le fait que l'ensemble des solutions possibles (l'ensemble des dénominations possibles en euros) constitue un \textit{système canonique}.
+				\end{itemize}
 			\end{solution}
 
 			\part[2] Supposons que la fonction \texttt{recherche\_dicho(table, elt)} implémente la recherche dichotomique telle que nous l'avons étudiée en cours. Quelles sont les valeurs qui vont être examinées lors de l'appel \texttt{recherche\_dicho([0, 1, 1, 2, 3, 5, 8, 9, 11], 7}? \textit{Indice: la première va être table[4] qui vaut 3.}\footnote{N'hésitez pas à utiliser sur votre copie un tableau donnant les valeurs successives des indices "\texttt{debut}", "\texttt{fin}", et "\texttt{milieu}".}
 			
 			\begin{solution}
-				MCOXXXXXX --- éléments attendus
+				Comme suggéré par l'énoncé, utilisons la technique du tableau de valeurs que nous avons déjà utilisée en cours:
+				\definecolor{mongreen}{RGB}{8,180,84}
+				\begin{center}				
+					\begin{figure}[H]
+						\centering
+						\includegraphics[width=0.6\textwidth]{RechDich.png}
+					\end{figure}
+					
+					\begin{tabular}{|c|c|c|c|}
+						\hline
+						\textbf{Debut} & \textbf{Fin} & \textbf{Milieu} & \textbf{\texttt{table[Milieu]}}\\
+						\hline
+						\textbf{\textcolor{blue}{0}} & \textbf{\textcolor{blue}{8}} & \textbf{\textcolor{blue}{4}} & \textbf{\textcolor{blue}{3}}\\
+						\hline 
+						\textbf{\textcolor{mongreen}{5}} & \textbf{\textcolor{mongreen}{8}} & \textbf{\textcolor{mongreen}{6}} & \textbf{\textcolor{mongreen}{8}} \\
+						\hline 
+						\textbf{\textcolor{red}{5}} & \textbf{\textcolor{red}{5}} & \textbf{\textcolor{red}{5}} & \textbf{\textcolor{red}{5}} \\
+						\hline
+					\end{tabular}
+				\end{center}
+				
+				\vspace{\baselineskip}
+				Le tableau ci-dessus montre bien que trois valeurs sont examinées successivement par l'algorithme avant d'arriver à la conclusion de l'absence de l'élément 7 dans la table fournie en entrée. Ces trois valeurs sont (c'est évidemment toujours \texttt{t[milieu]} qui est évalué --- voir le cours sur l'algorithme de recherche dichotomique si cela ne vous parait pas clair):
+				\begin{enumerate}
+					\item \texttt{t[4] = 3}
+					\item \texttt{t[6] = 8}
+					\item \texttt{t[5] = 5}
+				\end{enumerate}
 			\end{solution}
 		\end{parts}
 			
@@ -227,6 +260,18 @@ def f6(n):
 		\end{tabular}
 		
 		Déterminer la complexité de chacune des fonctions \texttt{f1} à \texttt{f6} en fonction de $n$ (vous pouvez utiliser la notation $\mathcal{O}()$ ou la terminologie "constante / linéaire / quadratique / autre"). Il est demandé pour chaque fonction une brève phrase de justification de la réponse.
+		
+		\begin{solution}
+			Les complexités respectives de ces fonctions sont:
+			\begin{description}
+				\item[f1] $i$ parcourt toutes les valeurs de $0$ à $(n-1)$, donc la complexité est \textbf{linéaire} en $\mathcal{O}(n)$; on se convainc aisément en effet que si $n$ double, alors le nombre d'itérations de la boucle doublera aussi.
+				\item[f2] $n$ n'apparait même pas dans la fonction -- la complexité de celle-ci n'en dépend donc absolument pas, on est donc sur une complexité \textbf{constante}, en $\mathcal{O}(1)$; on se convainc aisément en effet que si $n$ double, alors le nombre d'itérations de la boucle ne changera pas --- il restera à 1.000.000.000.
+				\item[f3] Il y avait ici un (tout petit) piège: on a bien deux boucles imbriquées, mais le nombre d'itérations de la boucle intérieure est fixe (à 5), donc ne dépend pas de $n$; la complexité dépend donc exclusivement de la boucle extérieure pour laquelle $i$ parcourt toutes les valeurs de $0$ à $(n-1)$, donc la complexité est \textbf{linéaire} en $\mathcal{O}(n)$; on se convainc aisément en effet que si $n$ double, alors le nombre d'itérations de la boucle doublera aussi.
+				\item[f4] La fonction la plus difficile des 6: $i \times i$ évolue de $0$ à $(n-1)$, donc i lui même évolue, de 1 en 1, de $0$ à approximativement $\sqrt{n}$. Le nombre d'itérations de la boucles dépend donc de la racine carrée de $n$ -- et sa complexité est donc en $\mathcal{O}(\sqrt{n})$. On se convainc d'ailleurs aisément que si $n$ double, alors le nombre d'itérations de la boucle passera d'environ $\sqrt{n}$ à $\sqrt{2n}$ -- et aura donc été multiplié par $\sqrt{2}$.
+				\item[f5] Là nous nous trouvons dans une configuration de boucles imbriquées "classique" où la boucle intérieure accomplit $n$ itérations pour chaque itération de la boucle extérieure qui en accomplit elle-même $n$ également -- on est donc dans une complexité \textbf{quadratique} en $\mathcal{O}(n^2)$; on se convainc aisément en effet que si $n$ double, alors le nombre d'itérations de la boucle intérieure doublera, celui de la boucle extérieure également et donc au total le nombre d'opérations aura quadruplé (aura donc été multiplié par $2^2$).
+				\item[f6] Pas de piège en tant que tel ici mais quelque chose à retenir: la complexité est une question d'augmentation en fonction de la taille de l'entrée -- donc une fonction qui réalise $n$ opérations et une qui en réalise $2 \times n$ comme, à l'évidence, celle-ci, ont la même complexité puisqu'un doublement de $n$ reviendra à un doublement du nombre d'opérations: complexité \textbf{linéaire} en $\mathcal{O}(n)$.
+			\end{description}
+		\end{solution}
 
         \question[2]{\textit{Fonction de recherche de 0}}
         \begin{minted}
@@ -260,7 +305,26 @@ def compter_zeros(t):
        		\hline 
        	\end{tabular}
         \begin{solution}
-        	MCOXXXXXX --- éléments attendus
+        	
+        	\begin{tabular}{|c|c|c|c|c|c|}
+        		\hline
+        		\textbf{Ligne Code} & \texttt{compte} & \texttt{i} & \texttt{j} & \texttt{t[i]} & \texttt{t[j]} \\
+        		\hline
+        		7 & \texttt{[0,0,0,0]} & 0 & 1 & 1 & 0\\
+        		\hline 
+        		7 & \texttt{[1,0,0,0]} & 0 & 2 & 1 & 2\\
+        		\hline 
+        		7 & \texttt{[1,0,0,0]} & 0 & 3 & 1 & 0\\
+        		\hline 
+        		7 & \texttt{[2,0,0,0]} & 1 & 2 & 0 & 2\\
+        		\hline 
+        		7 & \texttt{[2,0,0,0]} & 1 & 3 & 0 & 0\\
+        		\hline 
+        		7 & \texttt{[2,1,0,0]} & 2 & 3 & 2 & 0\\
+        		\hline 
+        	\end{tabular}
+        	
+        	Lors du dernier passage dans le test "\texttt{if t[j] == 0:}" la condition sera satisfaite (puisque \texttt{t[3] = 0}), donc la fonction renverra comme tableau final \texttt{[2, 1, 1, 0]}.
         \end{solution}
 		
 		\question{\textit{Fichier CSV}} --- On considère le code suivant:
@@ -296,6 +360,17 @@ table = list(csv.DictReader(fichier))
 for i in range(len(table)):
     print(table[i]['Spe2'])
 			\end{minted}
+			\begin{solution}
+				Pas de difficulté particulière ici -- juste un affichage des valeurs successives de la colonne \text{Spe2}, donc:
+				
+				\begin{verbatim}
+					NSI
+					Maths
+					SES
+					NSI
+					NSI
+				\end{verbatim}
+			\end{solution}
 			\part[1] Complétez la fonction suivante pour qu'elle fasse ce qui est spécifié.
 			\begin{minted}
 				[
