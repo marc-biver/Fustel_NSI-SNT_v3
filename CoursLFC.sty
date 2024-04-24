@@ -71,6 +71,8 @@
 \RequirePackage[bottom]{footmisc} % Pour que la note de bas de page en page de couv soit bien tout en bas.
 \RequirePackage{eurosym} % Pour le symbole euros
 
+\tcbuselibrary{breakable}
+
 % Traduction des commandes pour le package algorithmic
 \renewcommand{\algorithmicfor}{\textbf{pour}}
 \renewcommand{\algorithmicif}{\textbf{si}}
@@ -119,7 +121,7 @@
 	bottom=1mm,
 	left=2mm,
 	right=2mm,
-	before=\refstepcounter{monexo}
+	after=\refstepcounter{monexo}
 }
 
 % Environnement d'activités (pour le hors série pygame au départ)
@@ -201,7 +203,8 @@
 % Et enfin definition de l'environnement conditionnel
 \ifDispRep
 \newenvironment{MaReponse}
-{\begin{greyedtextbox}\itshape} % Begin greyed textbox with italics
+%{\begin{greyedtextbox}\itshape} % Begin greyed textbox with italics
+{\begin{greyedtextbox}}
 	{\end{greyedtextbox}}            % End greyed textbox
 \else
 \excludecomment{MaReponse}
@@ -286,6 +289,7 @@
 % Format pour mes définitions
 \definecolor{verylightred}{RGB}{255, 240, 240}
 \newtcolorbox{MaDef}[1]{
+	breakable,
 	colback=verylightred,      % Background color of the box
 	colframe=black,     % Frame color
 	coltitle=black,     % Title text color
@@ -349,5 +353,32 @@
 		breaklines, % Allows line breaks
 		]{python}{_code/#1}
 	\end{mdframed}
+}
+
+% Petits cadres de couleur à utiliser ici ou là...
+\newcommand{\redfrm}[1]{%
+	\setlength{\fboxrule}{1pt} % Épaisseur du bord
+	\setlength{\fboxsep}{2pt} % Espacement entre le texte et le cadre
+	\fcolorbox{red}{white}{#1} % Couleur du cadre et couleur de fond
+}
+\newcommand{\yelfrm}[1]{%
+	\setlength{\fboxrule}{1pt} % Épaisseur du bord
+	\setlength{\fboxsep}{2pt} % Espacement entre le texte et le cadre
+	\fcolorbox{yellow}{white}{#1} % Couleur du cadre et couleur de fond
+}
+\newcommand{\grnfrm}[1]{%
+	\setlength{\fboxrule}{1pt} % Épaisseur du bord
+	\setlength{\fboxsep}{2pt} % Espacement entre le texte et le cadre
+	\fcolorbox{mondarkgreen}{white}{#1} % Couleur du cadre et couleur de fond
+}
+\newcommand{\blufrm}[1]{%
+	\setlength{\fboxrule}{1pt} % Épaisseur du bord
+	\setlength{\fboxsep}{2pt} % Espacement entre le texte et le cadre
+	\fcolorbox{blue}{white}{#1} % Couleur du cadre et couleur de fond
+}
+\newcommand{\blkfrm}[1]{%
+	\setlength{\fboxrule}{1pt} % Épaisseur du bord
+	\setlength{\fboxsep}{2pt} % Espacement entre le texte et le cadre
+	\fcolorbox{black}{white}{#1} % Couleur du cadre et couleur de fond
 }
 

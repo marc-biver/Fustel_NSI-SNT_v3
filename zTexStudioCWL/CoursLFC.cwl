@@ -37,6 +37,11 @@
 \MaQuest{content}#n
 \MonPython{filename}#n
 \MaQuest{content}#n
+\redfrm{content}#n
+\yelfrm{content}#n
+\blufrm{content}#n
+\grnfrm{content}#n
+\blkfrm{content}#n
 
 # Environments
 \begin{monhlt}#\env
