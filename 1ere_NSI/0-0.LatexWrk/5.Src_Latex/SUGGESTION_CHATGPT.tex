@@ -1,0 +1,36 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx} % images
+\usepackage{comment} % pour l'affichage conditionnel
+
+% Définition de l'environnement conditionnel MaReponse
+\newif\ifDispRep
+%\DispReptrue  % Décommentez pour afficher les réponses
+\DispRepfalse % Décommentez pour masquer les réponses
+
+\ifDispRep
+\newenvironment{MaRepGraph}{%
+	% Environnement visible
+}{%
+	% Fermeture de l'environnement visible
+}
+\else
+\excludecomment{MaRepGraph}
+\fi
+
+\newcommand{\MaQuest}[1]{\par\vspace{0.3\baselineskip}\noindent$\rightarrow$\textit{#1}\par\vspace{0.3\baselineskip}}
+
+\begin{document}
+	\MaQuest{Q1}
+	
+	\begin{MaReponse}
+		\noindent
+		\begin{minipage}{0.5\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{example-image-a}
+		\end{minipage}
+		% Le texte suivant ne sera affiché que si \DispReptrue
+		Réponse à Q1.
+	\end{MaReponse}
+	
+	Suite du document...
+\end{document}
