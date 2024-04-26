@@ -4,8 +4,8 @@
 
 % Affichage ou non des reponses aux questions & exercices
 \newif\ifDispRep
-\DispReptrue  % Show the text
-%\DispRepfalse % Hide the text
+%\DispReptrue  % Show the text
+\DispRepfalse % Hide the text
 
 % Version du document
 \newcommand{\versiondoc}{v0.1}
@@ -192,8 +192,8 @@
 	 \end{figure}
 	 
 	 \MaQuest{Mais avant de nous lancer dans cette histoire de langage, si on commençait par un petit rappel: quels sont les éléments principaux de l'architecture de von Neumann qu'on a vue en début d'année --- \textit{indice: il y en a 3...}?}
-	 
-	 	\begin{MaReponse} 
+
+	\begin{MaReponse}	 
 	 	
 	 	\begin{figure}[H]
 	 		\centering
@@ -215,7 +215,7 @@
 	 		\item[Périphériques:] ce sont des dispositifs d'entrée / sortie qui vont permettre de communiquer avec l'extérieur. Il y en a une multitude: clavier, imprimante, carte réseau, micro, enceinte, écran, souris,...
 	 	\end{description}
 	 	
-	 \end{MaReponse}
+	\end{MaReponse}
 	 
 	 	 
 	 L'enjeu de ce chapitre est de s'intéresser au langage que comprend le cerveau de notre ordinateur, son processeur: les "instructions machine".
@@ -401,21 +401,99 @@ HALT
 	 		\item Comprendre et pouvoir expliquer les différents niveaux de langage informatique et les processus de passage de l'un à l'autre (compilation...);
 	 		\item Sans connaître par cœur les mnémoniques que nous avons utilisés ici, être capable de réaliser des exercices du type des trois précédents --- et notamment le dernier dans lequel il s'agit de lire du code assembleur et de le relier à son code Python correspondant.
 	 	\end{itemize}
-		\end{MonRet}
-	 
-\end{document}
-	 	
-	\subsection{Introduction}
-
-	\begin{MaVid}
-		\href{https://www.youtube.com/watch?v=SpCP2oaCx8A&feature=youtu.be}{Vidéo Youtube de l'INRIA} présentant les rôles principaux d'un système d'exploitation.
-	\end{MaVid}
-	
-	Comme on l'a vu dans cette vidéo 
-	
-	
+	\end{MonRet}
 		
+	\pagebreak
+	\section{Les systèmes d'exploitation}
+	
+	\subsection{Présentation générale}
+	
+	\subsubsection*{Introduction}
+	
+	\begin{MaVid}
+		Commençons pas une petite  \href{https://www.youtube.com/watch?v=SpCP2oaCx8A&feature=youtu.be}{vidéo Youtube de l'INRIA} présentant les rôles principaux d'un système d'exploitation.
+	\end{MaVid}
 
+	\subsubsection*{Fonctions d'un système d'exploitation}
+	
+	On en revient toujours au même schéma dans lequel, par rapport à la section précédente, on "monte d'un cran"...
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.3\textwidth]{003_CouchesOrdi.png}
+	\end{figure}
+	
+	L'OS (\textit{Operating System} en anglais) ou système d'exploitation est principalement un intermédiaire entre le matériel physique et les applications --- même si (et c'est ce que nous allons faire en séance) les utilisateurs peuvent également y accéder directement. L'utilisateur utilise des applications qui communiquent avec l'OS; ce dernier leur fournit les ressources matérielles dont elles ont besoin.
+	
+	Un OS a notamment les rôles suivants:
+	\begin{description}
+		\item [Gestion du processeur:] il est chargé de gérer l'allocation (le partage) du temps de traitement du processeur entre les différents programmes;
+		\item [Gestion de la mémoire] et de l'espace physique alloué à chaque application;
+		\item [Gestion des entrées / sorties:] il unifie unifie et contrôle l'accès des programmes aux ressources matérielles par l'intermédiaire des pilotes (ou \textit{drivers});
+		\item [Gestion des applications:] il est chargé de la bonne exécution des applications en leur affectant les ressources nécessaires à leur bon fonctionnement;
+		\item [Gestion des droits:] il est chargé de la sécurité liée à l'exécution des programmes en garantissant que les ressources ne sont utilisées que par les programmes et utilisateurs possédant les droits adéquats;
+		\item[Gestion des fichiers:] il gère la lecture et l'écriture dans le système de fichiers et les droits d'accès aux fichiers par les utilisateurs et les applications.
+	\end{description}
+	
+	Pour réaliser ces tâches, un système d'exploitation est principalement constitué de:
+	\begin{description}
+		\item [Un noyau (kernel):] c'est la partie la plus importante de l'OS dans laquelle se trouve les programmes de gestion de la mémoire, du processeur, etc. et qui fournit aux logiciels une interface pour utiliser le matériel;
+		\item [Un système de fichiers (FS, file system):] une façon d'organiser les données sur un support de stockage;
+		\item[Un interpréteur de commande (shell):] il permet la communication avec le système d'exploitation par l'intermédiaire d'un langage de commandes.
+	\end{description}
+
+	\subsubsection*{Différents systèmes d'exploitation}
+	
+	Comme pour tous les logiciels, il existe des OS libres et d'autres dits "propriétaires":
+	\begin{itemize}
+		\item Les deux systèmes d'exploitation les plus utilisés dans les ordinateurs personnels, Windows et MacOS sont tous deux propriétaires --- ils sont payants (même si leur prix est généralement inclus à celui de la machine que l'on achète), appartiennent à une société privée (Microsoft et Apple), et ne peuvent être modifié;
+		\item UNIX est un système à l'origine développé par AT\&T Bell Labs dans les années 60 et sur lequel de très nombreux autres OS se sont fondés (Linux et MacOS en particulier). Aujourd'hui il en existe de multiples versions propriétaires (IBM, HP, Sun...) d'UNIX.
+		\item Linux est un système d'exploitation open source inspiré d'Unix.La communauté autour de Linux est très active, contribuant à une multitude de distributions différentes adaptées à divers besoins et préférences. Une des distributions les plus connues, Ubuntu, est connue pour sa simplicité d'installation et d'utilisation -- et c'est celle que nous utiliseons sur les ordinateurs NSI;
+		\item Une variante connue de Linux est Chromium OS qui est l'OS des Chromebooks;
+		\item Il existe une foule d'autres OS adaptés à différents contextes --- les OS de smartphones et tablettes (iOS et Androïd), des OS des systèmes embarqués dans les voitures, les trains, les avions, des OS pour certains serveurs spécialisés...
+	\end{itemize}
+	
+	\subsubsection*{A retenir}
+	
+		\begin{MonRet}
+		Ce qu'il faut retenir de cette section sur les OS:
+		\begin{itemize}
+			\item Comprendre et expliquer leur positionnement dans le fonctionnement d'un ordinateur;
+			\item Comprendre et expliquer quels sont leurs rôles principaux;
+			\item Comprendre et expliquer les trois composantes centrales qui les constituent;
+			\item Citer les principaux OS commerciaux (propriétaires) et libres.
+		\end{itemize}
+	\end{MonRet}
+	
+	 
+	 \subsection{FS \& shell UNIX}
+	 
+	 Un système de fichiers est une façon d'organiser et de stocker une arborescence sur un support (disque, disquette, cd ...). Chaque OS propriétaire a développé sa propre organisation. Dans le cas d'UNIX (et donc de Linux) la structure en est une d'un arbre comme illustré ci-dessous.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\textwidth]{012_Arbo.png}
+	\end{figure}
+	
+	Une des possibilités qu'offre l'interface de ligne de commande (le \textit{shell}) UNIX est de se déplacer à l'intérieur de cette arborescence, de lire des fichiers, de lister le contenu de répertoires, de déplacer ou copier des éléments, etc. Historiquement, c'était le seul moyen d'effectuer ces opérations --- mais maintenant la plupart sont réalisables au moyen de la souris dans l'interface graphique. Pourquoi en ce cas, me direz-vous, nous embêter avec ça? Plusieurs raisons:
+	\begin{itemize}
+		\item Ce que font les interfaces graphique n'est qu'une adaptation d'une partie de ces commandes --- elles ne permettent pas de tout faire;
+		\item En ligne de commande on peut accéder partout dans l'arborescence, même dans les répertoires dits "cachés" --- ce n'est pas le cas dans l'interface graphique;
+		\item Pour manipuler des fichiers depuis du code (Python par exemple) il n'y a pas d'autre moyen que de connaître ces commandes;
+		\item Et enfin (même si vous ne me croirez pas tout de suite), à l'usage, c'est \textit{beaucoup} plus rapide et efficace de travailler en ligne de commande que dans une interface graphique!
+	\end{itemize}
+	
+	\begin{MonExo}[Jeu "Terminus"]
+		Avant de nous lancer dans des manipulations "réelles" dans shell, nous allons nous initier à ces commandes au moyen d'un petit jeu en ligne, Terminus.
+		\vspace{\baselineskip}
+		
+		Rendez-vous sur l'espace documentaire partagé de l'ENT et effectuez le TP développé par Charles Poulmaire sur la base du jeu en ligne Terminus. Le fichier contenant les activités s'appelle \textbf{TP1-Terminus.pdf} et il se trouve dans le même répertoire que ce cours (dans "1NSIGr2 / COURS / 07\_ArchitectureSystème").
+		\vspace{\baselineskip}
+		
+		\textbf{L'activité est à réaliser sur papier en parallèle de l'avancement du jeu et sera à rendre.}
+	\end{MonExo}
+	 
+	 
 \end{document}
 
 %Eléments manquants:
