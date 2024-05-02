@@ -4,8 +4,8 @@
 
 % Affichage ou non des reponses aux questions & exercices
 \newif\ifDispRep
-%\DispReptrue  % Show the text
-\DispRepfalse % Hide the text
+\DispReptrue  % Show the text
+%\DispRepfalse % Hide the text
 
 % Version du document
 \newcommand{\versiondoc}{v0.1}
@@ -334,6 +334,18 @@
 	 	\end{alphenum}
 	 \end{MonExo}
 	 
+	 \begin{MaReponse}
+	 	\begin{alphenum}
+	 		\item Vous vous connectez donc au simulateur...
+	 		\item 
+	 		\begin{alphenum}
+	 			\item On place (\texttt{MOV} = "move") la valeur 78 dans le registre R3 du processeur;
+	 			\item On stocke (\texttt{STR} = "store") la valeur contenue dans le registre R3 dans la case mémoire 50;
+	 			\item On charge (\texttt{LDR} = "loader") la valeur qui était dans la case mémoire 50 dans le registre R1 --- en d'autres termes on réalise l'opération exactement inverse de la précédente;
+	 		\end{alphenum}
+	 	\end{alphenum}
+	 \end{MaReponse}
+	 
 	 \begin{MonExo}[Etudions à présent un programme complet]
 	 	Soit le programme suivant:
 	 	\begin{minted}[linenos]{text}
@@ -483,6 +495,13 @@ HALT
 		\item Et enfin (même si vous ne me croirez pas tout de suite), à l'usage, c'est \textit{beaucoup} plus rapide et efficace de travailler en ligne de commande que dans une interface graphique!
 	\end{itemize}
 	
+	Pour découvrir les fonctionnalités (ou tout au moins une partie d'entre elles) qui nous sont rendues disponibles par le shell Linux, nous allons effectuer trois activités les introduisant:
+	\begin{alphenum}
+		\item Un jeu en ligne, nommé Terminus (un TP développé par Charles Poulmaire);
+		\item Une série d'activités à effectuer directement sur votre machine;
+		\item Pour ceux qui avancent bien, un petit défi.
+	\end{alphenum}
+	
 	\begin{MonExo}[Jeu "Terminus"]
 		Avant de nous lancer dans des manipulations "réelles" dans shell, nous allons nous initier à ces commandes au moyen d'un petit jeu en ligne, Terminus.
 		\vspace{\baselineskip}
@@ -493,6 +512,11 @@ HALT
 		\textbf{L'activité est à réaliser sur papier en parallèle de l'avancement du jeu et sera à rendre.}
 	\end{MonExo}
 	 
+	 \begin{MonExo}[Activités shell]
+	 	Rendez-vous sur l'espace documentaire partagé de l'ENT et effectuez le second TP que vous y trouverez --- le fichier contenant les activités s'appelle \textbf{02\_TP2-Shell.pdf} et il se trouve dans le même répertoire que ce cours (dans "1NSIGr2 / COURS / 07\_ArchitectureSystème").
+	 	
+	 	Les activités seront à réaliser directement dans le terminal de votre machine NSI.
+	 \end{MonExo}
 	 
 \end{document}
 
