@@ -389,14 +389,101 @@ def CompteEleves(spe, table):
     	    compte += 1
     return compte
 			\end{minted}
+			\begin{solution}
+					\begin{minted}
+					[
+					bgcolor = gray!15,
+					fontsize = \footnotesize,
+					linenos = true % numéros de ligne
+					]
+					{Python}
+def CompteEleves(spe, table):
+    ''' Fonction qui renvoie le nombre d'élèves ayant choisi la spécialité passée en argument'''
+    n = len(table)
+    compte = 0
+    for i in range(n):
+        # On vérifie parmi les trois spécialités
+        if spe in (table[i]["Spe1"], table[i]["Spe2"], table[i]["Spe3"]):
+            compte += 1
+    return compte
+				\end{minted}
+				Note: on pouvait également procéder avec 3 égalités avec des "\texttt{or}" --- ce qui revenait au même:
+				\begin{Verbatim}
+if spe == table[i]["Spe1"] or spe == table[i]["Spe2"] or spe == table[i]["Spe3"]:
+				\end{Verbatim}
+			\end{solution}
 			\part[2] Rédigez une fonction AgeMoy(classe) qui renvoie l'âge moyen des élèves présents dans la classe passée en argument. Par exemple \texttt{AgeMoy('1G5')} renverra la valeur $15.5$ (la moyenne de 15 et 16)\footnote{N'hésitez pas à commencer par en rédiger l'algorithme en pseudo-code: des points seront attribués à cela même si le code final est faux ou absent.}.
+			\begin{solution}
+				\begin{minted}
+					[
+					bgcolor = gray!15,
+					fontsize = \footnotesize,
+					linenos = true % numéros de ligne
+					]
+					{Python}
+def AgeMoy(classe):
+    ''' Fonction qui renvoie l'age moyen des élèves présents dans la classe passée en argument'''
+    n = len(table)
+    CumulAge = 0 # âge cumulé de tous les élèves
+    compte = 0 # nombre d'élèves
+    for i in range(n):
+        # On vérifie si l'élève est dans la classe spécifiée
+        if table[i]["Classe"] == classe:
+            CumulAge += int(table[i]["Age"]) # DictReader ne renvoie que des alphanumériques
+            compte += 1
+    moy = CumulAge / compte
+    return moy
+				\end{minted}
+			\end{solution}
 		\end{parts}
 		
 		\vspace{\baselineskip}
 		\question{\textit{Ré-écriture du tri par sélection}}
 		\begin{parts}
 			\part[2] Ecrivez le pseudo-code d'une fonction \texttt{Prochain\_Min(liste, indice\_courant)} qui prend en entrée une liste et un indice et qui renvoie l'indice de la valeur minimale présente dans \texttt{liste} entre l'indice \texttt{indice\_courant} (inclus) et la fin de la liste. Par exemple: \texttt{Prochain\_Min([10,13,11,12], 0)} renverra $0$ (correspondant à la valeur 10) et \texttt{Prochain\_Min([10,13,11,12], 1)} renverra $2$ (correspondant à la valeur 11).
+			\begin{solution}
+				\begin{algorithmic}[1]
+					\Require{Liste, liste d'éléments triables; indice\_courant, un entier correspondant à l'indice de départ}
+					\Ensure{Resultat, entier correspondant à l'indice du minimum de la liste à partir d'indice\_courant}
+					\Function{ProchainMin}{Liste, indice\_courant}
+					\State $n$ $\leftarrow$ len(Liste)
+					\State Resultat $\leftarrow indice\_courant$
+					\Comment{Initialisation du résultat}
+					\State CurMin $\leftarrow Liste[indice\_courant]$
+					\Comment{Initialisation du minimum}
+					\For{$i$ allant de $indice\_courant$ à $n$}
+					\If{$Liste[i] < CurMin$}
+					\Comment{On a trouvé un nouveau minimum}
+					\State $CurMin \leftarrow Liste[i]$
+					\State $Resultat \leftarrow i$
+					\EndIf
+					\EndFor
+					\State\Return{Resultat}
+					\EndFunction
+				\end{algorithmic}
+			\end{solution}
 			\part[1] Traduisez le pseudo-code que vous venez de rédiger en fonction codée en Python.
+				\begin{solution}
+					\begin{minted}
+					[
+					bgcolor = gray!15,
+					fontsize = \footnotesize,
+					linenos = true % numéros de ligne
+					]
+					{Python}
+def Prochain_Min(lst, indice):
+    ''' Fonction qui renvoie le minimum de la sous-liste de lst débutant à indice et 
+    terminant à la fin de la liste'''
+    n = len(lst)
+    res = indice
+    curmin = lst[indice]
+    for i in range(indice, n):
+        if lst[i] < curmin:
+            curmin = lst[i]
+            res = i
+    return res
+					\end{minted}
+				\end{solution}
 			\part[2] Complétez le code suivant (parties A et B) pour qu'il réalise le tri par sélection d'une table passée en argument tel que nous l'avons vu en cours\footnote{Un petit rappel, pour gagner du temps dans la permutation: le code "\texttt{a , b = b , a}", en Python, met la valeur de a dans b et celle de b dans a.}:
 				\begin{minted}
 					[
@@ -415,6 +502,23 @@ def TriSelect(table):
         ...
     return table
 			\end{minted}
+			\begin{solution}
+				\begin{minted}
+				[
+				bgcolor = gray!15,
+				fontsize = \footnotesize,
+				linenos = true % numéros de ligne
+				]
+				{Python}
+def TriSelect(table):
+    ''' Fonction qui applique le tri par sélection à table et renvoie la table triée'''
+    n = len(table)
+    for i in range(n):
+        indice_a_permuter = Prochain_Min(table, i)
+        table[i], table[indice_a_permuter] = table[indice_a_permuter], table[i]
+    return table
+				\end{minted}
+			\end{solution}
 		\end{parts}
 		
 		\vspace{1.5\baselineskip} 
@@ -423,21 +527,110 @@ def TriSelect(table):
 		
 		\textit{(Question bonus 1): } En conservant le modèle que l'on a utilisé dans la question précédente pour le tri par sélection (une fonction principale et une sous-fonction qui cherche l'indice du minimum), écrivez une implémentation de ce même tri mais en ordre décroissant.
 		\begin{solution}
-			MCOXXXXXX --- éléments attendus
+			Rien de bien compliqué ici - on va juste chercher le maximum au lieu de chercher le minimum à chaque fois. On va donc remplacer la fonction Prochain\_Min par:
+			\begin{minted}
+				[
+				bgcolor = gray!15,
+				fontsize = \footnotesize,
+				linenos = true % numéros de ligne
+				]
+				{Python}
+def Prochain_Max(lst, indice):
+    ''' Fonction qui renvoie le maximum de la sous-liste de lst débutant à indice et 
+    terminant à la fin de la liste'''
+    n = len(lst)
+    res = indice
+    curmax = lst[indice]
+    for i in range(indice, n):
+        if lst[i] > curmin:
+            curmax = lst[i]
+            res = i
+    return res
+			\end{minted}
+			Et il suffira alors de remplacer dans la fonction \texttt{TriSelect} l'appel à:
+			
+			\texttt{Prochain\_Min(table, i)}
+			
+			par:
+			
+			\texttt{Prochain\_Max(table, i)}.
 		\end{solution} 
 		
 		\vspace{1.5\baselineskip}
 		
 		\textit{(Question bonus 2): }En utilisant ce que vous avez fait à la question 6 \textit{et} ce que vous avez fait à la question bonus 1, écrivez une implémentation du tri par sélection qui classe tous les nombres pairs de la liste par ordre croissant à gauche de la liste en sortie, et tous les nombres impairs par ordre décroissant à droite. Par exemple, si on appelle cette fonction \texttt{TriSelTordu(table)}, l'appel \texttt{TriSelTordu([1, 9, 8, 10, 6, 5, 11, 23, 2])} renverra [2, 6, 8, 10, 23, 11, 9, 5, 1].
 		\begin{solution}
-			MCOXXXXXX --- éléments attendus
+			La solution la plus simple à ce problème consiste à découper tout d'abord la liste en deux, puis à trier chacune d'entre elles séparément, puis enfin à "recoller" les deux listes ensemble.
+			
+			Dans le code qui suit on part du principe que sont déjà définies:
+			\begin{description}
+				\item[\texttt{TriSelectCrois}] La fonction qui a été rédigée en réponse à la question 5 (\textit{et pas 6 comme le disait l'énoncé...}) s'appuyant sur la fonction \texttt{Prochain\_Min}: elle renvoie une table triée par ordre croissant au moyen du tri par sélection.
+				\item[\texttt{TriSelectDeCrois}] La fonction qui a été rédigée en réponse à la question bonus 1 s'appuyant sur la fonction \texttt{Prochain\_Max}: elle renvoie une table triée par ordre décroissant au moyen du tri par sélection.
+			\end{description}
+			
+			\begin{minted}
+				[
+				bgcolor = gray!15,
+				fontsize = \footnotesize,
+				linenos = true % numéros de ligne
+				]
+				{Python}
+def TriSelTordu(lst):
+    ''' Fonction qui répond à l'énoncé...'''
+    n = len(lst)
+    LstPair = []
+    LstImpair = []
+    for i in range(n):
+        if lst[i] % 2 == 0:
+            LstPair.append(lst[i])
+        else:
+            LstImPair.append(lst[i])
+    LstPair = TriSelectCrois(LstPair)
+    LstImPair = TriSelectCrois(LstImPair)
+    return LstPair + LstImpair
+			\end{minted}
 		\end{solution} 
 		
 		\vspace{1.5\baselineskip}
 		
 		\textit{(Question bonus 3): }Une technique pour repérer le plagiat dans un texte consiste à repérer les enchainements de mots (plutôt que les mots individuels). Écrivez une fonction \texttt{Plagiat(txt)} qui prend en entrée une chaîne de caractères et renvoie les 2 enchainements de mots les plus fréquents qu'elle contient. Par exemple si l'on donne à la variable txt la valeur "Le vent souffle fort sur la plaine. Les arbres dans la plaine se courbent sous le vent. Le vent, le vent, toujours le vent.", \texttt{Plagiat(txt)} renverrait les enchainements "le vent" (présent cinq fois) et "la plaine" (deux fois)\footnote{Rappel: la commande "\texttt{lst = txt.split()}" crée une liste \texttt{lst} dont les éléments sont les mots de \texttt{txt}.}.
 		\begin{solution}
-			MCOXXXXXX --- éléments attendus
+			En simplifiant on pouvait proposer une fonction de ce type:
+			
+			\begin{minted}
+				[
+				bgcolor = gray!15,
+				fontsize = \footnotesize,
+				linenos = true % numéros de ligne
+				]
+				{Python}
+			
+def Plagiat(txt):
+    ''' Fonction qui renvoie les deux enchainements de mots les plus fréquents de txt'''
+    # On découpe le texte en mots
+    lst = txt.split()
+    res = {}
+    
+    # On fait l'inventaire des enchainements
+    for i in range(1, len(lst)):
+        if (lst[i-1], lst[i]) not in res:
+        res[(lst[i-1], lst[i])] = 1
+    else:
+        res[(lst[i-1], lst[i])] += 1
+
+    # On identifie les deux plus fréquents
+    curmax1 = ((),0)
+    curmax2 = ((),0)
+    for enchainement in res:
+        if res[enchainement] > curmax1[1]:
+            curmax2 = curmax1
+            curmax1 = (enchainement,res[enchainement])
+        elif res[enchainement] > curmax2[1]:
+            curmax2 = (enchainement,res[enchainement])
+    return curmax1, curmax2
+			\end{minted}
+			
+			Notez que cette fonction est vraiment simpliste  --- elle fait notamment abstraction des majuscules, de la ponctuation... Il faudrait à l'évidence nettement l'améliorer pour pouvoir s'en servir "réellement".
 		\end{solution} 
 
         \end{spacing}
