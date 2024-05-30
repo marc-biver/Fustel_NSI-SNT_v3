@@ -1,0 +1,65 @@
+﻿<!DOCTYPE HTML>
+<html lang='fr'>
+<head>
+	<title>Exercice 3</title>
+	<meta charset='utf-8'>
+	<script>
+	function ModifParagraphe(element)
+	{
+		element.innerHTML = 'Le paragraphe a été modifié.';
+	}
+	
+	function ModifPremierTitre()
+	{
+		let element = document.getElementById('PremierTitre');
+		element.innerHTML = 'Le premier titre a été modifié';
+	}
+	
+	function ModifCategorieTitre(t)
+	{
+		let liste_elements = document.getElementsByTagName(t);
+		if (t=='h1')
+		{
+			var texte = 'Les titres de niveau 1 ont été modifiés';
+		}
+		else
+		{
+			var texte = 'Les titres de niveau 2 ont été modifiés';
+		}
+		for(let i=0;i<liste_elements.length;i++)
+		{
+			liste_elements[i].innerHTML = texte;
+		}
+	}
+		
+	function ModifTitres()
+	{
+		let liste_elements = document.getElementsByClassName('Titre');
+		for(let i=0;i<liste_elements.length;i++)
+		{
+			liste_elements[i].innerHTML = 'Les titres ont été modifiés';
+		}
+	}
+	</script>
+</head>
+<body>
+	<h1 id='PremierTitre' class='Titre'>Titre de niveau 1</h1>
+	<h2 class='Titre'>Titre de niveau 2</h2>
+	<p>Paragraphe non modifiable<p>
+	<h1 class='Titre'>Titre de niveau 1</h1>
+	<h2 class='Titre'>Titre de niveau 2</h2>
+	<p onclick='ModifParagraphe(this)'>Paragraphe modifiable en cliquant</p>
+	<hr>
+	<p>Modifications des titres :
+	<br>
+	<button onclick='ModifPremierTitre()'>Premier titre de niveau 1</button>
+	<button onclick="ModifCategorieTitre('h1')">Tous les titres de niveau 1</button>
+	<button onclick="ModifCategorieTitre('h2')">Tous les titres de niveau 2</button>
+	<button onclick='ModifTitres()'>Tous les titres</button>
+	</p>
+	
+</body>
+</html>
+
+
+

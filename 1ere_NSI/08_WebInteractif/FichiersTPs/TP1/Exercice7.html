@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">	
+
+<head>
+	<meta charset="UTF-8">
+	<title>Exercice 7</title>
+	<script>
+	function AfficherMasquer()
+	{
+		let element = document.getElementById('titre');
+		let style_existant = window.getComputedStyle(element).getPropertyValue('visibility');
+		if(style_existant == 'visible')
+		{
+			element.style.visibility = 'hidden';
+		}
+		else
+		{
+			element.style.visibility = 'visible';
+		}
+	}
+	</script>
+</head>
+
+<body>
+	<h1 id='titre'>Ceci est un titre</h1>
+	<hr>
+	<p><button onclick='AfficherMasquer()'>Afficher/Masquer</button></p>
+</body>
+</html>

@@ -1,0 +1,37 @@
+﻿<!DOCTYPE HTML>
+<html lang='fr'>
+<head>
+	<title>Exercice 1</title>
+	<meta charset='utf-8'>
+	<script>
+	function ModifParagraphe()
+	{
+		document.getElementById("demo").innerHTML = "Le paragraphe a changé.";
+	}
+	
+	function AfficheDate()
+	{
+		document.getElementById('demo1').innerHTML = Date();
+	}
+	
+	function CalculProduit(a,b)
+	{
+		let p = a*b;
+		document.getElementById('result').innerHTML = p;
+	}
+	</script>
+</head>
+<body>
+	<h1>Page web interactive</h1>
+	<p id="demo">Un paragraphe</p>
+	<button onclick="ModifParagraphe()">Appuyer</button>
+	<br>
+	<button onclick="AfficheDate()">Cliquer pour avoir la date.</button>
+	<p id="demo1"></p>
+	<p>3 x 4 = <span id="result">?</span></p>
+	<button onclick="CalculProduit(3,4)">Cliquer pour avoir le résultat</button>
+</body>
+</html>
+
+
+

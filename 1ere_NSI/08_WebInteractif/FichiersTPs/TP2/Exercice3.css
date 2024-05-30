@@ -1,0 +1,14 @@
+#titre_principal_1{text-align: center; text-decoration: underline; color: lime;}
+#titre_principal_2{text-align: center; text-decoration: underline; color: red;}
+#enonce{border: 3px solid black; background-color: lime; padding: 3px;}
+#reponse{border: 3px solid black; background-color: red; padding: 3px;}
+#indication{font-style: italic;}
+#tableau{text-align: center;}
+table{margin: auto; background-color: #26C4EC; border: 1px solid black; padding: 2px; width: 300px;}
+caption{caption-side: bottom; font-weight: bold;}
+#TG{background-color: black; border: 1px solid black; padding: 2px; color: white; text-align: left;}
+#TD{background-color: black; border: 1px solid black; padding: 2px; color: white; text-align: right;}
+.G{background-color: #26C4EC; border: 1px solid black; padding: 2px; text-align: left;}
+.D{background-color: #26C4EC; border: 1px solid black; padding: 2px; text-align: right;}
+#bouton_sol{text-align:center;}
+#solution{display:none;}

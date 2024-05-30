@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">	
+
+<head>
+	<meta charset="UTF-8">
+	<title>Exercice 6</title>
+	<script>
+	function change_couleur1(elem)
+	{
+		elem.style.color = 'red';
+	}
+		
+	function change_couleur2(elem,couleur)
+	{
+		elem.style.color = couleur;
+	}
+	
+	function change_couleur3()
+	{
+		let corps = document.getElementsByTagName('body');
+		let liste_par = document.getElementsByTagName('p');
+		corps[0].style.backgroundColor = 'black';
+		for(let i=0; i<liste_par.length; i++)
+		{
+			liste_par[i].style.color = 'white';
+		}
+	}
+	</script>
+</head>
+
+<body>
+	<p onclick="change_couleur1(this)">Cliquez pour avoir un texte rouge</p>
+	<p onclick="change_couleur2(this,'rgb(0, 255, 0)')">Cliquez pour avoir un texte vert</p>
+	<p onclick="change_couleur3()">Cliquez pour inverser les couleurs</p>
+</body>
+</html>

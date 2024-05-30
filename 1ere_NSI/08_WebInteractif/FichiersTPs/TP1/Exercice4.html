@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">	
+
+<head>
+	<meta charset="UTF-8">
+	<title>Exercice 4</title>
+	<script>
+	function modif_texte1(elem)
+	{
+		elem.innerHTML = 'texte modifié';
+	}
+		
+	function modif_texte2(elem)
+	{
+		elem.insertAdjacentHTML('beforeend',"<span> texte complété en italique</span>");
+	}
+	</script>
+</head>
+
+<body>
+	<p onclick="modif_texte1(this)">Cliquez pour modifier</p>
+	<p onclick="modif_texte2(this)">Cliquez pour compléter :</p>
+</body>
+</html>

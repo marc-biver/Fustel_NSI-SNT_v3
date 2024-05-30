@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang='fr'>
+<head>
+	<meta charset='utf-8'>
+	<title>Exercice 5</title>
+	<script>
+	function Ajouter(val)
+	{
+		let valeur_initiale = document.getElementById('q').innerHTML;
+		let valeur_finale = Number(valeur_initiale) + val;
+		if(valeur_finale >= 0)
+		{
+			document.getElementById('q').innerHTML = valeur_finale;
+			document.getElementById('total').innerHTML = valeur_finale*1.5;
+		}
+	}
+	</script>
+</head>
+<body>
+	<p>Un muffin coûte 1.5 euros.</p>
+	<p>Veuillez cliquer sur + ou - pour ajuster la quantité de muffins que vous voulez.</p>
+	<p>Quantité = <span id='q'>0</span><br>
+		<button onclick="Ajouter(-1)">-</button>
+		<button onclick="Ajouter(1)">+</button>
+	</p>
+	Le total à payer est de <span id='total'>0</span> euros.
+</body>
+</html>

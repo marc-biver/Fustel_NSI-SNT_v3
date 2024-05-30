@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">	
+
+<head>
+	
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="Exercice3.css" type="text/css">
+	<title>Exercice 3</title>
+	
+	<script>
+	function AfficheSolution()
+	{
+	
+	}
+	</script>
+
+</head>
+
+
+
+<body>
+
+<h1 id="titre_principal_1">Enoncé</h1>
+
+<div id="enonce">On place une somme de 2000 &euro; à 2% d'intérêt composé annuel en 2014.<br>
+Donner l'évolution de ce placement sur 8 ans.<br>
+<span id="indication">On donnera la réponse sous la forme d'un tableau en arrondissant au centime.</span></div>
+<br>
+<hr>
+
+<p id="bouton_sol"><button type="button" onclick="AfficheSolution()">Afficher la solution</button></p>
+
+<div id="solution">
+	<h1 id="titre_principal_2">Solution</h1>
+	<div id="reponse">Lorsque l'on connaît une somme S une année alors la somme l'année suivante est donnée par la formule S&times;1,02<br>
+	On obtient alors le tableau suivant :<br>
+	<div id="tableau">
+		<table>
+			<caption>Placement de 2000 &euro; à 2%</caption>
+			<tr> <th id="TG"> Années </th> <th id="TD"> Sommes en &euro; </th> </tr>
+			<tr> <td class="G"> 2014 </td> <td class="D"> 2000 </td> </tr>
+			<tr> <td class="G"> 2015 </td> <td class="D"> 2040 </td> </tr>
+			<tr> <td class="G"> 2016 </td> <td class="D"> 2080,80 </td> </tr>
+			<tr> <td class="G"> 2017 </td> <td class="D"> 2122,42 </td> </tr>
+			<tr> <td class="G"> 2018 </td> <td class="D"> 2164,86 </td> </tr>
+			<tr> <td class="G"> 2019 </td> <td class="D"> 2208,16 </td> </tr>
+			<tr> <td class="G"> 2020 </td> <td class="D"> 2252,32 </td> </tr>
+			<tr> <td class="G"> 2021 </td> <td class="D"> 2297,37 </td> </tr>
+			<tr> <td class="G"> 2022 </td> <td class="D"> 2343,32 </td> </tr>
+		</table>
+	</div>
+	</div>
+</div>
+
+</body>
+</html>
