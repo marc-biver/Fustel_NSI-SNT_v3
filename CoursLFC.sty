@@ -340,12 +340,26 @@
 % Environnement de prise de note pour les élèves
 \definecolor{tresrouge}{RGB}{255, 0, 0}
 \definecolor{jaunePDN}{RGB}{255, 250, 205}
-\newtcolorbox{PDNenv}{
+\newtcolorbox{PDNenv}[1]{
 	colback=jaunePDN,      % Background color of the box
 	colframe=tresrouge,     % Frame color
 	coltitle=black,     % Title text color
 	colbacktitle=jaunePDN, % Fonds de la partie titre à blanc
-	title={\LARGE{\faEdit} \Large{\hspace{0.2cm}\textbf{\uline{Prise de notes:}}\hspace{0.2cm}} \LARGE{\faEdit}}, % Title format
+	title=
+		{\LARGE{ %O1, O2
+				\faEdit
+				}  %F2
+				\Large{ %O2
+					\hspace{0.2cm} %OF3
+					\textit{Prise de notes} %OF3
+					\hspace{0.2cm} %OF3
+				} %F2
+				\LARGE{\faEdit} %OF2
+				\Large{ %O3
+					\hspace{0.2cm} %OF3
+					\uline{\textbf{#1}} %OF34
+					}%F2
+				}, % F1 - Title format
 	boxrule=0.7mm,      % Frame thickness
 	arc=0mm,            % Corner radius of the frame
 	top=1mm,            % Space between the frame and the content at the top
@@ -353,8 +367,8 @@
 	left=2mm,           % Space between the frame and the content on the left
 	right=2mm           % Space between the frame and the content on the right
 }
-\newcommand{\PDN}[1]{%
-	\begin{PDNenv}
+\newcommand{\PDN}[2][5cm]{%
+	\begin{PDNenv}{#2}
 		\begin{Form}
 			\TextField[multiline=true, width=\linewidth, height=#1, bordercolor={0.65 0.79 0.94}]{}
 		\end{Form}
