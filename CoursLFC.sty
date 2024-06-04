@@ -336,6 +336,31 @@
 	right=2mm           % Space between the frame and the content on the right
 }
 
+
+% Environnement de prise de note pour les élèves
+\definecolor{tresrouge}{RGB}{255, 0, 0}
+\definecolor{jaunePDN}{RGB}{255, 250, 205}
+\newtcolorbox{PDNenv}{
+	colback=jaunePDN,      % Background color of the box
+	colframe=tresrouge,     % Frame color
+	coltitle=black,     % Title text color
+	colbacktitle=jaunePDN, % Fonds de la partie titre à blanc
+	title={\LARGE{\faEdit} \Large{\hspace{0.2cm}\textbf{\uline{Prise de notes:}}\hspace{0.2cm}} \LARGE{\faEdit}}, % Title format
+	boxrule=0.7mm,      % Frame thickness
+	arc=0mm,            % Corner radius of the frame
+	top=1mm,            % Space between the frame and the content at the top
+	bottom=1mm,         % Space between the frame and the content at the bottom
+	left=2mm,           % Space between the frame and the content on the left
+	right=2mm           % Space between the frame and the content on the right
+}
+\newcommand{\PDN}[1]{%
+	\begin{PDNenv}
+		\begin{Form}
+			\TextField[multiline=true, width=\linewidth, height=#1, bordercolor={0.65 0.79 0.94}]{}
+		\end{Form}
+	\end{PDNenv}%
+}
+
 % Format d'inclusion de code Python - avec un fichier en entrée
 %\newcommand{\MonPython}[1]{
 %		\inputminted[
