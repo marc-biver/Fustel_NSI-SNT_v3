@@ -42,7 +42,7 @@
 \blufrm{content}#n
 \grnfrm{content}#n
 \blkfrm{content}#n
-\PDN[taille_box_notes]{titre_notes}#n
+\PDN[taille_box]{titre}#n
 
 # Environments
 \begin{monhlt}#\env

@@ -73,6 +73,22 @@
 
 \tcbuselibrary{breakable}
 
+% Couleurs utilisées ici:
+\definecolor{tresrouge}{RGB}{255, 0, 0}
+\definecolor{jaunePDN}{RGB}{255, 250, 205}
+\definecolor{mondarkgreen}{rgb}{0,0.5,0} % Vert pour du texte qui pète pas trop
+\definecolor{myblue}{rgb}{0.12, 0.3, 0.84} % Environnement d'exos
+\definecolor{lightblue}{rgb}{0.8, 0.9, 1} % Light blue for the background (exos)
+\definecolor{vertcadre}{RGB}{0, 110, 22} % Adjust the rgb values as needed
+\definecolor{vertfond}{RGB}{0, 255, 51} % Light blue for the background
+\definecolor{lightgray}{gray}{0.9}
+\definecolor{encoreplusverylightgreen}{RGB}{220, 255, 220}
+\definecolor{rougepale}{RGB}{255, 200, 200}
+\definecolor{verylightred}{RGB}{255, 240, 240}
+\definecolor{verylighpurple}{RGB}{250, 235, 250}
+\definecolor{verylightgreen}{RGB}{204, 255, 204}
+
+
 % Traduction des commandes pour le package algorithmic
 \renewcommand{\algorithmicfor}{\textbf{pour}}
 \renewcommand{\algorithmicif}{\textbf{si}}
@@ -89,16 +105,12 @@
 % Note: le elsif n'a pas besoin d'être renew, le package le "calcule" automatiquement à partir
 % de else et if
 
-% Vert pour du texte qui pète pas trop
-\definecolor{mondarkgreen}{rgb}{0,0.5,0}
 
 % Environnement highlight pour WIP
 \newmdenv[backgroundcolor=yellow!20, linecolor=yellow!20, innerleftmargin=10pt, innerrightmargin=10pt, innertopmargin=10pt, innerbottommargin=10pt, skipabove=\baselineskip, skipbelow=\baselineskip]{monhlt}
 
 
 % Environnement d'exos
-\definecolor{myblue}{rgb}{0.12, 0.3, 0.84} % Adjust the rgb values as needed
-\definecolor{lightblue}{rgb}{0.8, 0.9, 1} % Light blue for the background
 \newcounter{monexo}
 \setcounter{monexo}{1}
 \newtcolorbox{MonExo}[1][]{
@@ -126,8 +138,6 @@
 
 % Environnement d'activités (pour le hors série pygame au départ)
 % NB: rgb : 0 à 1; RGB = 0 à 255
-\definecolor{vertcadre}{RGB}{0, 110, 22} % Adjust the rgb values as needed
-\definecolor{vertfond}{RGB}{0, 255, 51} % Light blue for the background
 \newcounter{monact}
 \setcounter{monact}{1}
 \newtcolorbox{MonAct}[1][]{
@@ -176,7 +186,6 @@
 %%\DispRepfalse % Hide the text
 
 % Définition (simplifiee) de leur textbox
-\definecolor{lightgray}{gray}{0.9}
 \newmdenv[
 	linecolor=black,
 	backgroundcolor=lightgray,
@@ -239,7 +248,6 @@
 }
 
 % Environnement one-shot pour P=NP mais c'est plus propre dans le doc tex comme ça.
-\definecolor{encoreplusverylightgreen}{RGB}{220, 255, 220}
 \newtcolorbox{MonCash}[1]{
 	colback=encoreplusverylightgreen,      % Background color of the box
 	colframe=mondarkgreen,     % Frame color
@@ -255,8 +263,6 @@
 }
 
 % Environnement d'ALERTE!!
-\definecolor{tresrouge}{RGB}{255, 0, 0}
-\definecolor{rougepale}{RGB}{255, 200, 200}
 \newtcolorbox{MonAlarme}[1]{
 	colback=rougepale,      % Background color of the box
 	colframe=tresrouge,     % Frame color
@@ -287,7 +293,6 @@
 }
 
 % Format pour mes définitions
-\definecolor{verylightred}{RGB}{255, 240, 240}
 \newtcolorbox{MaDef}[1]{
 	breakable,
 	colback=verylightred,      % Background color of the box
@@ -304,7 +309,6 @@
 }
 
 % Format pour mes règles
-\definecolor{verylighpurple}{RGB}{250, 235, 250}
 \newtcolorbox{MaRgl}[1]{
 	breakable,
 	colback=verylighpurple,      % Background color of the box
@@ -321,7 +325,6 @@
 }
 
 % Format "à retenir"
-\definecolor{verylightgreen}{RGB}{204, 255, 204}
 \newtcolorbox{MonRet}{
 	colback=verylightgreen,      % Background color of the box
 	colframe=red,     % Frame color
@@ -338,52 +341,26 @@
 
 
 % Environnement de prise de note pour les élèves
-\definecolor{tresrouge}{RGB}{255, 0, 0}
-\definecolor{jaunePDN}{RGB}{255, 250, 205}
-\newtcolorbox{PDNenv}[1]{
-	colback=jaunePDN,      % Background color of the box
-	colframe=tresrouge,     % Frame color
-	coltitle=black,     % Title text color
-	colbacktitle=jaunePDN, % Fonds de la partie titre à blanc
-	title=
-		{\LARGE{ %O1, O2
-				\faEdit
-				}  %F2
-				\Large{ %O2
-					\hspace{0.2cm} %OF3
-					\textit{Prise de notes} %OF3
-					\hspace{0.2cm} %OF3
-				} %F2
-				\LARGE{\faEdit} %OF2
-				\Large{ %O3
-					\hspace{0.2cm} %OF3
-					\uline{\textbf{#1}} %OF34
-					}%F2
-				}, % F1 - Title format
-	boxrule=0.7mm,      % Frame thickness
-	arc=0mm,            % Corner radius of the frame
-	top=1mm,            % Space between the frame and the content at the top
-	bottom=1mm,         % Space between the frame and the content at the bottom
-	left=2mm,           % Space between the frame and the content on the left
-	right=2mm           % Space between the frame and the content on the right
-}
-\newcommand{\PDN}[2][5cm]{%
-	\begin{PDNenv}{#2}
-		\begin{Form}
-			\TextField[multiline=true, width=\linewidth, height=#1, bordercolor={0.65 0.79 0.94}]{}
-		\end{Form}
-	\end{PDNenv}%
+% Define a counter for unique form names
+\newcounter{pdnform}
+
+% Define the PDN command with one optional argument for the height of the text field
+\newcommand{\PDN}[2][4]{%
+	\stepcounter{pdnform}% Increment the form counter
+	\begin{Form}
+		\noindent
+		\begin{tcolorbox}[colback=jaunePDN, colframe=tresrouge, arc=4pt, boxrule=2pt, width=\linewidth, halign=left, valign=top]
+			\begin{minipage}[t]{\linewidth}
+				\Large\faEdit \hspace{0.1cm} \uline{\textit{Prise de notes}} \hspace{0.1cm} \Large\faEdit \hspace{0.3cm} \textbf{#2}
+			\end{minipage}
+		\end{tcolorbox}
+		\vspace{0.5cm}
+		\noindent
+		\TextField[name=mytextfield\thepdnform, multiline=true, width=\linewidth, height=#1cm, bordercolor={tresrouge}, readonly=false]{}
+	\end{Form}
 }
 
 % Format d'inclusion de code Python - avec un fichier en entrée
-%\newcommand{\MonPython}[1]{
-%		\inputminted[
-%		bgcolor=gray!15,
-%		fontsize=\footnotesize,
-%		linenos=true,
-%		breaklines, % Allows line breaks
-%		]{python}{_code/#1}
-%}
 \newcommand{\MonPython}[1]{
 	\begin{mdframed}[backgroundcolor=gray!15, hidealllines=true, innerleftmargin=10pt, innerrightmargin=10pt, innertopmargin=10pt, innerbottommargin=10pt]
 		\inputminted[
