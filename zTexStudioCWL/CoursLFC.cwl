@@ -47,6 +47,7 @@
 # Environments
 \begin{monhlt}#\env
 \begin{alphenum}#\env
+\begin{mitem}#\env
 \begin{zeromgitem}#\env
 \begin{MonAmp}{title}#\env
 \begin{MonAlarme}{title}#\env
