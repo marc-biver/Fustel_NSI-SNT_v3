@@ -13,6 +13,7 @@
 **/*Src_Latex/*.out
 **/*Src_Latex/*.toc
 **/*Src_Latex/*.cut
+**/*.log
 
 # Même chose mais pour mon petit outil Python2PDF
 **/z.PDFageCodePython/*.gz
